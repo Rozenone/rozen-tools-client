@@ -1,7 +1,8 @@
-import { app, BrowserWindow } from "electron"
+import { app, BrowserWindow, Menu } from "electron"
 import path from "path"
 
 const createWindow = () => {
+    Menu.setApplicationMenu(null);
     const win = new BrowserWindow({
         webPreferences: {
             contextIsolation: false, // 是否开启隔离上下文
@@ -15,7 +16,7 @@ const createWindow = () => {
         win.loadFile(path.join(__dirname, "./index.html"))
         win.webContents.openDevTools()
     } else {
-        const url = "http://localhost:5173" // 本地启动的vue项目路径。注意：vite版本3以上使用的端口5173；版本2用的是3000
+        const url: string = import.meta.env.VITE_URL // 本地启动的vue项目路径。注意：vite版本3以上使用的端口5173；版本2用的是3000
         win.loadURL(url)
         win.webContents.openDevTools()
     }

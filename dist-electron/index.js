@@ -2,6 +2,7 @@
 const electron = require("electron");
 const path = require("path");
 const createWindow = () => {
+  electron.Menu.setApplicationMenu(null);
   const win = new electron.BrowserWindow({
     webPreferences: {
       contextIsolation: false,
@@ -16,7 +17,7 @@ const createWindow = () => {
     win.loadFile(path.join(__dirname, "./index.html"));
     win.webContents.openDevTools();
   } else {
-    let url = "http://localhost:5173";
+    const url = "http://localhost:5173";
     win.loadURL(url);
     win.webContents.openDevTools();
   }

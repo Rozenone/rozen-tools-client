@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "main": "dist-electron/index.js",
   "scripts": {
-    "dev": "chcp 65001 && vite",
-    "build": "rimraf dist-electron && vite build && electron-builder",
+    "dev": "chcp 65001 && vite --mode=development",
+    "build": "rimraf dist-electron && vite build && electron-builder  --mode=production",
     "preview": "vite preview",
     "lint": "eslint src",
     "fix": "eslint src --fix",
@@ -13,7 +13,9 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.16.12",
+    "dotenv": "^16.4.5",
     "pinia": "^2.2.4",
+    "pinia-plugin-persistedstate": "^4.1.1",
     "quasar": "^2.17.0",
     "vue": "^3.4.37"
   },
@@ -23,6 +25,7 @@
     "@quasar/vite-plugin": "^1.7.0",
     "@types/vue-router": "^2.0.0",
     "@vitejs/plugin-vue": "^5.1.2",
+    "axios": "^1.7.7",
     "electron": "^32.1.2",
     "electron-builder": "^25.0.5",
     "electron-devtools-installer": "^3.2.0",

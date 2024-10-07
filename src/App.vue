@@ -1,7 +1,6 @@
 <template>
   <div>
-<a></a>
-    <h1>hello electron</h1>
+    hello11
   </div>
 </template>
 

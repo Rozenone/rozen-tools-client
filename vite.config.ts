@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import { fileURLToPath, URL } from 'node:url'
 import vue from '@vitejs/plugin-vue'
 
 import electron from "vite-plugin-electron"
@@ -27,4 +28,9 @@ export default defineConfig(({ mode }) => ({
     emptyOutDir: false, // 默认情况下，若 outDir 在 root 目录下，则 Vite 会在构建时清空该目录
     outDir: "dist-electron"
   },
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  }
 }))

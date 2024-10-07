@@ -16,14 +16,17 @@ import '@quasar/extras/fontawesome-v5/fontawesome-v5.css'
 // Import Quasar css
 import 'quasar/dist/quasar.css'
 
+import pinia from '@/stores'
 import App from './App.vue'
 
-const myApp = createApp(App)
+const myApp = createApp(App);
 
+
+myApp.use(pinia);
 myApp.use(Quasar, {
     plugins: {},  //添加Quasar插件
     lang: quasarLang,
     iconSet: quasarIconSet,
-})
+});
 
-myApp.mount('#app')
+myApp.mount('#app');
