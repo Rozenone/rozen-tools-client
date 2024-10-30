@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite'
-import { fileURLToPath, URL } from 'node:url'
+import { fileURLToPath } from "node:url";
 import vue from '@vitejs/plugin-vue'
 
 import electron from "vite-plugin-electron"
@@ -8,13 +8,16 @@ import polyfillExports from "vite-plugin-electron-renderer"
 import { quasar, transformAssetUrls } from '@quasar/vite-plugin'
 
 export default defineConfig(({ mode }) => ({
+  define: {
+    'process.env': process.env
+  },
   base: mode == 'development' ? '' : './',
   plugins: [
     vue({
       template: { transformAssetUrls }
     }),
     electron([{
-      entry: "src-electron/index.ts", // 主进程文件
+      entry: "src-render/index.ts", // 主进程文件
     },
       {
         entry: 'src-preload/preload.ts'
@@ -30,7 +33,7 @@ export default defineConfig(({ mode }) => ({
   },
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL("./src", import.meta.url))
     }
   }
 }))

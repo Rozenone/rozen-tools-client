@@ -1,13 +1,14 @@
-import { app, BrowserWindow, Menu } from "electron"
+import { app, BrowserWindow, Menu, ipcMain } from "electron"
 import path from "path"
 
 const createWindow = () => {
     Menu.setApplicationMenu(null);
     const win = new BrowserWindow({
+        frame: false,
         webPreferences: {
-            contextIsolation: false, // 是否开启隔离上下文
+            contextIsolation: true, // 是否开启隔离上下文
             nodeIntegration: true, // 渲染进程使用Node API
-            preload: path.join(__dirname, "./preload.js"), // 需要引用js文件
+            preload: path.join(__dirname, "./preload.js"),// 需要引用js文件
         },
     })
 
@@ -18,8 +19,25 @@ const createWindow = () => {
     } else {
         const url: string = import.meta.env.VITE_URL // 本地启动的vue项目路径。注意：vite版本3以上使用的端口5173；版本2用的是3000
         win.loadURL(url)
+        win.on('ready-to-show', () => { // 窗口准备就绪后，显示窗口
+            win.show()
+        })
         win.webContents.openDevTools()
     }
+
+    ipcMain.on('close-window', () => {
+        win.destroy();
+    })
+    ipcMain.on('min-window',() => {
+        win.minimize();  
+    })
+    ipcMain.on('max-window',() => {
+        if (win.isMaximized()) {
+            win.unmaximize()
+        } else {
+            win.maximize();
+        }
+    })
 }
 
 app.whenReady().then(() => {

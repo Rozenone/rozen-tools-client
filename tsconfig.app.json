@@ -10,14 +10,10 @@
     ],
     "skipLibCheck": true,
     "composite": true,
+    /* alias */
     "baseUrl": "./",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "store/*": [
-        "src/stores/*"
-      ]
+      "@/*": ["src/*"]
     },
     "types": [
       "vite/client"
@@ -38,9 +34,9 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "src-electron/**/*.ts",
-    "src-electron/**/*.tsx",
-    "src-electron/**/*.vue",
+    "src-render/**/*.ts",
+    "src-render/**/*.tsx",
+    "src-render/**/*.vue",
     "env.d.ts"
   ]
 }

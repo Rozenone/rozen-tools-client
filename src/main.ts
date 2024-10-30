@@ -1,32 +1,23 @@
-import { createApp } from 'vue'
-import { Quasar } from 'quasar'
-import quasarLang from 'quasar/lang/zh-CN'
-import quasarIconSet from 'quasar/icon-set/fontawesome-v5'
-
-// Import icon libraries
-import '@quasar/extras/roboto-font/roboto-font.css'
-import '@quasar/extras/material-icons-outlined/material-icons-outlined.css'
-import '@quasar/extras/material-icons-round/material-icons-round.css'
-import '@quasar/extras/material-icons-sharp/material-icons-sharp.css'
-import '@quasar/extras/material-symbols-outlined/material-symbols-outlined.css'
-import '@quasar/extras/material-symbols-rounded/material-symbols-rounded.css'
-import '@quasar/extras/material-symbols-sharp/material-symbols-sharp.css'
-import '@quasar/extras/fontawesome-v5/fontawesome-v5.css'
-
-// Import Quasar css
-import 'quasar/dist/quasar.css'
-
-import pinia from '@/stores'
-import App from './App.vue'
+import { createApp } from 'vue';
+import { Quasar } from 'quasar';
+import { createPinia } from 'pinia';
+import quasarLang from 'quasar/lang/zh-CN';
+import '@quasar/extras/material-icons/material-icons.css';
+import 'quasar/dist/quasar.css';
+import i18n from './locales/i18config'; // 直接引入 i18n 实例
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
+import App from './App.vue';
+import router from './router';
 
 const myApp = createApp(App);
+const pinia = createPinia();
 
-
+pinia.use(piniaPluginPersistedstate);
+myApp.use(i18n); // 使用 i18n 实例
 myApp.use(pinia);
 myApp.use(Quasar, {
-    plugins: {},  //添加Quasar插件
+    plugins: {},  // 添加 Quasar 插件
     lang: quasarLang,
-    iconSet: quasarIconSet,
 });
-
+myApp.use(router);
 myApp.mount('#app');

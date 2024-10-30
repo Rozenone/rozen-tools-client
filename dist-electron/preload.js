@@ -1,3 +1,13 @@
 "use strict";
-const os = require("os");
-console.log("platform", os.platform());
+const electron = require("electron");
+electron.contextBridge.exposeInMainWorld("ipcCommon", {
+  closeWindow: () => {
+    electron.ipcRenderer.send("close-window", null);
+  },
+  minWindow: () => {
+    electron.ipcRenderer.send("min-window", null);
+  },
+  maxWindow: () => {
+    electron.ipcRenderer.send("max-window", null);
+  }
+});

@@ -4,8 +4,9 @@ const path = require("path");
 const createWindow = () => {
   electron.Menu.setApplicationMenu(null);
   const win = new electron.BrowserWindow({
+    frame: false,
     webPreferences: {
-      contextIsolation: false,
+      contextIsolation: true,
       // 是否开启隔离上下文
       nodeIntegration: true,
       // 渲染进程使用Node API
@@ -19,8 +20,24 @@ const createWindow = () => {
   } else {
     const url = "http://localhost:5173";
     win.loadURL(url);
+    win.on("ready-to-show", () => {
+      win.show();
+    });
     win.webContents.openDevTools();
   }
+  electron.ipcMain.on("close-window", () => {
+    win.destroy();
+  });
+  electron.ipcMain.on("min-window", () => {
+    win.minimize();
+  });
+  electron.ipcMain.on("max-window", () => {
+    if (win.isMaximized()) {
+      win.unmaximize();
+    } else {
+      win.maximize();
+    }
+  });
 };
 electron.app.whenReady().then(() => {
   createWindow();

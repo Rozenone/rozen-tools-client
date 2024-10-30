@@ -15,5 +15,5 @@
     "src/**/*.vue",
     "electron-main/**/*.ts",
     "electron-preload/**/*.ts"
-  ]
+, "quasar.conf.ts"  ]
 }
