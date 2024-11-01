@@ -15,14 +15,14 @@ const createWindow = () => {
     }
   });
   if (process.env.NODE_ENV !== "development") {
-    win.loadFile(path.join(__dirname, "./index.html"));
-    win.webContents.openDevTools();
+    win.loadFile(path.join(__dirname, "./index.html")).then(() => win.webContents.openDevTools());
   } else {
     const url = "http://localhost:5173";
-    win.loadURL(url);
-    win.on("ready-to-show", () => {
-      win.show();
-    });
+    win.loadURL(url).then(
+      () => win.on("ready-to-show", () => {
+        win.show();
+      })
+    );
     win.webContents.openDevTools();
   }
   electron.ipcMain.on("close-window", () => {
@@ -50,3 +50,4 @@ electron.app.on("window-all-closed", () => {
     electron.app.quit();
   }
 });
+module.exports = createWindow;
