@@ -7,7 +7,10 @@
 
 <script setup lang='ts'>
 import useStore from '@/stores';
+import { useRouter } from 'vue-router'
 const topStore = useStore().top;
+const router = useRouter();
+
 </script>
 
 

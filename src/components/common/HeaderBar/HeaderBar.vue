@@ -3,11 +3,7 @@
   <div>
     <q-header reveal bordered class="bg-primary text-white" height-hint="98">
       <q-bar class="bg-black text-white drag">
-        <div class="cursor-pointer">File</div>
-        <div class="cursor-pointer">Edit</div>
-        <div class="cursor-pointer gt-xs">View</div>
-        <div class="cursor-pointer gt-xs">Window</div>
-        <div class="cursor-pointer">Help</div>
+        <div class="cursor-pointer no-drag">Help</div>
         <q-space />
         <q-btn @click="minWindow" class="no-drag" dense flat icon="minimize" />
         <q-btn @click="maxWindow" class="no-drag" dense flat icon="crop_square" />
@@ -73,5 +69,10 @@ const maxWindow = () => {
 
 .no-drag {
   -webkit-app-region: no-drag;
+}
+
+.cursor-pointer:hover {
+  cursor: pointer;
+  background-color: #d14;
 }
 </style>

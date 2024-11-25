@@ -5,7 +5,7 @@
   "main": "dist-electron/index.js",
   "scripts": {
     "dev": "chcp 65001 && vite --mode=development",
-    "build": "rimraf dist-electron && vite build && electron-builder  --mode=production",
+    "build": "dist-electron && vite build && electron-builder  --mode=production",
     "preview": "vite preview",
     "lint": "eslint src",
     "fix": "eslint src --fix",

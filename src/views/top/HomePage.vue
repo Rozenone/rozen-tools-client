@@ -23,12 +23,17 @@ const initData = reactive([
   {
     title: 'json',
     img: 'json.svg',
-    url: '/json_format'
+    url: '/service/json_format'
   },
   {
     title: 'regx',
     img: 'regx.svg',
-    url: '/regx_check'
+    url: '/service/regex_format'
+  },
+  {
+    title: 'uuid',
+    img: 'restart.svg',
+    url: '/service/uuid'
   }
 ])
 </script>
@@ -56,4 +61,5 @@ const initData = reactive([
   height: 30px;
   margin-right: 10px;
 }
+
 </style>
