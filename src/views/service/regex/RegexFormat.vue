@@ -80,7 +80,6 @@ const inputText = ref('')
 const highlightedText = ref('')
 
 const updateHighlightedText = () => {
-  console.log(regex.value)
   try {
     // 如果用户输入正则表达式
     const regexText = new RegExp(regex.value, suffix.value) // 使用全局匹配

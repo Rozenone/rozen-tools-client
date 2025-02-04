@@ -12,7 +12,7 @@ const i18n = createI18n({
   globalInjection: true, // 注入全局属性和函数
   silentTranslationWarn: true, // 抑制本地化失败警告
   silentFallbackWarn: true, // 抑制回退失败警告
-  locale: localStorage.getItem('lan'),
+  locale: localStorage.getItem('lan') as string,
   fallbackLocale: 'jp',
   messages, // 添加消息对象
 });
