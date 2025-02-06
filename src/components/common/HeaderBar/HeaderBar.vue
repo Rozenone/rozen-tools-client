@@ -1,16 +1,32 @@
 <!-- 页头 -->
 <template>
   <div>
-    <q-header reveal bordered class="bg-primary text-white" height-hint="98">
-      <q-bar class="bg-black text-white drag">
-        <div class="cursor-pointer no-drag">Help</div>
+    <q-header reveal bordered :class="[isWindows ? 'windows-header' : 'mac-header']">
+      <!-- Windows 风格标题栏 -->
+      <q-bar v-if="isWindows" class="bg-primary text-white window-drag">
+        <div class="window-title">{{ $t('comm.appTitle') }}</div>
         <q-space />
-        <q-btn @click="minWindow" class="no-drag" dense flat icon="minimize" />
-        <q-btn @click="maxWindow" class="no-drag" dense flat icon="crop_square" />
-        <q-btn @click="closeWindow" class="no-drag" dense flat icon="close" />
+        <div class="window-controls">
+          <q-btn @click="minWindow" flat dense icon="remove" class="window-button" />
+          <q-btn @click="maxWindow" flat dense icon="crop_square" class="window-button" />
+          <q-btn @click="closeWindow" flat dense icon="close" class="window-button close" />
+        </div>
       </q-bar>
+
+      <!-- macOS 风格标题栏 -->
+      <q-bar v-else class="mac-titlebar window-drag">
+        <div class="mac-buttons">
+          <div @click="closeWindow" class="mac-button close" />
+          <div @click="minWindow" class="mac-button minimize" />
+          <div @click="maxWindow" class="mac-button maximize" />
+        </div>
+        <div class="window-title">{{ $t('comm.appTitle') }}</div>
+      </q-bar>
+
+      <!-- 通用工具栏 -->
       <q-toolbar>
         <q-btn dense flat round icon="menu_open" @click="toggleLeftDrawer" />
+        <q-space />
         <q-btn dense flat round icon="brightness_5" @click="toggleRightDrawer" />
       </q-toolbar>
 
@@ -22,57 +38,102 @@
 </template>
 
 <script setup lang="ts">
-import useStore from "@/stores";
-const topStore = useStore().top;
+import useStore from "@/stores"
+import { ref, onMounted } from 'vue'
 
-/**
- * 控制左侧窗口
- */
+const topStore = useStore().top
+const isWindows = ref(false)
+
+onMounted(() => {
+  // 检测操作系统
+  isWindows.value = navigator.platform.includes('Win')
+})
+
 const toggleLeftDrawer = () => {
-  topStore.toggleLeftDrawer();
-};
+  topStore.toggleLeftDrawer()
+}
 
-/**
- * 右侧窗口
- */
 const toggleRightDrawer = () => {
-  topStore.toggleRightDrawer();
-};
+  topStore.toggleRightDrawer()
+}
 
-/**
- * 关闭窗口
- */
 const closeWindow = () => {
-  window.ipcCommon.closeWindow();
-};
+  window.ipcCommon.closeWindow()
+}
 
-/**
- * 缩小窗口
- */
 const minWindow = () => {
-  window.ipcCommon.minWindow();
-};
+  window.ipcCommon.minWindow()
+}
 
-/**
- * 窗口最大化
- */
 const maxWindow = () => {
-  window.ipcCommon.maxWindow();
-};
+  window.ipcCommon.maxWindow()
+}
 </script>
 
 <style scoped>
-.drag {
-  /* 可拖拽区域 */
+/* 通用样式 */
+.window-drag {
   -webkit-app-region: drag;
 }
 
-.no-drag {
+.window-title {
+  font-size: 14px;
+  margin-left: 12px;
+}
+
+/* Windows 风格样式 */
+.windows-header .window-controls {
   -webkit-app-region: no-drag;
 }
 
-.cursor-pointer:hover {
+.windows-header .window-button {
+  min-width: 46px;
+  min-height: 32px;
+}
+
+.windows-header .window-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.windows-header .window-button.close:hover {
+  background: #e81123;
+}
+
+/* macOS 风格样式 */
+.mac-header .mac-titlebar {
+  height: 28px;
+  background: #323233;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+}
+
+.mac-buttons {
+  display: flex;
+  gap: 8px;
+  -webkit-app-region: no-drag;
+}
+
+.mac-button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
   cursor: pointer;
-  background-color: #d14;
+}
+
+.mac-button.close {
+  background: #ff5f56;
+}
+
+.mac-button.minimize {
+  background: #ffbd2e;
+}
+
+.mac-button.maximize {
+  background: #27c93f;
+}
+
+.mac-button:hover {
+  filter: brightness(85%);
 }
 </style>
