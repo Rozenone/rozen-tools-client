@@ -3,27 +3,41 @@
     "target": "ES2020",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "skipLibCheck": true,
     "composite": true,
-    "baseUrl": ".",
+    /* alias */
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["src/*"]
     },
-    "types": ["vite/client", "node"],
+    "types": [
+      "vite/client"
+    ],
+    /* Bundler mode */
     "moduleResolution": "bundler",
-    "emitDeclarationOnly": true,
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
     "isolatedModules": true,
-    "esModuleInterop": true,
-    "jsx": "preserve"
+    "moduleDetection": "force",
+    "noEmit": false,
+    "jsx": "preserve",
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
   },
   "include": [
-    "env.d.ts",
     "src/**/*.ts",
-    "src/**/*.d.ts",
     "src/**/*.tsx",
-    "src/**/*.vue"
+    "src/**/*.d.ts",
+    "src/**/*.vue",
+    "src-render/**/*.ts",
+    "src-render/**/*.tsx",
+    "src-render/**/*.vue",
+    "env.d.ts"
   ]
 }

@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
+import { fileURLToPath } from "node:url";
 import vue from '@vitejs/plugin-vue'
-import path from 'path'
 
 import electron from "vite-plugin-electron"
 import electronRenderer from "vite-plugin-electron-renderer"
@@ -33,7 +33,7 @@ export default defineConfig(({ mode }) => ({
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
+      '@': fileURLToPath(new URL("./src", import.meta.url))
     }
   }
 }))
