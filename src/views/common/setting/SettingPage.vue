@@ -54,7 +54,7 @@ const tab = ref('language')
 const splitterModel = ref(20)
 
 onMounted(() => {
-  const lan = localStorage.getItem('lan')
+  const lan = localStorage.getItem('lan') || 'cn'
   model.value = lan
   initLan.value = lan
 })

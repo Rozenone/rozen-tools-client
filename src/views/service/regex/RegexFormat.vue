@@ -53,11 +53,11 @@
 <script setup lang='ts'>
 import { getCurrentInstance, ref, watch } from 'vue'
 
-const { proxy } = getCurrentInstance()
+const { proxy } = getCurrentInstance() as { proxy: any }
 const regex = ref('')
 const suffix = ref('g')
-const model = ref([])
-const fixedOrder = ['g', 'i', 'm', 's'] // 固定顺序
+const model = ref<string[]>([])
+const fixedOrder: string[] = ['g', 'i', 'm', 's'] // 添加类型声明
 const options = [
   {
     label: proxy.$t('regexFormat.tip.global'),
@@ -107,7 +107,7 @@ watch(suffix, () => {
 })
 
 // 监听下拉选项
-watch(model, async (newVal) => {
+watch(model, async (newVal: string[]) => {
   suffix.value = fixedOrder
     .filter(value => newVal.includes(value))
     .join('')

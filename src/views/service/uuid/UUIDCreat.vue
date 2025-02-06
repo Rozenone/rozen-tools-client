@@ -68,7 +68,7 @@ import { ref, getCurrentInstance } from 'vue'
 import { useQuasar } from 'quasar'
 import { v4 as uuidv4, v1 as uuidv1 } from 'uuid'
 
-const { proxy } = getCurrentInstance()
+const { proxy } = getCurrentInstance() as { proxy: any }
 const $q = useQuasar()
 
 const uuidVersion = ref('v4')
