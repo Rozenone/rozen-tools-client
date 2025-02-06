@@ -3,6 +3,7 @@ import { Quasar } from 'quasar';
 import { createPinia } from 'pinia';
 import quasarLang from 'quasar/lang/zh-CN';
 import '@quasar/extras/material-icons/material-icons.css';
+import '@/assets/css/base.css'
 import 'quasar/dist/quasar.css';
 import i18n from './locales/i18config'; // 直接引入 i18n 实例
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';

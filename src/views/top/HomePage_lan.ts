@@ -1,8 +1,12 @@
 export const homePage_cn = {
-    message: 'bb'
+  json: 'json转换工具',
+  regx: '正则转换',
+  uuid: 'UUID生成'
 }
 
 
 export const homePage_jp = {
-    message: 'aa'
+  json: 'jsonフォマード',
+  regx: '正規表現',
+  uuid: 'UUID作成'
 }
