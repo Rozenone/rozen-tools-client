@@ -3,16 +3,6 @@ const electron = require("electron");
 const path = require("path");
 const createWindow = () => {
   electron.Menu.setApplicationMenu(null);
-  electron.session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
-    callback({
-      responseHeaders: {
-        ...details.responseHeaders,
-        "Content-Security-Policy": [
-          "default-src 'self' 'unsafe-inline'; img-src 'self' data: blob: 'unsafe-inline'"
-        ]
-      }
-    });
-  });
   const win = new electron.BrowserWindow({
     frame: false,
     webPreferences: {
@@ -20,10 +10,8 @@ const createWindow = () => {
       // 是否开启隔离上下文
       nodeIntegration: true,
       // 渲染进程使用Node API
-      preload: path.join(__dirname, "./preload.js"),
+      preload: path.join(__dirname, "./preload.js")
       // 需要引用js文件
-      webSecurity: false
-      // 添加这行来禁用 CSP
     }
   });
   if (process.env.NODE_ENV !== "development") {

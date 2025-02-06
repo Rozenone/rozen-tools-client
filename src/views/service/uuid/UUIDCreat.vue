@@ -9,15 +9,26 @@
       <q-card-section>
         <div class="row q-col-gutter-md items-center">
           <div class="col-auto">
-            <q-select v-model="uuidVersion" :options="[
-              { label: $t('uuidCreat.version.v4'), value: 'v4' },
-              { label: $t('uuidCreat.version.v1'), value: 'v1' }
-            ]" style="width: 150px" @update:model-value="generateUUID" />
+            <q-select
+              v-model="uuidVersion"
+              :options="[
+                { label: $t('uuidCreat.version.v4'), value: 'v4' },
+                { label: $t('uuidCreat.version.v1'), value: 'v1' }
+              ]"
+              style="width: 150px"
+              @update:model-value="generateUUID"
+            />
           </div>
 
           <div class="col-auto">
-            <q-input v-model.number="generateCount" type="number" :min="1" :max="100"
-              :label="$t('uuidCreat.generateCount')" style="width: 150px" />
+            <q-input
+              v-model.number="generateCount"
+              type="number"
+              :min="1"
+              :max="100"
+              :label="$t('uuidCreat.generateCount')"
+              style="width: 150px"
+            />
           </div>
 
           <div class="col-auto">
@@ -27,7 +38,11 @@
           </div>
 
           <div class="col-auto">
-            <q-toggle v-model="isUpperCase" :label="$t('uuidCreat.upperCase')" @update:model-value="toggleCase" />
+            <q-toggle
+              v-model="isUpperCase"
+              :label="$t('uuidCreat.upperCase')"
+              @update:model-value="toggleCase"
+            />
           </div>
         </div>
       </q-card-section>
@@ -88,7 +103,7 @@ const copyUUID = async (uuid: string) => {
 
 // 切换大小写
 const toggleCase = () => {
-  uuidList.value = uuidList.value.map(uuid =>
+  uuidList.value = uuidList.value.map(uuid => 
     isUpperCase.value ? uuid.toUpperCase() : uuid.toLowerCase()
   )
 }
