@@ -1,16 +1,116 @@
 <!-- 正则表达式 -->
 <template>
-  <div>
+  <div class="q-pa-md">
+    <q-card>
+      <q-card-section>
+        <div class="text-h6">{{ $t('uuidCreat.title') }}</div>
+      </q-card-section>
 
+      <q-card-section>
+        <div class="row q-col-gutter-md items-center">
+          <div class="col-auto">
+            <q-select
+              v-model="uuidVersion"
+              :options="[
+                { label: $t('uuidCreat.version.v4'), value: 'v4' },
+                { label: $t('uuidCreat.version.v1'), value: 'v1' }
+              ]"
+              style="width: 150px"
+              @update:model-value="generateUUID"
+            />
+          </div>
+
+          <div class="col-auto">
+            <q-input
+              v-model.number="generateCount"
+              type="number"
+              :min="1"
+              :max="100"
+              :label="$t('uuidCreat.generateCount')"
+              style="width: 150px"
+            />
+          </div>
+
+          <div class="col-auto">
+            <q-btn color="primary" @click="generateUUID">
+              {{ $t('uuidCreat.generateButton') }}
+            </q-btn>
+          </div>
+
+          <div class="col-auto">
+            <q-toggle
+              v-model="isUpperCase"
+              :label="$t('uuidCreat.upperCase')"
+              @update:model-value="toggleCase"
+            />
+          </div>
+        </div>
+      </q-card-section>
+
+      <q-card-section>
+        <q-list bordered separator>
+          <q-item v-for="(uuid, index) in uuidList" :key="index">
+            <q-item-section>{{ uuid }}</q-item-section>
+            <q-item-section side>
+              <q-btn flat color="primary" icon="content_copy" @click="copyUUID(uuid)">
+                <q-tooltip>{{ $t('uuidCreat.copy') }}</q-tooltip>
+              </q-btn>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-card-section>
+    </q-card>
   </div>
 </template>
 
-<script setup lang='ts'>
-import { getCurrentInstance, ref, watch } from 'vue'
+<script lang="ts" setup>
+import { ref, getCurrentInstance } from 'vue'
+import { useQuasar } from 'quasar'
+import { v4 as uuidv4, v1 as uuidv1 } from 'uuid'
+
 const { proxy } = getCurrentInstance()
+const $q = useQuasar()
 
+const uuidVersion = ref('v4')
+const generateCount = ref(1)
+const isUpperCase = ref(false)
+const uuidList = ref<string[]>([])
+
+// 生成 UUID
+const generateUUID = () => {
+  uuidList.value = []
+  for (let i = 0; i < generateCount.value; i++) {
+    const uuid = uuidVersion.value === 'v4' ? uuidv4() : uuidv1()
+    uuidList.value.push(isUpperCase.value ? uuid.toUpperCase() : uuid)
+  }
+}
+
+// 复制 UUID
+const copyUUID = async (uuid: string) => {
+  try {
+    await navigator.clipboard.writeText(uuid)
+    $q.notify({
+      type: 'positive',
+      message: proxy.$t('uuidCreat.notification.copySuccess')
+    })
+  } catch (err) {
+    $q.notify({
+      type: 'negative',
+      message: proxy.$t('uuidCreat.notification.copyFail')
+    })
+  }
+}
+
+// 切换大小写
+const toggleCase = () => {
+  uuidList.value = uuidList.value.map(uuid => 
+    isUpperCase.value ? uuid.toUpperCase() : uuid.toLowerCase()
+  )
+}
+
+// 初始生成一个 UUID
+generateUUID()
 </script>
-
 
 <style scoped>
 * {
@@ -19,5 +119,4 @@ const { proxy } = getCurrentInstance()
   -ms-user-select: text;
   user-select: text;
 }
-
 </style>
