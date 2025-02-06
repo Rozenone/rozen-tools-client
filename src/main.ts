@@ -1,5 +1,5 @@
 import { createApp } from 'vue';
-import { Quasar } from 'quasar';
+import { Quasar, Dark } from 'quasar';
 import { createPinia } from 'pinia';
 import quasarLang from 'quasar/lang/zh-CN';
 import '@quasar/extras/material-icons/material-icons.css';
@@ -15,10 +15,21 @@ const pinia = createPinia();
 
 pinia.use(piniaPluginPersistedstate);
 myApp.use(i18n); // 使用 i18n 实例
-myApp.use(pinia);
+myApp.use(pinia); 
 myApp.use(Quasar, {
-    plugins: {},  // 添加 Quasar 插件
-    lang: quasarLang,
+    plugins: { Dark },
+    config: {
+        brand: {
+            primary: '#1976D2',
+            secondary: '#26A69A',
+            accent: '#9C27B0',
+            positive: '#21BA45',
+            negative: '#C10015',
+            info: '#31CCEC',
+            warning: '#F2C037'
+        },
+        dark: false
+    },
 });
 myApp.use(router);
 myApp.mount('#app');
