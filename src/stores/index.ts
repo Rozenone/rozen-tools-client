@@ -1,8 +1,18 @@
-import topStore from './top/topStore'
+import { defineStore } from 'pinia'
 
-// 统一导出所有store
-export default function useStore() {
-    return {
-        top: topStore()
+const useStore = defineStore('main', {
+  state: () => ({
+    top: {
+      leftDrawerOpen: false,
+      rightDrawerOpen: false,
+      toggleLeftDrawer() {
+        this.leftDrawerOpen = !this.leftDrawerOpen
+      },
+      toggleRightDrawer() {
+        this.rightDrawerOpen = !this.rightDrawerOpen
+      }
     }
-}
+  })
+})
+
+export default useStore
