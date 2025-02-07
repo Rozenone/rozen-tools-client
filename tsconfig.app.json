@@ -11,12 +11,13 @@
     "skipLibCheck": true,
     "composite": true,
     /* alias */
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     },
     "types": [
-      "vite/client"
+      "vite/client",
+      "node"
     ],
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -32,12 +33,10 @@
   },
   "include": [
     "src/**/*.ts",
-    "src/**/*.tsx",
     "src/**/*.d.ts",
+    "src/**/*.tsx",
     "src/**/*.vue",
-    "src-render/**/*.ts",
-    "src-render/**/*.tsx",
-    "src-render/**/*.vue",
-    "env.d.ts"
+    "types/**/*.d.ts",
+    "src/env.d.ts"
   ]
 }

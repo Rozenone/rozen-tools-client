@@ -1,19 +1,21 @@
 <!-- 左侧栏 -->
 <template>
-  <q-drawer v-model="topStore.leftDrawerOpen" side="left" behavior="desktop" elevated>
-    <!-- drawer content -->
+  <q-drawer v-model="topStore.leftDrawerOpen" side="left" bordered>
+    <q-list>
+      <!-- 抽屉内容 -->
+      <q-item v-ripple>
+        <q-item-section>
+          {{ $t('comm.page1') }}
+        </q-item-section>
+      </q-item>
+    </q-list>
   </q-drawer>
 </template>
 
-<script setup lang='ts'>
-import useStore from '@/stores';
-import { useRouter } from 'vue-router'
-const topStore = useStore().top;
-const router = useRouter();
+<script setup lang="ts">
+import useStore from '@/stores'
 
+const topStore = useStore().top
 </script>
-
-
-
 
 <style scoped></style>
