@@ -47,9 +47,7 @@
 
 <script setup lang='ts'>
 import { reactive, ref, watch, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 
-const router = useRouter()
 const tab = ref('language')
 const splitterModel = ref(20)
 

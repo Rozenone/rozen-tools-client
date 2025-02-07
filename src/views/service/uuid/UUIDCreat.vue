@@ -103,7 +103,7 @@ const copyUUID = async (uuid: string) => {
       type: 'positive',
       message: proxy.$t('uuidCreat.notification.copySuccess')
     })
-  } catch (err) {
+  } catch {
     $q.notify({
       type: 'negative',
       message: proxy.$t('uuidCreat.notification.copyFail')
