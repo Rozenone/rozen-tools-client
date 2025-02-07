@@ -38,6 +38,16 @@
           </div>
 
           <div class="col-auto">
+            <q-btn 
+              color="secondary" 
+              @click="exportToCsv"
+              :disable="!uuidList.length"
+            >
+              {{ $t('uuidCreat.exportCsv') }}
+            </q-btn>
+          </div>
+
+          <div class="col-auto">
             <q-toggle
               v-model="isUpperCase"
               :label="$t('uuidCreat.upperCase')"
@@ -106,6 +116,28 @@ const toggleCase = () => {
   uuidList.value = uuidList.value.map(uuid => 
     isUpperCase.value ? uuid.toUpperCase() : uuid.toLowerCase()
   )
+}
+
+// 添加导出CSV功能
+const exportToCsv = () => {
+  const csvContent = uuidList.value.join('\n')
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+  const link = document.createElement('a')
+  const url = URL.createObjectURL(blob)
+  
+  const date = new Date().toISOString().slice(0, 10)
+  link.setAttribute('href', url)
+  link.setAttribute('download', `uuids-${date}.csv`)
+  
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+  URL.revokeObjectURL(url)
+  
+  $q.notify({
+    type: 'positive',
+    message: proxy.$t('uuidCreat.notification.exportSuccess')
+  })
 }
 
 // 初始生成一个 UUID

@@ -53,6 +53,11 @@ const toolItems: ToolItem[] = reactive([
     title: 'uuid',
     img: 'restart.svg',
     url: '/service/uuid'
+  },
+  {
+    title: 'encoding',
+    img: 'encoding.svg',
+    url: '/service/encoding'
   }
 ])
 </script>

@@ -10,8 +10,10 @@ export const uuidCreat_cn = {
     copy: '复制',
     notification: {
       copySuccess: '复制成功',
-      copyFail: '复制失败'
-    }
+      copyFail: '复制失败',
+      exportSuccess: '导出成功'
+    },
+    exportCsv: '导出CSV'
 }
 
 export const uuidCreat_jp = {
@@ -26,6 +28,8 @@ export const uuidCreat_jp = {
     copy: 'コピー',
     notification: {
       copySuccess: 'コピーしました',
-      copyFail: 'コピーに失敗しました'
-    }
+      copyFail: 'コピーに失敗しました',
+      exportSuccess: 'エクスポートしました'
+    },
+    exportCsv: 'CSVエクスポート'
 }

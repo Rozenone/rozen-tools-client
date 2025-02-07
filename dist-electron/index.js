@@ -38,6 +38,12 @@ const createWindow = () => {
       win.maximize();
     }
   });
+  electron.ipcMain.handle("select-directory", async () => {
+    const result = await electron.dialog.showOpenDialog({
+      properties: ["openDirectory"]
+    });
+    return result.canceled ? null : result.filePaths[0];
+  });
 };
 electron.app.whenReady().then(() => {
   createWindow();

@@ -31,7 +31,7 @@
       </q-toolbar>
 
       <q-tabs align="left">
-        <q-route-tab to="/" :label="$t('comm.page1')" />
+        <q-route-tab to="/" :label="$t('headerBar.page1')" />
       </q-tabs>
     </q-header>
   </div>
