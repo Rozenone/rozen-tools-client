@@ -5,7 +5,16 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      component: () => import('@/views/top/HomePage.vue')
+      component: () => import('@/views/top/HomePage.vue') 
+    },
+    {
+      path: '/common',
+      children: [
+        {
+          path: 'settings',
+          component: () => import('@/views/common/setting/SettingPage.vue')
+        }
+      ]
     },
     {
       path: '/service',
