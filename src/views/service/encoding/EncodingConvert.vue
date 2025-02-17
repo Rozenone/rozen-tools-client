@@ -112,9 +112,9 @@ const canConvert = computed(() => {
 // 选择输出目录
 const selectOutputDir = async () => {
   try {
-    const result = await window.ipcCommon.selectDirectory()
-    if (result) {
-      outputPath.value = result
+    const resultFilePath = await window.ipcCommon.selectDirectory()
+    if (resultFilePath) {
+      outputPath.value = resultFilePath
     }
   } catch (err) {
     console.error('选择目录失败:', err)
@@ -133,7 +133,7 @@ const onRejected = () => {
 const confirmConvert = () => {
   $q.dialog({
     title: proxy.$t('encodingConvert.confirmation.title'),
-    message: proxy.$t('encodingConvert.confirmation.message'),
+    message: proxy.$t('encodingConvert.confirmation.message') ,
     ok: {
       label: proxy.$t('encodingConvert.confirmation.ok'),
       color: 'primary'
