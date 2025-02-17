@@ -4,7 +4,7 @@
     <q-header reveal bordered :class="[isWindows ? 'windows-header' : 'mac-header']">
       <!-- Windows 风格标题栏 -->
       <q-bar v-if="isWindows" class="bg-primary text-white window-drag">
-        <div class="window-title">{{ $t('comm.appTitle') }}</div>
+        <div class="window-title">{{ $t('headerBar.appTitle') }}</div>
         <q-space />
         <div class="window-controls">
           <q-btn @click="minWindow" flat dense icon="remove" class="window-button" />
@@ -20,7 +20,7 @@
           <div @click="minWindow" class="mac-button minimize" />
           <div @click="maxWindow" class="mac-button maximize" />
         </div>
-        <div class="window-title">{{ $t('comm.appTitle') }}</div>
+        <div class="window-title">{{ $t('headerBar.appTitle') }}</div>
       </q-bar>
 
       <!-- 通用工具栏 -->
@@ -31,7 +31,7 @@
       </q-toolbar>
 
       <q-tabs align="left">
-        <q-route-tab to="/" :label="$t('comm.page1')" />
+        <q-route-tab to="/" :label="$t('headerBar.page1')" />
       </q-tabs>
     </q-header>
   </div>

@@ -5,7 +5,7 @@
       <!-- 抽屉内容 -->
       <q-item v-ripple>
         <q-item-section>
-          {{ $t('comm.page1') }}
+          {{ $t('headerBar.page1') }}
         </q-item-section>
       </q-item>
     </q-list>
