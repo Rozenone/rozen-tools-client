@@ -6,6 +6,7 @@ import { settingPage_cn } from '@/views/common/setting/SettingPage_lan'
 import { regexFormat_cn } from '@/views/service/regex/RegexFormat_lan'
 import { uuidCreat_cn } from '@/views/service/uuid/UUIDCreat_lan'
 import { encodingConvert_cn } from '@/views/service/encoding/EncodingConvert_lan'
+import { leftDrawer_cn } from '@/components/common/LeftDrawer/LeftDrawer_lan'
 
 const cn = {
   homePage: homePage_cn,
@@ -15,7 +16,8 @@ const cn = {
   settingPage: settingPage_cn,
   regexFormat: regexFormat_cn,
   uuidCreat: uuidCreat_cn,
-  encodingConvert: encodingConvert_cn
+  encodingConvert: encodingConvert_cn,
+  leftDrawer: leftDrawer_cn
 }
 
 export default cn
