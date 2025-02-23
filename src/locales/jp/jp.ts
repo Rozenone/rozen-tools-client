@@ -6,6 +6,7 @@ import { settingPage_jp } from '@/views/common/setting/SettingPage_lan'
 import { regexFormat_jp} from '@/views/service/regex/RegexFormat_lan'
 import { uuidCreat_jp } from '@/views/service/uuid/UUIDCreat_lan'
 import { encodingConvert_jp } from '@/views/service/encoding/EncodingConvert_lan'
+import { leftDrawer_jp } from '@/components/common/LeftDrawer/LeftDrawer_lan'
 
 const jp = {
   homePage: homePage_jp,
@@ -15,7 +16,8 @@ const jp = {
   settingPage: settingPage_jp,
   regexFormat: regexFormat_jp,
   uuidCreat: uuidCreat_jp,
-  encodingConvert: encodingConvert_jp
+  encodingConvert: encodingConvert_jp,
+  leftDrawer: leftDrawer_jp
 }
 
 export default jp

@@ -9,6 +9,7 @@ import i18n from "./locales/i18config"; // 直接引入 i18n 实例
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import App from "./App.vue";
 import router from "./router";
+import '@fortawesome/fontawesome-free/css/all.min.css'
 
 const myApp = createApp(App);
 const pinia = createPinia();

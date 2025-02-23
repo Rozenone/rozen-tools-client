@@ -3,7 +3,7 @@
   <q-drawer v-model="topStore.rightDrawerOpen" side="right" overlay>
     <q-list bordered padding>
       <q-item-label header>{{ $t('rightDrawer.clientSetting') }}</q-item-label>
-      <q-item clickable v-ripple v-for="item in settingData">
+      <q-item clickable v-ripple v-for="item in settingData" :key="item.title">
         <q-item-section @click="router.push(item.url)">
           <q-item-label>{{ $t(`rightDrawer.${item.title}`) }}</q-item-label>
           <q-item-label caption>
