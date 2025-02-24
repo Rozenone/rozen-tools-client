@@ -9,8 +9,10 @@ declare module '@/stores' {
     top: {
       leftDrawerOpen: boolean
       rightDrawerOpen: boolean
+      theme: 'light' | 'dark'
       toggleLeftDrawer: () => void
       toggleRightDrawer: () => void
+      setTheme: (theme: 'light' | 'dark') => void
     }
   }
   export default useStore

@@ -10,8 +10,17 @@
           v-model="tab"
           vertical
           class="text-teal"
+          active-color="primary"
+          indicator-color="primary"
         >
-          <q-tab name="language" icon="language" :label="$t('settingPage.language')" />
+          <q-tab 
+            v-for="item in tabItems" 
+            :key="item.name"
+            :name="item.name"
+            :icon="item.icon"
+            :label="$t(`settingPage.${item.label}`)"
+            :class="{ 'active-tab': tab === item.name }"
+          />
         </q-tabs>
       </template>
 
@@ -39,6 +48,19 @@
             </q-select>
             <span class="restartTip" v-if="!changeFlg">{{ $t('settingPage.restartTip') }}</span>
           </q-tab-panel>
+          <q-tab-panel name="theme">
+            {{ $t('settingPage.theme.title') }}
+            <q-btn-toggle
+              v-model="currentTheme"
+              :options="[
+                { label: $t('settingPage.theme.light'), value: 'light' },
+                { label: $t('settingPage.theme.dark'), value: 'dark' }
+              ]"
+              spread
+              color="primary"
+              @update:model-value="changeTheme"
+            />
+          </q-tab-panel>
         </q-tab-panels>
       </template>
     </q-splitter>
@@ -47,14 +69,20 @@
 
 <script setup lang='ts'>
 import { reactive, ref, watch, onMounted } from 'vue'
+import useStore from '@/stores'
+import { useQuasar } from 'quasar'
 
 const tab = ref('language')
 const splitterModel = ref(20)
+const $q = useQuasar()
+const store = useStore()
+const currentTheme = ref(store.top.theme)
 
 onMounted(() => {
   const lan = localStorage.getItem('lan')
   model.value = lan
   initLan.value = lan
+  $q.dark.set(currentTheme.value === 'dark')
 })
 const changeFlg = ref(false)
 const initLan = ref('')
@@ -76,10 +104,34 @@ watch(model, async (newLan) => {
   changeFlg.value = initLan.value === newLan;
 })
 
+const changeTheme = (theme: string) => {
+  store.top.setTheme(theme as 'light' | 'dark')
+  $q.dark.set(theme === 'dark')
+}
+
+// 定义标签页配置
+const tabItems = [
+  { name: 'language', icon: 'language', label: 'language' },
+  { name: 'theme', icon: 'palette', label: 'theme.title' }
+]
+
 </script>
 
 <style scoped>
 .restartTip {
   color: red;
+}
+
+.active-tab {
+  color: var(--q-primary);
+  background: rgba(var(--q-primary-rgb), 0.1);
+}
+
+.q-tab {
+  transition: all 0.3s ease;
+}
+
+.q-tab:hover {
+  background: rgba(var(--q-primary-rgb), 0.05);
 }
 </style>
