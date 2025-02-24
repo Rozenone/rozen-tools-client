@@ -1,10 +1,17 @@
 <!-- 页头 -->
 <template>
   <div>
-    <q-header reveal bordered :class="[isWindows ? 'windows-header' : 'mac-header']">
+    <q-header reveal bordered :class="[
+      isWindows ? 'windows-header' : 'mac-header',
+      store.top.theme === 'dark' ? 'bg-dark' : 'bg-primary'
+    ]">
       <!-- Windows 风格标题栏 -->
-      <q-bar v-if="isWindows" class="bg-primary text-white window-drag">
-        <div class="window-title">{{ $t('headerBar.appTitle') }}</div>
+      <q-bar v-if="isWindows" :class="store.top.theme === 'dark' ? 'bg-dark' : 'bg-primary'" class="text-white window-drag">
+        <div class="app-title">
+          <span class="brand-name">Rozen</span>
+          <span class="tool-name">Tools</span>
+          <q-badge color="secondary" class="version-badge">v1.0</q-badge>
+        </div>
         <q-space />
         <div class="window-controls">
           <q-btn @click="minWindow" flat dense icon="remove" class="window-button" />
@@ -14,13 +21,17 @@
       </q-bar>
 
       <!-- macOS 风格标题栏 -->
-      <q-bar v-else class="mac-titlebar window-drag">
+      <q-bar v-else class="mac-titlebar window-drag" :class="store.top.theme === 'dark' ? 'bg-dark' : 'bg-primary'">
         <div class="mac-buttons">
           <div @click="closeWindow" class="mac-button close" />
           <div @click="minWindow" class="mac-button minimize" />
           <div @click="maxWindow" class="mac-button maximize" />
         </div>
-        <div class="window-title">{{ $t('headerBar.appTitle') }}</div>
+        <div class="app-title">
+          <span class="brand-name">Rozen</span>
+          <span class="tool-name">Tools</span>
+          <q-badge color="secondary" class="version-badge">v1.0</q-badge>
+        </div>
       </q-bar>
 
       <!-- 通用工具栏 -->
@@ -41,7 +52,7 @@
 import useStore from "@/stores"
 import { ref, onMounted } from 'vue'
 
-const topStore = useStore().top
+const store = useStore()
 const isWindows = ref(false)
 
 onMounted(() => {
@@ -50,11 +61,11 @@ onMounted(() => {
 })
 
 const toggleLeftDrawer = () => {
-  topStore.toggleLeftDrawer()
+  store.top.toggleLeftDrawer()
 }
 
 const toggleRightDrawer = () => {
-  topStore.toggleRightDrawer()
+  store.top.toggleRightDrawer()
 }
 
 const closeWindow = () => {
@@ -135,5 +146,61 @@ const maxWindow = () => {
 
 .mac-button:hover {
   filter: brightness(85%);
+}
+
+.bg-dark {
+  background: #1d1d1d !important;
+}
+
+.bg-dark .window-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.bg-dark .window-button.close:hover {
+  background: #e81123;
+}
+
+.app-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  padding: 0 12px;
+}
+
+.brand-name {
+  font-weight: 700;
+  font-size: 1.2em;
+  background: linear-gradient(45deg, #00ff88, #00b4ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 1px;
+  text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+.tool-name {
+  font-weight: 500;
+  opacity: 0.9;
+  font-size: 1.1em;
+}
+
+.version-badge {
+  font-size: 0.7em;
+  padding: 2px 6px;
+  border-radius: 12px;
+  margin-left: 8px;
+}
+
+/* 深色主题适配 */
+.bg-dark .brand-name {
+  background: linear-gradient(45deg, #00ffaa, #00ffff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  text-shadow: 0 0 20px rgba(0, 255, 170, 0.4);
+}
+
+.bg-dark .tool-name {
+  color: #e0e0e0;
 }
 </style>
