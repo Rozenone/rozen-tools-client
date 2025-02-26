@@ -7,6 +7,7 @@
   --text-light: #2c3e50;
   --text-dark: #e0e0e0;
   --card-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  font-size: 14px; /* 默认字体大小 */
 }
 
 body {
@@ -16,6 +17,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: var(--text-light);
   background: var(--background-light);
+  font-size: 1rem;
 }
 
 /* 页面布局 */
@@ -114,4 +116,16 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+.text-h6 {
+  font-size: 1.25rem;
+}
+
+.text-subtitle1 {
+  font-size: 1.1rem;
+}
+
+.text-subtitle2 {
+  font-size: 0.9rem;
 }

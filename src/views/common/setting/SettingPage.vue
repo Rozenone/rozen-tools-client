@@ -61,6 +61,34 @@
               @update:model-value="changeTheme"
             />
           </q-tab-panel>
+          <q-tab-panel name="font">
+            <div class="text-h6 q-mb-md">{{ $t('settingPage.font.title') }}</div>
+            <div class="row q-col-gutter-md">
+              <!-- 字体大小滑块 -->
+              <div class="col-12">
+                <div class="text-subtitle2 q-mb-sm">{{ $t('settingPage.font.size') }}</div>
+                <q-slider
+                  v-model="fontSize"
+                  :min="12"
+                  :max="20"
+                  :step="1"
+                  label
+                  label-always
+                  color="primary"
+                  @update:model-value="changeFontSize"
+                />
+              </div>
+              
+              <!-- 预览区域 -->
+              <div class="col-12 preview-section q-pa-md">
+                <div class="text-subtitle2 q-mb-md">{{ $t('settingPage.font.preview') }}</div>
+                <div class="preview-text">
+                  <div>{{ $t('settingPage.font.previewTitle') }}</div>
+                  <div>{{ $t('settingPage.font.previewText') }}</div>
+                </div>
+              </div>
+            </div>
+          </q-tab-panel>
         </q-tab-panels>
       </template>
     </q-splitter>
@@ -77,12 +105,15 @@ const splitterModel = ref(20)
 const $q = useQuasar()
 const store = useStore()
 const currentTheme = ref(store.top.theme)
+const fontSize = ref(store.top.fontSize || 14)
 
 onMounted(() => {
   const lan = localStorage.getItem('lan')
   model.value = lan
   initLan.value = lan
   $q.dark.set(currentTheme.value === 'dark')
+  // 应用保存的字体大小
+  document.documentElement.style.fontSize = `${fontSize.value}px`
 })
 const changeFlg = ref(false)
 const initLan = ref('')
@@ -109,10 +140,16 @@ const changeTheme = (theme: string) => {
   $q.dark.set(theme === 'dark')
 }
 
+const changeFontSize = (size: number) => {
+  store.top.setFontSize(size)
+  document.documentElement.style.fontSize = `${size}px`
+}
+
 // 定义标签页配置
 const tabItems = [
   { name: 'language', icon: 'language', label: 'language' },
-  { name: 'theme', icon: 'palette', label: 'theme.title' }
+  { name: 'theme', icon: 'palette', label: 'theme.title' },
+  { name: 'font', icon: 'format_size', label: 'font.title' }
 ]
 
 </script>
@@ -133,5 +170,20 @@ const tabItems = [
 
 .q-tab:hover {
   background: rgba(var(--q-primary-rgb), 0.05);
+}
+
+.preview-section {
+  border: 1px solid var(--q-separator-color);
+  border-radius: 8px;
+  background: var(--q-card-color);
+}
+
+.preview-text {
+  line-height: 1.5;
+}
+
+/* 深色模式适配 */
+.body--dark .preview-section {
+  background: #1d1d1d;
 }
 </style>
