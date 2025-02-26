@@ -10,9 +10,11 @@ declare module '@/stores' {
       leftDrawerOpen: boolean
       rightDrawerOpen: boolean
       theme: 'light' | 'dark'
+      fontSize: number
       toggleLeftDrawer: () => void
       toggleRightDrawer: () => void
       setTheme: (theme: 'light' | 'dark') => void
+      setFontSize: (size: number) => void
     }
   }
   export default useStore

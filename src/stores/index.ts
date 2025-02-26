@@ -6,6 +6,7 @@ const useStore = defineStore('main', {
       leftDrawerOpen: false,
       rightDrawerOpen: false,
       theme: 'light' as 'light' | 'dark',
+      fontSize: 14,
       toggleLeftDrawer() {
         this.leftDrawerOpen = !this.leftDrawerOpen
       },
@@ -14,6 +15,9 @@ const useStore = defineStore('main', {
       },
       setTheme(theme: 'light' | 'dark') {
         this.theme = theme
+      },
+      setFontSize(size: number) {
+        this.fontSize = size
       }
     }
   }),
