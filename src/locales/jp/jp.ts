@@ -7,6 +7,7 @@ import { regexFormat_jp} from '@/views/service/regex/RegexFormat_lan'
 import { uuidCreat_jp } from '@/views/service/uuid/UUIDCreat_lan'
 import { encodingConvert_jp } from '@/views/service/encoding/EncodingConvert_lan'
 import { leftDrawer_jp } from '@/components/common/LeftDrawer/LeftDrawer_lan'
+import { jwtParser_jp } from '@/views/service/jwt/JWTParser_lan'
 
 const jp = {
   homePage: homePage_jp,
@@ -17,7 +18,8 @@ const jp = {
   regexFormat: regexFormat_jp,
   uuidCreat: uuidCreat_jp,
   encodingConvert: encodingConvert_jp,
-  leftDrawer: leftDrawer_jp
+  leftDrawer: leftDrawer_jp,
+  jwtParser: jwtParser_jp
 }
 
 export default jp

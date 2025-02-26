@@ -34,6 +34,10 @@ const router = createRouter({
         {
           path: 'encoding',
           component: () => import('@/views/service/encoding/EncodingConvert.vue')
+        },
+        {
+          path: 'jwt',
+          component: () => import('@/views/service/jwt/JWTParser.vue')
         }
       ]
     }

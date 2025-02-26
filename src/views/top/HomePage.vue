@@ -58,6 +58,11 @@ const toolItems: ToolItem[] = reactive([
     title: 'encoding',
     img: 'encoding.svg',
     url: '/service/encoding'
+  },
+  {
+    title: 'jwt',
+    img: 'jwt.svg',
+    url: '/service/jwt'
   }
 ])
 </script>
