@@ -19,7 +19,8 @@
     "quasar": "^2.17.0",
     "uuid": "^11.0.5",
     "vue": "^3.4.37",
-    "vue-i18n": "^10.0.4"
+    "vue-i18n": "^10.0.4",
+    "axios": "^1.6.7"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.25.7",
@@ -29,7 +30,6 @@
     "@types/uuid": "^10.0.0",
     "@types/vue-router": "^2.0.0",
     "@vitejs/plugin-vue": "^5.1.2",
-    "axios": "^1.7.7",
     "electron": "^32.1.2",
     "electron-builder": "^25.0.5",
     "electron-devtools-installer": "^3.2.0",

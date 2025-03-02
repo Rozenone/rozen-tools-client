@@ -15,6 +15,28 @@ export const settingPage_cn = {
     preview: '预览',
     previewTitle: '这是标题文本',
     previewText: '这是正文内容的预览文本。您可以通过调整滑块来改变全局字体大小。'
+  },
+  proxy: {
+    title: '代理设置',
+    description: '配置网络代理',
+    enable: '启用代理',
+    host: '代理主机',
+    port: '代理端口',
+    auth: '身份验证',
+    username: '用户名',
+    password: '密码',
+    placeholder: {
+      host: '输入代理主机地址',
+      port: '输入代理端口',
+      username: '输入用户名（可选）',
+      password: '输入密码（可选）'
+    },
+    testConnection: '测试连接',
+    notification: {
+      saved: '代理设置已保存',
+      testSuccess: '代理连接测试成功',
+      testFailed: '代理连接测试失败'
+    }
   }
 }
 
@@ -36,5 +58,27 @@ export const settingPage_jp = {
     preview: 'プレビュー',
     previewTitle: 'これはタイトルテキストです',
     previewText: 'これは本文のプレビューテキストです。スライダーを調整して、グローバルフォントサイズを変更できます。'
+  },
+  proxy: {
+    title: 'プロキシ設定',
+    description: 'ネットワークプロキシの設定',
+    enable: 'プロキシを有効にする',
+    host: 'プロキシホスト',
+    port: 'ポート',
+    auth: '認証',
+    username: 'ユーザー名',
+    password: 'パスワード',
+    placeholder: {
+      host: 'プロキシホストを入力',
+      port: 'ポート番号を入力',
+      username: 'ユーザー名（オプション）',
+      password: 'パスワード（オプション）'
+    },
+    testConnection: '接続テスト',
+    notification: {
+      saved: 'プロキシ設定を保存しました',
+      testSuccess: '接続テストに成功しました',
+      testFailed: '接続テストに失敗しました'
+    }
   }
 }
