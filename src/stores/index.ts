@@ -7,6 +7,13 @@ const useStore = defineStore('main', {
       rightDrawerOpen: false,
       theme: 'light' as 'light' | 'dark',
       fontSize: 14,
+      proxy: {
+        enabled: false,
+        host: '',
+        port: '',
+        username: '',
+        password: ''
+      },
       toggleLeftDrawer() {
         this.leftDrawerOpen = !this.leftDrawerOpen
       },
@@ -18,6 +25,15 @@ const useStore = defineStore('main', {
       },
       setFontSize(size: number) {
         this.fontSize = size
+      },
+      setProxy(proxyConfig: {
+        enabled: boolean,
+        host: string,
+        port: string,
+        username: string,
+        password: string
+      }) {
+        this.proxy = proxyConfig
       }
     }
   }),
