@@ -1,10 +1,11 @@
 <!-- 主要top画面 -->
 <template>
-  <div class="setting_base">
+  <div class="setting_base full-height">
     <q-splitter
       v-model="splitterModel"
-      :limits="[15, 40]" 
+      :limits="[20, 30]"
       class="settings-splitter"
+      separator-class="bg-grey-4"
     >
       <template v-slot:before>
         <q-tabs
@@ -327,29 +328,59 @@ const tabItems = [
 
 <style scoped>
 .setting_base {
-  height: 100%;
   min-height: 400px;
+  background: var(--q-grey-1);
 }
 
 .settings-splitter {
-  height: 100%;
-  min-width: 600px; /* 设置最小宽度 */
+  height: 100vh;
+  min-width: 800px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
 }
 
 .settings-tabs {
   height: 100%;
-  min-width: 120px; /* 设置标签栏最小宽度 */
+  min-width: 200px;
+  background: var(--q-grey-2);
+  border-right: 1px solid var(--q-separator-color);
+  padding-top: 8px;
+}
+
+:deep(.q-tabs__content) {
+  height: auto;
+}
+
+:deep(.q-tab__content) {
+  min-width: 100%;
+  flex-direction: row;
+  justify-content: flex-start;
 }
 
 .settings-panels {
   height: 100%;
-  min-width: 400px; /* 设置内容区最小宽度 */
+  min-width: 580px;
+  background: white;
 }
 
 .panel-content {
   max-width: 800px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 16px 24px;
+}
+
+.panel-content .text-h6 {
+  display: flex;
+  align-items: center;
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--q-separator-color);
+}
+
+.panel-content .text-caption {
+  color: var(--q-text-secondary);
+  margin-bottom: 24px;
 }
 
 .language-select {
@@ -390,28 +421,50 @@ const tabItems = [
   font-size: 0.9em;
 }
 
-.active-tab {
-  color: var(--q-primary);
-  background: rgba(var(--q-primary-rgb), 0.1);
-}
-
 .q-tab {
   transition: all 0.3s ease;
   min-height: 48px;
+  width: 100%;
+  padding-left: 24px;
 }
 
-.q-tab:hover {
-  background: rgba(var(--q-primary-rgb), 0.05);
+.q-tab__icon {
+  margin-right: 12px;
+  font-size: 20px;
+}
+
+.q-tab__label {
+  font-size: 14px;
+}
+
+.active-tab {
+  color: var(--q-primary);
+  background: white;
+  font-weight: 500;
 }
 
 /* 深色模式适配 */
 .body--dark {
-  .preview-section {
+  .setting_base {
+    background: var(--q-dark);
+  }
+  
+  .settings-splitter {
+    background: #1d1d1d;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .settings-panels {
     background: #1d1d1d;
   }
   
-  .preview-body {
-    color: var(--q-text-dark);
+  .settings-tabs {
+    background: #1d1d1d;
+    border-right-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .active-tab {
+    background: #2d2d2d;
   }
 }
 
@@ -419,14 +472,13 @@ const tabItems = [
 @media (max-width: 768px) {
   .settings-splitter {
     min-width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    height: calc(100vh - 50px);
   }
 
   .panel-content {
-    padding: 0 8px;
-  }
-
-  .preview-section {
-    margin-top: 8px;
+    padding: 16px;
   }
 }
 
