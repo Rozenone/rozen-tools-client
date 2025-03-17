@@ -37,6 +37,28 @@ export const settingPage_cn = {
       testSuccess: '代理连接测试成功',
       testFailed: '代理连接测试失败'
     }
+  },
+  ai: {
+    title: 'AI 设置',
+    description: '配置 AI 对话接口',
+    enable: '启用 AI',
+    model: 'AI 模型',
+    apiKey: 'API Key',
+    baseUrl: '接口地址',
+    temperature: '随机度',
+    maxTokens: '最大长度',
+    placeholder: {
+      apiKey: '输入您的 API Key',
+      baseUrl: '输入接口地址',
+      temperature: '0-2之间,越大回答越随机',
+      maxTokens: '单次回复最大字符数'
+    },
+    testConnection: '测试连接',
+    notification: {
+      saved: 'AI 设置已保存',
+      testSuccess: '连接测试成功',
+      testFailed: '连接测试失败'
+    }
   }
 }
 

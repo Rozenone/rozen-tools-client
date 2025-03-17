@@ -1,10 +1,27 @@
 import request from './request'
+import useStore from '@/stores'
 
-// api请求设置
-export const testProxy = () => {
+export interface ChatMessage {
+  role: 'user' | 'assistant' | 'system'
+  content: string
+}
+
+export const chatCompletion = async (messages: ChatMessage[]) => {
+  const store = useStore()
+  const { apiKey, baseUrl, model, temperature, maxTokens } = store.top.aiConfig
+
   return request({
-    url: 'https://api.ipify.org',
-    method: 'get',
-    params: { format: 'json' }
+    url: `${baseUrl}/v1/chat/completions`,
+    method: 'post',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json'
+    },
+    data: {
+      model,
+      messages,
+      temperature,
+      max_tokens: maxTokens
+    }
   })
 }

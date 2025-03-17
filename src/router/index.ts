@@ -38,6 +38,10 @@ const router = createRouter({
         {
           path: 'jwt',
           component: () => import('@/views/service/jwt/JWTParser.vue')
+        },
+        {
+          path: 'ai-chat',
+          component: () => import('@/views/service/ai/AIChat.vue')
         }
       ]
     }

@@ -210,6 +210,112 @@
               </q-card>
             </div>
           </q-tab-panel>
+
+          <!-- AI 设置面板 -->
+          <q-tab-panel name="ai" class="q-pa-md">
+            <div class="panel-content">
+              <div class="text-h6 q-mb-md">{{ $t('settingPage.ai.title') }}</div>
+              <div class="text-caption q-mb-lg">{{ $t('settingPage.ai.description') }}</div>
+              
+              <q-card flat bordered class="ai-settings">
+                <q-card-section>
+                  <div class="row q-col-gutter-md">
+                    <!-- 启用 AI 开关 -->
+                    <div class="col-12">
+                      <q-toggle
+                        v-model="aiEnabled"
+                        :label="$t('settingPage.ai.enable')"
+                        color="primary"
+                      />
+                    </div>
+
+                    <!-- AI 模型选择 -->
+                    <div class="col-12">
+                      <q-select
+                        v-model="aiModel"
+                        :options="['gpt-3.5-turbo', 'gpt-4']"
+                        :label="$t('settingPage.ai.model')"
+                        :disable="!aiEnabled"
+                        outlined
+                        dense
+                      />
+                    </div>
+
+                    <!-- API Key -->
+                    <div class="col-12">
+                      <q-input
+                        v-model="apiKey"
+                        :label="$t('settingPage.ai.apiKey')"
+                        :placeholder="$t('settingPage.ai.placeholder.apiKey')"
+                        :disable="!aiEnabled"
+                        type="password"
+                        outlined
+                        dense
+                      />
+                    </div>
+
+                    <!-- Base URL -->
+                    <div class="col-12">
+                      <q-input
+                        v-model="baseUrl"
+                        :label="$t('settingPage.ai.baseUrl')"
+                        :placeholder="$t('settingPage.ai.placeholder.baseUrl')"
+                        :disable="!aiEnabled"
+                        outlined
+                        dense
+                      />
+                    </div>
+
+                    <!-- 参数设置 -->
+                    <div class="col-12 col-sm-6">
+                      <q-input
+                        v-model.number="temperature"
+                        type="number"
+                        :label="$t('settingPage.ai.temperature')"
+                        :placeholder="$t('settingPage.ai.placeholder.temperature')"
+                        :disable="!aiEnabled"
+                        :min="0"
+                        :max="2"
+                        :step="0.1"
+                        outlined
+                        dense
+                      />
+                    </div>
+
+                    <div class="col-12 col-sm-6">
+                      <q-input
+                        v-model.number="maxTokens"
+                        type="number"
+                        :label="$t('settingPage.ai.maxTokens')"
+                        :placeholder="$t('settingPage.ai.placeholder.maxTokens')"
+                        :disable="!aiEnabled"
+                        :min="100"
+                        :max="4000"
+                        outlined
+                        dense
+                      />
+                    </div>
+                  </div>
+
+                  <!-- 操作按钮 -->
+                  <div class="row justify-end q-gutter-sm q-mt-md">
+                    <q-btn
+                      :label="$t('settingPage.ai.testConnection')"
+                      color="primary"
+                      :disable="!aiEnabled"
+                      @click="testAIConnection"
+                    />
+                    <q-btn
+                      :label="$t('common.save')"
+                      color="primary"
+                      :disable="!aiEnabled"
+                      @click="saveAISettings"
+                    />
+                  </div>
+                </q-card-section>
+              </q-card>
+            </div>
+          </q-tab-panel>
         </q-tab-panels>
       </template>
     </q-splitter>
@@ -220,7 +326,7 @@
 import { reactive, ref, watch, onMounted, computed, getCurrentInstance } from 'vue'
 import useStore from '@/stores'
 import { useQuasar } from 'quasar'
-import { testProxy } from '@/utils/api'
+
 const { proxy } = getCurrentInstance()
 const $q = useQuasar()
 const tab = ref('language')
@@ -296,34 +402,59 @@ const saveProxySettings = () => {
   })
 }
 
-// 测试代理连接
-const testProxyConnection = async () => {
-  try {
-    const response = await testProxy()
-    if (response.ip) {
-      $q.notify({
-        type: 'positive',
-        message: proxy.$t('settingPage.proxy.notification.testSuccess')
-      })
-    } else {
-      throw new Error('Proxy test failed')
-    }
-  } catch {
-    $q.notify({
-      type: 'negative',
-      message: proxy.$t('settingPage.proxy.notification.testFailed')
-    })
-  }
-}
-
 // 定义标签页配置
 const tabItems = [
   { name: 'language', icon: 'language', label: 'language' },
   { name: 'theme', icon: 'palette', label: 'theme.title' },
   { name: 'font', icon: 'format_size', label: 'font.title' },
-  { name: 'proxy', icon: 'dns', label: 'proxy.title' }
+  { name: 'proxy', icon: 'dns', label: 'proxy.title' },
+  { name: 'ai', icon: 'smart_toy', label: 'ai.title' }
 ]
 
+// AI 设置
+const aiEnabled = ref(store.top.aiConfig.enabled)
+const aiModel = ref(store.top.aiConfig.model)
+const apiKey = ref(store.top.aiConfig.apiKey)
+const baseUrl = ref(store.top.aiConfig.baseUrl)
+const temperature = ref(store.top.aiConfig.temperature)
+const maxTokens = ref(store.top.aiConfig.maxTokens)
+
+// 保存 AI 设置
+const saveAISettings = () => {
+  store.top.setAIConfig({
+    enabled: aiEnabled.value,
+    apiKey: apiKey.value,
+    baseUrl: baseUrl.value,
+    model: aiModel.value,
+    temperature: temperature.value,
+    maxTokens: maxTokens.value
+  })
+  
+  $q.notify({
+    type: 'positive',
+    message: proxy.$t('settingPage.ai.notification.saved')
+  })
+}
+
+// 测试 AI 连接
+const testAIConnection = async () => {
+  try {
+    const response = await chatCompletion([
+      { role: 'user', content: 'Hello' }
+    ])
+    if (response.choices?.length > 0) {
+      $q.notify({
+        type: 'positive',
+        message: proxy.$t('settingPage.ai.notification.testSuccess')
+      })
+    }
+  } catch {
+    $q.notify({
+      type: 'negative',
+      message: proxy.$t('settingPage.ai.notification.testFailed')
+    })
+  }
+}
 </script>
 
 <style scoped>

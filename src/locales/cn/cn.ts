@@ -8,6 +8,7 @@ import { uuidCreat_cn } from '@/views/service/uuid/UUIDCreat_lan'
 import { encodingConvert_cn } from '@/views/service/encoding/EncodingConvert_lan'
 import { leftDrawer_cn } from '@/components/common/LeftDrawer/LeftDrawer_lan'
 import { jwtParser_cn } from '@/views/service/jwt/JWTParser_lan'
+import { aiChat_cn } from '@/views/service/ai/AIChat_lan'
 
 const cn = {
   homePage: homePage_cn,
@@ -19,7 +20,8 @@ const cn = {
   uuidCreat: uuidCreat_cn,
   encodingConvert: encodingConvert_cn,
   leftDrawer: leftDrawer_cn,
-  jwtParser: jwtParser_cn
+  jwtParser: jwtParser_cn,
+  aiChat: aiChat_cn
 }
 
 export default cn

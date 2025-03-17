@@ -38,6 +38,16 @@
       <q-toolbar>
         <q-btn dense flat round icon="menu_open" @click="toggleLeftDrawer" />
         <q-space />
+        <q-btn 
+          dense 
+          flat 
+          round 
+          icon="smart_toy" 
+          class="q-mr-sm"
+          @click="openAIChat"
+        >
+          <q-tooltip>{{ $t('headerBar.aiChat') }}</q-tooltip>
+        </q-btn>
         <q-btn dense flat round icon="brightness_5" @click="toggleRightDrawer" />
       </q-toolbar>
 
@@ -50,9 +60,11 @@
 
 <script setup lang="ts">
 import useStore from "@/stores"
+import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 
 const store = useStore()
+const router = useRouter()
 const isWindows = ref(false)
 
 onMounted(() => {
@@ -78,6 +90,10 @@ const minWindow = () => {
 
 const maxWindow = () => {
   window.ipcCommon.maxWindow()
+}
+
+const openAIChat = () => {
+  router.push('/service/ai-chat')
 }
 </script>
 
