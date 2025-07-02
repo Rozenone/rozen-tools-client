@@ -20,7 +20,7 @@ const createWindow = () => {
       .loadFile(path.join(__dirname, "./index.html"))
       .then(() => win.webContents.openDevTools());
   } else {
-    const url: string = import.meta.env.VITE_URL; // 本地启动的vue项目路径。注意：vite版本3以上使用的端口5173；版本2用的是3000
+    const url: string = process.env.VITE_URL || "http://localhost:5173"; // 本地启动的vue项目路径。
     win.loadURL(url).then(() =>
       win.on("ready-to-show", () => {
         // 窗口准备就绪后，显示窗口
