@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "main": "dist-electron/index.js",
   "scripts": {
-    "dev": "vite --mode=development",
-    "build": "rimraf dist-electron && vite build && electron-builder  --mode=production",
+    "dev": "vite",
+    "build": "rimraf dist-electron && vite build && electron-builder",
     "preview": "vite preview",
     "lint": "eslint src",
     "fix": "eslint src --fix",
