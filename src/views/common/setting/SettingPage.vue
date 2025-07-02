@@ -54,9 +54,6 @@
                   <q-icon name="language" />
                 </template>
               </q-select>
-              <div class="q-mt-sm">
-                <span class="restartTip" v-if="!changeFlg">{{ $t('settingPage.restartTip') }}</span>
-              </div>
             </div>
           </q-tab-panel>
 
@@ -129,8 +126,21 @@
                       />
                     </div>
 
+                    <!-- 代理协议 -->
+                    <div class="col-12 col-sm-4">
+                      <q-select
+                        v-model="proxyProtocol"
+                        :options="['http', 'https']"
+                        :label="$t('settingPage.proxy.protocol')"
+                        :disable="!proxyEnabled"
+                        outlined
+                        dense
+                        class="q-mb-md"
+                      />
+                    </div>
+
                     <!-- 代理主机和端口 -->
-                    <div class="col-12 col-sm-8">
+                    <div class="col-12 col-sm-4">
                       <q-input
                         v-model="proxyHost"
                         :label="$t('settingPage.proxy.host')"
@@ -198,7 +208,7 @@
                           flat
                         />
                         <q-btn
-                          label="保存"
+                          :label="$t('settingPage.proxy.save')"
                           color="primary"
                           :disable="!isValidProxy"
                           @click="saveProxySettings"
@@ -306,7 +316,7 @@
                       @click="testAIConnection"
                     />
                     <q-btn
-                      :label="$t('common.save')"
+                      :label="$t('settingPage.ai.save')"
                       color="primary"
                       :disable="!aiEnabled"
                       @click="saveAISettings"
@@ -326,8 +336,10 @@
 import { reactive, ref, watch, onMounted, computed, getCurrentInstance } from 'vue'
 import useStore from '@/stores'
 import { useQuasar } from 'quasar'
+import { chatCompletion } from '@/utils/api'
+import i18n from '@/locales/i18config'
 
-const { proxy } = getCurrentInstance()
+const { proxy } = getCurrentInstance() as any
 const $q = useQuasar()
 const tab = ref('language')
 const splitterModel = ref(20)
@@ -336,15 +348,12 @@ const currentTheme = ref(store.top.theme)
 const fontSize = ref(store.top.fontSize || 14)
 
 onMounted(() => {
-  const lan = localStorage.getItem('lan')
+  const lan = localStorage.getItem('lan') || ''
   model.value = lan
-  initLan.value = lan
   $q.dark.set(currentTheme.value === 'dark')
   // 应用保存的字体大小
   document.documentElement.style.fontSize = `${fontSize.value}px`
 })
-const changeFlg = ref(false)
-const initLan = ref('')
 
 const model = ref('中文')
 const options = reactive([
@@ -360,7 +369,7 @@ const options = reactive([
 
 watch(model, async (newLan) => {
   localStorage.setItem('lan', newLan)
-  changeFlg.value = initLan.value === newLan;
+  i18n.global.locale.value = newLan as 'cn' | 'jp'
 })
 
 const changeTheme = (theme: string) => {
@@ -368,7 +377,8 @@ const changeTheme = (theme: string) => {
   $q.dark.set(theme === 'dark')
 }
 
-const changeFontSize = (size: number) => {
+const changeFontSize = (size: number | null) => {
+  if (size == null) return
   store.top.setFontSize(size)
   document.documentElement.style.fontSize = `${size}px`
 }
@@ -379,6 +389,7 @@ const proxyHost = ref(store.top.proxy.host)
 const proxyPort = ref(store.top.proxy.port)
 const proxyUsername = ref(store.top.proxy.username)
 const proxyPassword = ref(store.top.proxy.password)
+const proxyProtocol = ref(store.top.proxy.protocol)
 
 // 验证代理配置是否有效
 const isValidProxy = computed(() => {
@@ -390,6 +401,7 @@ const isValidProxy = computed(() => {
 const saveProxySettings = () => {
   store.top.setProxy({
     enabled: proxyEnabled.value,
+    protocol: proxyProtocol.value,
     host: proxyHost.value,
     port: proxyPort.value,
     username: proxyUsername.value,
@@ -442,7 +454,7 @@ const testAIConnection = async () => {
     const response = await chatCompletion([
       { role: 'user', content: 'Hello' }
     ])
-    if (response.choices?.length > 0) {
+    if (response.data.choices?.length > 0) {
       $q.notify({
         type: 'positive',
         message: proxy.$t('settingPage.ai.notification.testSuccess')
@@ -454,6 +466,41 @@ const testAIConnection = async () => {
       message: proxy.$t('settingPage.ai.notification.testFailed')
     })
   }
+}
+
+const testProxyConnection = async () => {
+  $q.dialog({
+    title: '测试代理',
+    message: '请输入要测试的网址（如 https://www.google.com ）',
+    prompt: {
+      model: '',
+      type: 'text'
+    },
+    cancel: true,
+    persistent: true
+  }).onOk(async (url) => {
+    if (!url) {
+      $q.notify({ type: 'warning', message: '请输入网址' })
+      return
+    }
+    try {
+      // @ts-ignore
+      const result = await window.electron.ipcRenderer.invoke('test-proxy-request', {
+        protocol: proxyProtocol.value,
+        host: proxyHost.value,
+        port: proxyPort.value,
+        username: proxyUsername.value,
+        password: proxyPassword.value
+      }, url)
+      if (result.success) {
+        $q.notify({ type: 'positive', message: '请求成功，状态码：' + result.status })
+      } else {
+        $q.notify({ type: 'negative', message: '请求失败: ' + result.message })
+      }
+    } catch (e) {
+      $q.notify({ type: 'negative', message: '请求异常: ' + e })
+    }
+  })
 }
 </script>
 
@@ -545,11 +592,6 @@ const testAIConnection = async () => {
 
 .preview-body {
   color: var(--q-text-secondary);
-}
-
-.restartTip {
-  color: var(--q-negative);
-  font-size: 0.9em;
 }
 
 .q-tab {

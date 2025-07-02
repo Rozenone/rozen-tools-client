@@ -12,7 +12,8 @@ const useStore = defineStore('main', {
         host: '',
         port: '',
         username: '',
-        password: ''
+        password: '',
+        protocol: 'http'
       },
       aiConfig: {
         enabled: false,
@@ -39,7 +40,8 @@ const useStore = defineStore('main', {
         host: string,
         port: string,
         username: string,
-        password: string
+        password: string,
+        protocol: string
       }) {
         this.proxy = proxyConfig
       },

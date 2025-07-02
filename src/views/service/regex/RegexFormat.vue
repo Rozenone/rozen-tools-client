@@ -12,7 +12,7 @@
           </q-avatar>
         </template>
       </q-input>
-      <!--      选择框-->
+      <!--选择框-->
       <q-select
         filled
         v-model="model"
@@ -53,10 +53,10 @@
 <script setup lang='ts'>
 import { getCurrentInstance, ref, watch } from 'vue'
 
-const { proxy } = getCurrentInstance()
+const { proxy } = getCurrentInstance() as any
 const regex = ref('')
 const suffix = ref('g')
-const model = ref([])
+const model = ref<string[]>([])
 const fixedOrder = ['g', 'i', 'm', 's'] // 固定顺序
 const options = [
   {
@@ -109,7 +109,7 @@ watch(suffix, () => {
 // 监听下拉选项
 watch(model, async (newVal) => {
   suffix.value = fixedOrder
-    .filter(value => newVal.includes(value))
+    .filter((value: string) => newVal.includes(value))
     .join('')
 })
 

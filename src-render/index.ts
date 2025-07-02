@@ -2,6 +2,7 @@ import { app, BrowserWindow, Menu, ipcMain, dialog, IpcMainInvokeEvent } from "e
 import fs from "fs";
 import iconv from "iconv-lite";
 import path from "path";
+import axios from 'axios'
 
 const createWindow = () => {
   Menu.setApplicationMenu(null);
@@ -89,6 +90,22 @@ const createWindow = () => {
         }
     }
   );
+  // 测试代理请求
+  ipcMain.handle('test-proxy-request', async (event, proxyConfig, testUrl) => {
+    try {
+      const { protocol, host, port, username, password } = proxyConfig
+      const proxy = {
+        protocol,
+        host,
+        port: Number(port),
+        auth: username ? { username, password } : undefined
+      }
+      const response = await axios.get(testUrl, { proxy })
+      return { success: true, status: response.status }
+    } catch (e) {
+      return { success: false, message: e.message }
+    }
+  })
 };
 
 // 窗口准备事件

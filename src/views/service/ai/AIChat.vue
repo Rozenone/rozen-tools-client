@@ -64,7 +64,7 @@ import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
 import { chatCompletion, type ChatMessage } from '@/utils/api'
 import MarkdownIt from 'markdown-it'
-const { proxy } = getCurrentInstance()
+const { proxy } = getCurrentInstance() as any
 
 const md = new MarkdownIt()
 const store = useStore()
@@ -122,10 +122,10 @@ const sendMessage = async () => {
 
     const response = await chatCompletion(chatMessages)
     
-    if (response.choices?.[0]?.message) {
+    if (response.data.choices?.[0]?.message) {
       messages.value.push({
         role: 'assistant',
-        content: response.choices[0].message.content,
+        content: response.data.choices[0].message.content,
         time: new Date().toLocaleTimeString()
       })
     } else {

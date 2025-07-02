@@ -62,7 +62,7 @@
             <q-separator />
 
             <q-tab-panels v-model="activeTab" animated>
-              <q-tab-panel v-for="section in ['header', 'payload', 'signature']" :key="section" :name="section">
+              <q-tab-panel v-for="section in (['header', 'payload', 'signature'] as const)" :key="section" :name="section">
                 <q-input
                   v-model="decodedData[section]"
                   type="textarea"
@@ -102,7 +102,7 @@
 import { ref, getCurrentInstance } from 'vue'
 import { useQuasar } from 'quasar'
 
-const { proxy } = getCurrentInstance()
+const { proxy } = getCurrentInstance() as any
 const $q = useQuasar()
 const jwtToken = ref('')
 const activeTab = ref('header')

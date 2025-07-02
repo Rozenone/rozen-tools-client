@@ -25,12 +25,14 @@ declare module "@/stores" {
         port: string;
         username: string;
         password: string;
+        protocol: string;
       };
       toggleLeftDrawer: () => void;
       toggleRightDrawer: () => void;
       setTheme: (theme: "light" | "dark") => void;
       setFontSize: (size: number) => void;
       setProxy: (config: {
+        protocol: string;
         enabled: boolean;
         host: string;
         port: string;
