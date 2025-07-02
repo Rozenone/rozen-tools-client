@@ -25,9 +25,41 @@ declare module '@/stores' {
       leftDrawerOpen: boolean
       rightDrawerOpen: boolean
       theme: 'light' | 'dark'
+      fontSize: number
+      proxy: {
+        enabled: boolean
+        host: string
+        port: string
+        username: string
+        password: string
+      }
+      aiConfig: {
+        enabled: boolean
+        apiKey: string
+        baseUrl: string
+        model: string
+        temperature: number
+        maxTokens: number
+      }
       toggleLeftDrawer: () => void
       toggleRightDrawer: () => void
       setTheme: (theme: 'light' | 'dark') => void
+      setFontSize: (size: number) => void
+      setProxy: (config: {
+        enabled: boolean
+        host: string
+        port: string
+        username: string
+        password: string
+      }) => void
+      setAIConfig: (config: {
+        enabled: boolean
+        apiKey: string
+        baseUrl: string
+        model: string
+        temperature: number
+        maxTokens: number
+      }) => void
     }
   }
   export default useStore

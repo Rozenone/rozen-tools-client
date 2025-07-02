@@ -1,9 +1,11 @@
 export const headerBar_cn = {
-  page1: '公共工具',
-  appTitle: 'Rozen 工具集'
+  page1: '首页',
+  appTitle: 'Rozen 工具集',
+  aiChat: 'AI 助手'
 }
 
 export const headerBar_jp = {
-  page1: '共通のツール',
-  appTitle: 'Rozen ツールセット'
+  page1: 'ホーム',
+  appTitle: 'Rozen ツールセット',
+  aiChat: 'AI アシスタント'
 }

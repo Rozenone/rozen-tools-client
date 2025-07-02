@@ -8,6 +8,7 @@ import { uuidCreat_jp } from '@/views/service/uuid/UUIDCreat_lan'
 import { encodingConvert_jp } from '@/views/service/encoding/EncodingConvert_lan'
 import { leftDrawer_jp } from '@/components/common/LeftDrawer/LeftDrawer_lan'
 import { jwtParser_jp } from '@/views/service/jwt/JWTParser_lan'
+import { aiChat_jp } from '@/views/service/ai/AIChat_lan'
 
 const jp = {
   homePage: homePage_jp,
@@ -19,7 +20,8 @@ const jp = {
   uuidCreat: uuidCreat_jp,
   encodingConvert: encodingConvert_jp,
   leftDrawer: leftDrawer_jp,
-  jwtParser: jwtParser_jp
+  jwtParser: jwtParser_jp,
+  aiChat: aiChat_jp
 }
 
 export default jp

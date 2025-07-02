@@ -2,6 +2,7 @@ import { app, BrowserWindow, Menu, ipcMain, dialog, IpcMainInvokeEvent } from "e
 import fs from "fs";
 import iconv from "iconv-lite";
 import path from "path";
+import axios from 'axios'
 
 const createWindow = () => {
   Menu.setApplicationMenu(null);
@@ -20,7 +21,7 @@ const createWindow = () => {
       .loadFile(path.join(__dirname, "./index.html"))
       .then(() => win.webContents.openDevTools());
   } else {
-    const url: string = import.meta.env.VITE_URL; // 本地启动的vue项目路径。注意：vite版本3以上使用的端口5173；版本2用的是3000
+    const url: string = process.env.VITE_URL || "http://localhost:5173"; // 本地启动的vue项目路径。
     win.loadURL(url).then(() =>
       win.on("ready-to-show", () => {
         // 窗口准备就绪后，显示窗口
@@ -89,6 +90,22 @@ const createWindow = () => {
         }
     }
   );
+  // 测试代理请求
+  ipcMain.handle('test-proxy-request', async (event, proxyConfig, testUrl) => {
+    try {
+      const { protocol, host, port, username, password } = proxyConfig
+      const proxy = {
+        protocol,
+        host,
+        port: Number(port),
+        auth: username ? { username, password } : undefined
+      }
+      const response = await axios.get(testUrl, { proxy })
+      return { success: true, status: response.status }
+    } catch (e) {
+      return { success: false, message: e.message }
+    }
+  })
 };
 
 // 窗口准备事件
