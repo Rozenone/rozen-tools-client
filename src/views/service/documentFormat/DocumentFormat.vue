@@ -29,12 +29,35 @@
 
           <!-- 字体设置 -->
           <div class="col-12 col-md-6">
+            <!-- 常用日文字体快捷选择 -->
+            <div class="quick-fonts q-mb-sm">
+              <div class="text-caption text-grey-6 q-mb-xs">{{ $t('documentFormat.excel.quickJapaneseFonts') }}:</div>
+              <div class="row q-gutter-xs">
+                <q-btn 
+                  v-for="font in quickJapaneseFonts" 
+                  :key="font"
+                  :label="font" 
+                  size="sm" 
+                  outline 
+                  :color="selectedFont === font ? 'primary' : 'grey'"
+                  @click="selectedFont = font"
+                />
+              </div>
+            </div>
+            
             <q-select v-model="selectedFont" :options="fontOptions" :label="$t('documentFormat.excel.fontFamily')"
               outlined dense>
               <template v-slot:prepend>
                 <q-icon name="font_download" />
               </template>
             </q-select>
+            <!-- 字体预览 -->
+            <div class="font-preview q-mt-sm">
+              <div class="text-caption text-grey-6 q-mb-xs">{{ $t('documentFormat.excel.fontPreview') }}:</div>
+              <div class="preview-text japanese-text" :style="{ fontFamily: selectedFont }">
+                こんにちは、世界！ Hello, World! 123456
+              </div>
+            </div>
           </div>
 
           <!-- 字体大小 -->
@@ -113,13 +136,23 @@ const isProcessing = ref(false)
 
 // 格式化设置
 const zoomPercentage = ref(100)
-const selectedFont = ref('Arial')
+const selectedFont = ref('MS Pゴシック')
 const fontSize = ref(11)
 const fontColor = ref('#000000')
 const overwriteSource = ref(false)
 
+// 常用日文字体快捷选择
+const quickJapaneseFonts = [
+  'MS Pゴシック',
+  'MS P明朝',
+  'Yu Gothic',
+  'Meiryo',
+  '游ゴシック'
+]
+
 // 字体选项
 const fontOptions = [
+  // 英文字体
   'Arial',
   'Calibri',
   'Times New Roman',
@@ -127,7 +160,32 @@ const fontOptions = [
   'Verdana',
   'Georgia',
   'Courier New',
-  'Tahoma'
+  'Tahoma',
+  // 日文字体
+  'MS Pゴシック',
+  'MS P明朝',
+  'MS ゴシック',
+  'MS 明朝',
+  'Yu Gothic',
+  'Yu Mincho',
+  'Meiryo',
+  'Hiragino Sans',
+  'Hiragino Mincho',
+  'Noto Sans CJK JP',
+  'Noto Serif CJK JP',
+  'Source Han Sans JP',
+  'Source Han Serif JP',
+  'Kozuka Gothic Pro',
+  'Kozuka Mincho Pro',
+  'Yu Gothic UI',
+  'Yu Mincho UI',
+  'BIZ UDPGothic',
+  'BIZ UDPMincho',
+  '游ゴシック',
+  '游明朝',
+  'メイリオ',
+  'ヒラギノ角ゴシック',
+  'ヒラギノ明朝'
 ]
 
 // Excel功能特性
@@ -250,5 +308,39 @@ const formatExcel = async () => {
 
 :deep(.q-checkbox__label) {
   color: #222 !important;
+}
+
+.font-preview {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px;
+  background: #f9f9f9;
+}
+
+.preview-text {
+  font-size: 14px;
+  line-height: 1.4;
+  color: #333;
+  word-break: break-all;
+}
+
+/* 深色模式下的字体预览 */
+.body--dark .font-preview {
+  border-color: #444;
+  background: #2d2d2d;
+}
+
+.body--dark .preview-text {
+  color: #ccc;
+}
+
+.quick-fonts .q-btn {
+  font-size: 11px;
+  padding: 4px 8px;
+  min-height: 28px;
+}
+
+.quick-fonts .q-btn--outline {
+  border-width: 1px;
 }
 </style>

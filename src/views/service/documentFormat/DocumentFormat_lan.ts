@@ -15,7 +15,9 @@ export const documentFormat_cn = {
     features: {
       title: '功能特性'
     },
-    overwriteSource: '在源文件基础修改'
+    overwriteSource: '在源文件基础修改',
+    fontPreview: '字体预览',
+    quickJapaneseFonts: '常用日文字体'
   }
 }
 
@@ -36,6 +38,8 @@ export const documentFormat_jp = {
     features: {
       title: '機能特性'
     },
-    overwriteSource: '元ファイルを上書き修正'
+    overwriteSource: '元ファイルを上書き修正',
+    fontPreview: 'フォントプレビュー',
+    quickJapaneseFonts: 'よく使う日本語フォント'
   }
 } 

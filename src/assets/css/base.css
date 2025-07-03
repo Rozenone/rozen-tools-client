@@ -1,4 +1,4 @@
-* 基础样式 */
+ /*基础样式*/
 :root {
   --primary-color: #1976D2;
   --secondary-color: #26A69A;
@@ -12,7 +12,7 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Yu Gothic', 'MS Pゴシック', 'Meiryo', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--text-light);
@@ -128,4 +128,23 @@ body {
 
 .text-subtitle2 {
   font-size: 0.9rem;
+}
+
+/* 日文字体类 */
+.font-japanese-gothic {
+  font-family: 'MS Pゴシック', 'Yu Gothic', 'Meiryo', sans-serif;
+}
+
+.font-japanese-mincho {
+  font-family: 'MS P明朝', 'Yu Mincho', 'Hiragino Mincho', serif;
+}
+
+.font-japanese-ui {
+  font-family: 'Yu Gothic UI', 'MS UI Gothic', sans-serif;
+}
+
+/* 确保日文字符正确显示 */
+.japanese-text {
+  font-feature-settings: "palt" 1;
+  text-rendering: optimizeLegibility;
 }
