@@ -9,7 +9,9 @@ import { encodingConvert_jp } from '@/views/service/encoding/EncodingConvert_lan
 import { leftDrawer_jp } from '@/components/common/LeftDrawer/LeftDrawer_lan'
 import { jwtParser_jp } from '@/views/service/jwt/JWTParser_lan'
 import { aiChat_jp } from '@/views/service/ai/AIChat_lan'
-
+import { documentation_jp } from '@/views/documentation/DocumentationPage_lan'
+import { documentFormat_jp } from '@/views/service/documentFormat/DocumentFormat_lan'
+import { common_jp } from '@/locales/common'
 const jp = {
   homePage: homePage_jp,
   jsonFormat: jsonFormat_jp,
@@ -21,7 +23,10 @@ const jp = {
   encodingConvert: encodingConvert_jp,
   leftDrawer: leftDrawer_jp,
   jwtParser: jwtParser_jp,
-  aiChat: aiChat_jp
+  aiChat: aiChat_jp,
+  documentation: documentation_jp,
+  documentFormat: documentFormat_jp,
+  common: common_jp
 }
 
 export default jp

@@ -17,6 +17,10 @@ const router = createRouter({
       ]
     },
     {
+      path: '/documentation',
+      component: () => import('@/views/documentation/DocumentationPage.vue')
+    },
+    {
       path: '/service',
       children: [
         {
@@ -42,6 +46,10 @@ const router = createRouter({
         {
           path: 'ai-chat',
           component: () => import('@/views/service/ai/AIChat.vue')
+        },
+        {
+          path: 'document-format',
+          component: () => import('@/views/service/documentFormat/DocumentFormat.vue')
         }
       ]
     }

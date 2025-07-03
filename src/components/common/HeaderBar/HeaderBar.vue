@@ -48,11 +48,22 @@
         >
           <q-tooltip>{{ $t('headerBar.aiChat') }}</q-tooltip>
         </q-btn>
+        <q-btn 
+          dense 
+          flat 
+          round 
+          icon="description" 
+          class="q-mr-sm"
+          @click="openDocumentation"
+        >
+          <q-tooltip>{{ $t('headerBar.documentation') }}</q-tooltip>
+        </q-btn>
         <q-btn dense flat round icon="brightness_5" @click="toggleRightDrawer" />
       </q-toolbar>
 
       <q-tabs align="left">
         <q-route-tab to="/" :label="$t('headerBar.page1')" />
+        <q-route-tab to="/documentation" :label="$t('headerBar.documentation')" />
       </q-tabs>
     </q-header>
   </div>
@@ -94,6 +105,10 @@ const maxWindow = () => {
 
 const openAIChat = () => {
   router.push('/service/ai-chat')
+}
+
+const openDocumentation = () => {
+  router.push('/documentation')
 }
 </script>
 
