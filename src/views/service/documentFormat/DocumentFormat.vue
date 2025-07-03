@@ -2,7 +2,7 @@
 <template>
   <div class="document-format-page q-pa-md">
     <div class="text-h4 q-mb-lg">{{ $t('documentFormat.title') }}</div>
-    
+
     <!-- Excel格式化功能 -->
     <q-card class="excel-format-card q-mb-lg">
       <q-card-section>
@@ -10,39 +10,17 @@
           <q-icon name="table_chart" class="q-mr-sm" />
           {{ $t('documentFormat.excel.title') }}
         </div>
-        
+
         <div class="row q-col-gutter-md">
           <!-- 文件选择 -->
           <div class="col-12">
-            <q-file
-              v-model="excelFile"
-              :label="$t('documentFormat.excel.selectFile')"
-              accept=".xlsx,.xls"
-              outlined
-              @update:model-value="onFileSelected"
-            >
-              <template v-slot:prepend>
-                <q-icon name="attach_file" />
-              </template>
-              <template v-slot:append>
-                <q-icon name="close" @click="excelFile = null" class="cursor-pointer" />
-              </template>
-            </q-file>
+            <q-btn label="选择Excel文件" @click="selectExcelFile" color="primary" class="q-mb-md" />
           </div>
 
           <!-- 缩放设置 -->
           <div class="col-12 col-md-6">
-            <q-input
-              v-model.number="zoomPercentage"
-              type="number"
-              :label="$t('documentFormat.excel.zoomPercentage')"
-              :placeholder="$t('documentFormat.excel.zoomPlaceholder')"
-              :min="10"
-              :max="400"
-              :step="10"
-              outlined
-              dense
-            >
+            <q-input v-model.number="zoomPercentage" type="number" :label="$t('documentFormat.excel.zoomPercentage')"
+              :placeholder="$t('documentFormat.excel.zoomPlaceholder')" :min="10" :max="400" :step="10" outlined dense>
               <template v-slot:append>
                 <q-icon name="zoom_in" />
               </template>
@@ -51,13 +29,8 @@
 
           <!-- 字体设置 -->
           <div class="col-12 col-md-6">
-            <q-select
-              v-model="selectedFont"
-              :options="fontOptions"
-              :label="$t('documentFormat.excel.fontFamily')"
-              outlined
-              dense
-            >
+            <q-select v-model="selectedFont" :options="fontOptions" :label="$t('documentFormat.excel.fontFamily')"
+              outlined dense>
               <template v-slot:prepend>
                 <q-icon name="font_download" />
               </template>
@@ -66,36 +39,10 @@
 
           <!-- 字体大小 -->
           <div class="col-12 col-md-6">
-            <q-input
-              v-model.number="fontSize"
-              type="number"
-              :label="$t('documentFormat.excel.fontSize')"
-              :placeholder="$t('documentFormat.excel.fontSizePlaceholder')"
-              :min="8"
-              :max="72"
-              :step="1"
-              outlined
-              dense
-            >
+            <q-input v-model.number="fontSize" type="number" :label="$t('documentFormat.excel.fontSize')"
+              :placeholder="$t('documentFormat.excel.fontSizePlaceholder')" :min="8" :max="72" :step="1" outlined dense>
               <template v-slot:append>
                 <q-icon name="format_size" />
-              </template>
-            </q-input>
-          </div>
-
-          <!-- 字体颜色 -->
-          <div class="col-12 col-md-6">
-            <q-input
-              v-model="fontColor"
-              :label="$t('documentFormat.excel.fontColor')"
-              outlined
-              dense
-            >
-              <template v-slot:prepend>
-                <q-icon name="palette" />
-              </template>
-              <template v-slot:append>
-                <q-icon name="colorize" class="cursor-pointer" @click="showColorPicker = true" />
               </template>
             </q-input>
           </div>
@@ -103,34 +50,27 @@
           <!-- 操作按钮 -->
           <div class="col-12">
             <div class="row justify-end q-gutter-sm">
-              <q-btn
-                :label="$t('documentFormat.excel.preview')"
-                color="secondary"
-                :disable="!excelFile"
-                @click="previewExcel"
-                flat
-              />
-              <q-btn
-                :label="$t('documentFormat.excel.format')"
-                color="primary"
-                :disable="!excelFile"
-                @click="formatExcel"
-                :loading="isProcessing"
-              />
+              <q-btn :label="$t('documentFormat.excel.preview')" color="secondary" :disable="!excelFilePaths.length"
+                @click="previewExcel" flat />
+              <q-btn :label="$t('documentFormat.excel.format')" color="primary" :disable="!excelFilePaths.length"
+                @click="formatExcel" :loading="isProcessing" />
             </div>
+          </div>
+
+          <!-- 在操作按钮上方添加勾选框 -->
+          <div class="col-12">
+            <q-checkbox v-model="overwriteSource" :label="t('documentFormat.excel.overwriteSource')" class="q-mb-md" :text-color="$q.dark.isActive ? 'white' : 'black'" />
           </div>
         </div>
 
         <!-- 预览信息 -->
-        <div v-if="excelInfo" class="q-mt-md">
+        <div v-if="excelInfos.length" class="q-mt-md">
           <q-separator class="q-mb-md" />
           <div class="text-subtitle2 q-mb-sm">{{ $t('documentFormat.excel.fileInfo') }}</div>
           <div class="row q-col-gutter-sm">
-            <div class="col-12 col-sm-6">
-              <q-chip icon="description" :label="excelInfo.fileName" />
-            </div>
-            <div class="col-12 col-sm-6">
-              <q-chip icon="table_chart" :label="`${excelInfo.sheetCount} ${$t('documentFormat.excel.sheets')}`" />
+            <div class="col-12 col-sm-6" v-for="info in excelInfos" :key="info.fileName">
+              <q-chip icon="description" :label="info.fileName" />
+              <q-chip icon="table_chart" :label="`${info.sheetCount} ${$t('documentFormat.excel.sheets')}`" />
             </div>
           </div>
         </div>
@@ -154,34 +94,21 @@
         </q-list>
       </q-card-section>
     </q-card>
-
-    <!-- 颜色选择器对话框 -->
-    <q-dialog v-model="showColorPicker">
-      <q-card style="min-width: 300px">
-        <q-card-section>
-          <div class="text-h6">{{ $t('documentFormat.excel.selectColor') }}</div>
-        </q-card-section>
-        <q-card-section>
-          <q-color v-model="fontColor" />
-        </q-card-section>
-        <q-card-actions align="right">
-          <q-btn flat :label="$t('common.cancel')" @click="showColorPicker = false" />
-          <q-btn flat :label="$t('common.confirm')" @click="showColorPicker = false" color="primary" />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useQuasar } from 'quasar'
+import { useI18n } from 'vue-i18n'
+// @ts-ignore
+const { ipcRenderer } = window.electron || {}
 
 const $q = useQuasar()
+const { t } = useI18n()
 
-// Excel文件相关
-const excelFile = ref<File | null>(null)
-const excelInfo = ref<any>(null)
+const excelFilePaths = ref<string[]>([])
+const excelInfos = ref<any[]>([])
 const isProcessing = ref(false)
 
 // 格式化设置
@@ -189,7 +116,7 @@ const zoomPercentage = ref(100)
 const selectedFont = ref('Arial')
 const fontSize = ref(11)
 const fontColor = ref('#000000')
-const showColorPicker = ref(false)
+const overwriteSource = ref(false)
 
 // 字体选项
 const fontOptions = [
@@ -227,24 +154,35 @@ const excelFeatures = ref([
   }
 ])
 
-// 文件选择处理
-const onFileSelected = (file: File | null) => {
-  if (file) {
-    // 这里可以添加文件验证逻辑
-    excelInfo.value = {
-      fileName: file.name,
-      fileSize: (file.size / 1024).toFixed(2) + ' KB',
-      sheetCount: '未知' // 实际应用中需要解析Excel文件获取工作表数量
+// 文件选择
+const selectExcelFile = async () => {
+  if (ipcRenderer) {
+    const filePaths = await ipcRenderer.invoke('select-excel-file')
+    if (Array.isArray(filePaths) && filePaths.length) {
+      excelFilePaths.value = filePaths.filter(f => typeof f === 'string' && f)
+      // 读取每个文件的sheet数量（用exceljs主进程handler）
+      excelInfos.value = []
+      for (const filePath of excelFilePaths.value) {
+        try {
+          const sheetCount = await ipcRenderer.invoke('get-excel-sheet-count', filePath)
+          excelInfos.value.push({
+            fileName: filePath.split(/[\\/]/).pop(),
+            sheetCount
+          })
+        } catch {
+          excelInfos.value.push({
+            fileName: filePath.split(/[\\/]/).pop(),
+            sheetCount: '未知'
+          })
+        }
+      }
     }
-  } else {
-    excelInfo.value = null
   }
 }
 
 // 预览Excel
 const previewExcel = () => {
-  if (!excelFile.value) return
-  
+  if (!excelFilePaths.value.length) return
   $q.notify({
     type: 'info',
     message: '预览功能开发中...',
@@ -254,25 +192,28 @@ const previewExcel = () => {
 
 // 格式化Excel
 const formatExcel = async () => {
-  if (!excelFile.value) return
-  
+  if (!excelFilePaths.value.length) return
   isProcessing.value = true
-  
   try {
-    // 模拟处理过程
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
-    $q.notify({
-      type: 'positive',
-      message: 'Excel格式化完成！',
-      position: 'top'
+    // 强制所有参数为简单类型
+    const filePaths = excelFilePaths.value.map(f => String(f))
+    const zoom = Number(zoomPercentage.value)
+    const font = String(selectedFont.value)
+    const fontSizeVal = Number(fontSize.value)
+    const fontColorVal = String(fontColor.value)
+    const overwrite = Boolean(overwriteSource.value)
+    console.log('batch-format-excel params:', { filePaths, zoom, font, fontSize: fontSizeVal, fontColor: fontColorVal, overwrite })
+    await ipcRenderer.invoke('batch-format-excel', {
+      filePaths,
+      zoom,
+      font,
+      fontSize: fontSizeVal,
+      fontColor: fontColorVal,
+      overwrite
     })
+    $q.notify({ type: 'positive', message: '所有文件已处理完成！', position: 'top' })
   } catch (error) {
-    $q.notify({
-      type: 'negative',
-      message: '格式化失败，请重试',
-      position: 'top'
-    })
+    $q.notify({ type: 'negative', message: '格式化失败，请重试' + error, position: 'top' })
   } finally {
     isProcessing.value = false
   }
@@ -286,7 +227,6 @@ const formatExcel = async () => {
 }
 
 .excel-format-card {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
 }
 
@@ -307,4 +247,8 @@ const formatExcel = async () => {
   background: #1d1d1d;
   border: 1px solid #333;
 }
-</style> 
+
+:deep(.q-checkbox__label) {
+  color: #222 !important;
+}
+</style>

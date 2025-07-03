@@ -30,16 +30,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+const { proxy } = getCurrentInstance() as any
 
 // 文档工具列表
 const documentTools = ref([
   {
-    name: 'Excel 格式化',
-    description: '设置Excel文件的缩放、字体和光标位置',
+    name: proxy.$t('documentation.tools[0].name'),
+    description: proxy.$t('documentation.tools[0].description'),
     icon: 'table_chart',
     color: 'primary',
     route: '/service/document-format'
@@ -64,10 +65,13 @@ const navigateToTool = (route: string) => {
 }
 
 .tool-card {
-  height: 200px;
+  height: 220px;
   transition: all 0.3s ease;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .tool-card:hover {
@@ -80,6 +84,27 @@ const navigateToTool = (route: string) => {
   justify-content: center;
   align-items: center;
   height: 80px;
+}
+
+.text-h6.q-mb-sm {
+  word-break: break-all;
+  white-space: normal;
+  max-width: 100%;
+  font-size: 1.1rem;
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+
+.text-caption.text-grey-6 {
+  word-break: break-all;
+  white-space: normal;
+  max-width: 100%;
+  font-size: 0.95rem;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
 }
 
 /* 深色模式适配 */

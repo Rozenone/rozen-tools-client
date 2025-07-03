@@ -371,12 +371,12 @@ watch(model, async (newLan) => {
   localStorage.setItem('lan', newLan)
   i18n.global.locale.value = newLan as 'cn' | 'jp'
 })
-
+// 主题
 const changeTheme = (theme: string) => {
   store.top.setTheme(theme as 'light' | 'dark')
   $q.dark.set(theme === 'dark')
 }
-
+// 字体大小
 const changeFontSize = (size: number | null) => {
   if (size == null) return
   store.top.setFontSize(size)
