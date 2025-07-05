@@ -50,6 +50,12 @@ const router = createRouter({
         {
           path: 'document-format',
           component: () => import('@/views/service/documentFormat/DocumentFormat.vue')
+        },
+        {
+          path: 'csv/generate',
+          name: 'CsvGenerate',
+          component: () => import('@/views/service/csv/CsvGenerate.vue'),
+          meta: { title: 'CSV做成', icon: 'table_chart' }
         }
       ]
     }

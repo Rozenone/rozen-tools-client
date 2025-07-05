@@ -14,11 +14,11 @@
         <div class="row q-col-gutter-md">
           <!-- 文件选择 -->
           <div class="col-12">
-            <q-btn label="选择Excel文件" @click="selectExcelFile" color="primary" class="q-mb-md" />
+            <q-btn :label="$t('documentFormat.excel.selectFile')" @click="selectExcelFile" color="primary" class="q-mb-md" />
           </div>
 
           <!-- 缩放设置 -->
-          <div class="col-12 col-md-6">
+          <div class="col-12">
             <q-input v-model.number="zoomPercentage" type="number" :label="$t('documentFormat.excel.zoomPercentage')"
               :placeholder="$t('documentFormat.excel.zoomPlaceholder')" :min="10" :max="400" :step="10" outlined dense>
               <template v-slot:append>
@@ -28,7 +28,7 @@
           </div>
 
           <!-- 字体设置 -->
-          <div class="col-12 col-md-6">
+          <div class="col-12">
             <!-- 常用日文字体快捷选择 -->
             <div class="quick-fonts q-mb-sm">
               <div class="text-caption text-grey-6 q-mb-xs">{{ $t('documentFormat.excel.quickJapaneseFonts') }}:</div>
@@ -61,7 +61,7 @@
           </div>
 
           <!-- 字体大小 -->
-          <div class="col-12 col-md-6">
+          <div class="col-12">
             <q-input v-model.number="fontSize" type="number" :label="$t('documentFormat.excel.fontSize')"
               :placeholder="$t('documentFormat.excel.fontSizePlaceholder')" :min="8" :max="72" :step="1" outlined dense>
               <template v-slot:append>
@@ -73,8 +73,7 @@
           <!-- 操作按钮 -->
           <div class="col-12">
             <div class="row justify-end q-gutter-sm">
-              <q-btn :label="$t('documentFormat.excel.preview')" color="secondary" :disable="!excelFilePaths.length"
-                @click="previewExcel" flat />
+      
               <q-btn :label="$t('documentFormat.excel.format')" color="primary" :disable="!excelFilePaths.length"
                 @click="formatExcel" :loading="isProcessing" />
             </div>
@@ -191,23 +190,23 @@ const fontOptions = [
 // Excel功能特性
 const excelFeatures = ref([
   {
-    title: '多工作表支持',
-    description: '支持处理包含多个工作表的Excel文件',
+    title: t('documentFormat.excel.features.multiSheetTitle'),
+    description: t('documentFormat.excel.features.multiSheetDesc'),
     icon: 'table_chart'
   },
   {
-    title: '统一缩放设置',
-    description: '为所有工作表设置相同的缩放百分比',
+    title: t('documentFormat.excel.features.zoomTitle'),
+    description: t('documentFormat.excel.features.zoomDesc'),
     icon: 'zoom_in'
   },
   {
-    title: '字体格式统一',
-    description: '设置整个Excel文件的字体样式',
+    title: t('documentFormat.excel.features.fontTitle'),
+    description: t('documentFormat.excel.features.fontDesc'),
     icon: 'font_download'
   },
   {
-    title: '光标位置重置',
-    description: '将所有工作表的光标重置到左上角',
+    title: t('documentFormat.excel.features.cursorTitle'),
+    description: t('documentFormat.excel.features.cursorDesc'),
     icon: 'crop_free'
   }
 ])
@@ -236,16 +235,6 @@ const selectExcelFile = async () => {
       }
     }
   }
-}
-
-// 预览Excel
-const previewExcel = () => {
-  if (!excelFilePaths.value.length) return
-  $q.notify({
-    type: 'info',
-    message: '预览功能开发中...',
-    position: 'top'
-  })
 }
 
 // 格式化Excel
@@ -279,10 +268,6 @@ const formatExcel = async () => {
 </script>
 
 <style scoped>
-.document-format-page {
-  max-width: 1200px;
-  margin: 0 auto;
-}
 
 .excel-format-card {
   color: white;

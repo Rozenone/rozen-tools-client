@@ -63,6 +63,11 @@ const toolItems: ToolItem[] = reactive([
     title: 'jwt',
     img: 'jwt.svg',
     url: '/service/jwt'
+  },
+  {
+    title: 'csv_generate',
+    img: 'csv.svg',
+    url: '/service/csv/generate'
   }
 ])
 </script>

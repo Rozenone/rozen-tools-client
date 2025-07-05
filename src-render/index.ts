@@ -148,32 +148,52 @@ const createWindow = () => {
   });
 
   // 批量格式化Excel（缩放、字体、字号、颜色、光标重置）
-  ipcMain.handle('batch-format-excel', async (event, { filePaths, zoom, font, fontSize, fontColor, overwrite }) => {
+  ipcMain.handle('batch-format-excel', async (event, { filePaths, zoom, font, fontSize, fontColor, overwrite, savePath }) => {
     try {
       for (const filePath of filePaths) {
         const workbook = new ExcelJS.Workbook();
         await workbook.xlsx.readFile(filePath);
-        workbook.worksheets.forEach(ws => {
-          // 缩放
+        // 先统一设置所有sheet的视图和字体
+        workbook.worksheets.forEach((ws, idx) => {
+          // 缩放、光标重置
           ws.views = [{ state: 'normal', zoomScale: zoom, activeCell: 'A1' }];
-          // 字体、字号、颜色
-          ws.eachRow({ includeEmpty: true }, (row) => {
-            row.eachCell({ includeEmpty: true }, (cell) => {
+          // 字体、字号、颜色，确保所有单元格都设置
+          const maxRow = ws.rowCount;
+          const maxCol = ws.columnCount;
+          for (let r = 1; r <= maxRow; r++) {
+            for (let c = 1; c <= maxCol; c++) {
+              const cell = ws.getCell(r, c);
               cell.font = {
                 name: font,
                 size: fontSize,
                 color: { argb: fontColor.replace('#', '').toUpperCase() }
               };
-            });
-          });
+            }
+          }
         });
+        // 设置第一个sheet为活动sheet
+        if (workbook.worksheets.length > 0) {
+          workbook.views = [{
+            x: 0,
+            y: 0,
+            width: 100,
+            height: 100,
+            firstSheet: 0,
+            activeTab: 0,
+            visibility: 'visible'
+          }];
+        }
         if (overwrite) {
           await workbook.xlsx.writeFile(filePath);
         } else {
-          const dir = path.dirname(filePath);
-          const base = path.basename(filePath, path.extname(filePath));
-          const newPath = path.join(dir, `${base}_formatted.xlsx`);
-          await workbook.xlsx.writeFile(newPath);
+          if (savePath) {
+            await workbook.xlsx.writeFile(savePath);
+          } else {
+            const dir = path.dirname(filePath);
+            const base = path.basename(filePath, path.extname(filePath));
+            const newPath = path.join(dir, `${base}_formatted.xlsx`);
+            await workbook.xlsx.writeFile(newPath);
+          }
         }
       }
       return true;
@@ -185,7 +205,6 @@ const createWindow = () => {
   // 获取Excel文件的sheet数量
   ipcMain.handle('get-excel-sheet-count', async (event, filePath) => {
     try {
-      const ExcelJS = (await import('exceljs')).default;
       const workbook = new ExcelJS.Workbook();
       await workbook.xlsx.readFile(filePath);
       return workbook.worksheets.length;

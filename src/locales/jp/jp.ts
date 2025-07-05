@@ -26,7 +26,21 @@ const jp = {
   aiChat: aiChat_jp,
   documentation: documentation_jp,
   documentFormat: documentFormat_jp,
-  common: common_jp
+  common: common_jp,
+  csvGenerate: {
+    title: 'CSV作成',
+    templateInput: 'テンプレート入力',
+    templatePlaceholder: 'CSVテンプレートを入力してください。例：\nテストヘッダー1,テストヘッダー2,テストヘッダー3\nテスト{i},テスト{i},テスト{i}',
+    startValue: '開始値',
+    endValue: '終了値',
+    fillAll: '全て埋める',
+    generate: '生成',
+    result: '生成結果',
+    copy: 'コピー',
+    download: 'CSVダウンロード',
+    needTemplate: 'テンプレートは少なくともヘッダーと1行のデータが必要です',
+    copied: 'クリップボードにコピーしました'
+  }
 }
 
 export default jp

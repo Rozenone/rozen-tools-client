@@ -57,12 +57,7 @@ const navigateToTool = (route: string) => {
 .documentation-page {
   background: var(--q-grey-1);
   min-height: 100vh;
-}
-
-.tools-grid {
-  max-width: 1200px;
-  margin: 0 auto;
-}
+} 
 
 .tool-card {
   height: 220px;
