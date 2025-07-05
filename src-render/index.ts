@@ -3,6 +3,7 @@ import fs from "fs";
 import iconv from "iconv-lite";
 import path from "path";
 import axios from 'axios'
+import ExcelJS from 'exceljs';
 
 const createWindow = () => {
   Menu.setApplicationMenu(null);
@@ -19,7 +20,6 @@ const createWindow = () => {
   if (process.env.NODE_ENV !== "development") {
     win
       .loadFile(path.join(__dirname, "./index.html"))
-      .then(() => win.webContents.openDevTools());
   } else {
     const url: string = process.env.VITE_URL || "http://localhost:5173"; // 本地启动的vue项目路径。
     win.loadURL(url).then(() =>
@@ -63,31 +63,31 @@ const createWindow = () => {
       targetEncoding: string,
       outputPath: string
     ) => {
-        let successCount = 0;
-        let failCount = 0;
+      let successCount = 0;
+      let failCount = 0;
 
-        for(const filePath of filePaths) {
-          try {
-            const fileName = path.basename(filePath);
-            const outputFilePath = path.join(outputPath, fileName);
+      for (const filePath of filePaths) {
+        try {
+          const fileName = path.basename(filePath);
+          const outputFilePath = path.join(outputPath, fileName);
 
-            // 读取文件内容 写入文件
-            const fileBuffer = fs.readFileSync(filePath);
-            const fileContent = iconv.decode(fileBuffer, sourceEncoding);
+          // 读取文件内容 写入文件
+          const fileBuffer = fs.readFileSync(filePath);
+          const fileContent = iconv.decode(fileBuffer, sourceEncoding);
 
-           // 将文件内容转码到目标编码，并写入新文件
+          // 将文件内容转码到目标编码，并写入新文件
           const outputBuffer = iconv.encode(fileContent, targetEncoding);
           fs.writeFileSync(outputFilePath, outputBuffer);
-            successCount++;
-          }catch {
-            failCount++;
-            failCount++;
-          }
+          successCount++;
+        } catch {
+          failCount++;
+          failCount++;
         }
-        return {
-          successCount,
-          failCount
-        }
+      }
+      return {
+        successCount,
+        failCount
+      }
     }
   );
   // 测试代理请求
@@ -106,6 +106,112 @@ const createWindow = () => {
       return { success: false, message: e.message }
     }
   })
+  // 保存文件对话框
+  ipcMain.handle('show-save-dialog', async (event, options) => {
+    let win = BrowserWindow.getFocusedWindow();
+    if (!win) {
+      win = BrowserWindow.getAllWindows()[0] || undefined;
+    }
+    const result = await dialog.showSaveDialog(win, options);
+    // 只返回 filePath 字段，避免克隆问题
+    return result.filePath || '';
+  });
+
+  // 保存Excel文件
+  ipcMain.handle('save-excel-file', async (event, { filePath, buffer }) => {
+    fs.writeFileSync(filePath, buffer);
+    return true;
+  });
+
+  // 选择Excel文件
+  ipcMain.handle('select-excel-file', async () => {
+    let win = BrowserWindow.getFocusedWindow();
+    if (!win) {
+      win = BrowserWindow.getAllWindows()[0] || undefined;
+    }
+    const result = await dialog.showOpenDialog(win, {
+      properties: ['openFile', 'multiSelections'],
+      filters: [{ name: 'Excel', extensions: ['xlsx', 'xls'] }]
+    });
+    if (result.canceled || !result.filePaths.length) return [];
+    return result.filePaths;
+  });
+
+  // 读取Excel文件
+  ipcMain.handle('read-excel-file', async (event, filePath) => {
+    try {
+      const buf = fs.readFileSync(filePath);
+      return buf.toString('base64');
+    } catch (e) {
+      return '';
+    }
+  });
+
+  // 批量格式化Excel（缩放、字体、字号、颜色、光标重置）
+  ipcMain.handle('batch-format-excel', async (event, { filePaths, zoom, font, fontSize, fontColor, overwrite, savePath }) => {
+    try {
+      for (const filePath of filePaths) {
+        const workbook = new ExcelJS.Workbook();
+        await workbook.xlsx.readFile(filePath);
+        // 先统一设置所有sheet的视图和字体
+        workbook.worksheets.forEach((ws, idx) => {
+          // 缩放、光标重置
+          ws.views = [{ state: 'normal', zoomScale: zoom, activeCell: 'A1' }];
+          // 字体、字号、颜色，确保所有单元格都设置
+          const maxRow = ws.rowCount;
+          const maxCol = ws.columnCount;
+          for (let r = 1; r <= maxRow; r++) {
+            for (let c = 1; c <= maxCol; c++) {
+              const cell = ws.getCell(r, c);
+              cell.font = {
+                name: font,
+                size: fontSize,
+                color: { argb: fontColor.replace('#', '').toUpperCase() }
+              };
+            }
+          }
+        });
+        // 设置第一个sheet为活动sheet
+        if (workbook.worksheets.length > 0) {
+          workbook.views = [{
+            x: 0,
+            y: 0,
+            width: 100,
+            height: 100,
+            firstSheet: 0,
+            activeTab: 0,
+            visibility: 'visible'
+          }];
+        }
+        if (overwrite) {
+          await workbook.xlsx.writeFile(filePath);
+        } else {
+          if (savePath) {
+            await workbook.xlsx.writeFile(savePath);
+          } else {
+            const dir = path.dirname(filePath);
+            const base = path.basename(filePath, path.extname(filePath));
+            const newPath = path.join(dir, `${base}_formatted.xlsx`);
+            await workbook.xlsx.writeFile(newPath);
+          }
+        }
+      }
+      return true;
+    } catch (e) {
+      return { success: false, message: e && e.message ? e.message : 'unknown error' };
+    }
+  });
+
+  // 获取Excel文件的sheet数量
+  ipcMain.handle('get-excel-sheet-count', async (event, filePath) => {
+    try {
+      const workbook = new ExcelJS.Workbook();
+      await workbook.xlsx.readFile(filePath);
+      return workbook.worksheets.length;
+    } catch (e) {
+      return '未知';
+    }
+  });
 };
 
 // 窗口准备事件

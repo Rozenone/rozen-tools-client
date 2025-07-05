@@ -48,6 +48,15 @@
           {{ $t('leftDrawer.home') }}
         </q-item-section>
       </q-item>
+      
+      <q-item clickable v-ripple to="/documentation">
+        <q-item-section avatar>
+          <q-icon name="description" />
+        </q-item-section>
+        <q-item-section>
+          {{ $t('leftDrawer.documentation') }}
+        </q-item-section>
+      </q-item>
     </q-list>
   </q-drawer>
 </template>

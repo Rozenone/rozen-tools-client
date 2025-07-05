@@ -8,7 +8,9 @@ export const homePage_cn = {
   encoding: '编码转换',
   encodingDescription: '文件编码格式转换工具',
   jwt: 'JWT 解析',
-  jwtDescription: 'JWT Token 解析与编码工具'
+  jwtDescription: 'JWT Token 解析与编码工具',
+  csv_generate: 'CSV做成',
+  csv_generateDescription: '自定义模板批量生成CSV文件'
 }
 
 
@@ -22,5 +24,7 @@ export const homePage_jp = {
   encoding: 'エンコード変換',
   encodingDescription: 'ファイルエンコード変換ツール',
   jwt: 'JWT パーサー',
-  jwtDescription: 'JWT トークン解析・エンコードツール'
+  jwtDescription: 'JWT トークン解析・エンコードツール',
+  csv_generate: 'CSV作成',
+  csv_generateDescription: 'テンプレートでCSVファイルを一括生成'
 }
