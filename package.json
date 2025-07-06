@@ -1,8 +1,8 @@
 {
-  "name": "rozen-tools-client",
+  "name": "rozen-tools",
   "private": true,
-  "version": "0.0.0",
-  "author": "rozen",
+  "version": "0.0.1",
+  "author": "rozenone",
   "main": "dist-electron/index.js",
   "scripts": {
     "dev": "vite",

@@ -8,7 +8,11 @@ import ExcelJS from 'exceljs';
 const createWindow = () => {
   Menu.setApplicationMenu(null);
   const win = new BrowserWindow({
+    width: 1200,
+    height: 800,
+    title: '蔷薇tools',
     frame: false,
+    icon: path.join(__dirname, "../src/assets/img/avatar/profile.jpg"),
     webPreferences: {
       contextIsolation: true, // 是否开启隔离上下文
       nodeIntegration: true, // 渲染进程使用Node API
