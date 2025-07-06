@@ -22,7 +22,7 @@
 <script setup lang='ts'>
 import { getCurrentInstance, ref } from 'vue'
 
-const { proxy } = getCurrentInstance()
+const { proxy } = getCurrentInstance() as any
 const inputText = ref('')
 const outputText = ref('')
 const tip = ref('')
@@ -39,7 +39,7 @@ const format = () => {
       .replace(/\b(null)\b/g, '<span class="null">$1</span>') // 高亮 null
     outputText.value = `<pre>${highlightedJSON}</pre>`
     tip.value = proxy.$t('jsonFormat.checkPass')
-  } catch (error) {
+  } catch (error: any) {
     tip.value = error.message
   }
 }
@@ -52,7 +52,7 @@ const compressJson = () => {
     tip.value = proxy.$t('jsonFormat.checkPass')
     outputText.value = ''
     tip.value = proxy.$t('jsonFormat.compressSuccess')
-  } catch (error) {
+  } catch (error: any) {
     tip.value = error.message
   }
 }
@@ -71,6 +71,22 @@ const compressJson = () => {
 
 .json_btn {
   margin: .3em .5em;
+}
+
+.output_box {
+  background: #f4f4f4;
+  border-radius: 4px;
+  padding: 12px;
+  font-size: 14px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  color: #222;
+  min-height: 80px;
+  margin-top: 1em;
+}
+.body--dark .output_box {
+  background: #23272e !important;
+  color: #e0e0e0 !important;
 }
 </style>
 
@@ -93,5 +109,15 @@ const compressJson = () => {
 
 .null {
   color: #d14;
+}
+
+.body--dark .string {
+  color: #7fff7f;
+}
+.body--dark .number {
+  color: #6ab0ff;
+}
+.body--dark .boolean, .body--dark .null {
+  color: #ffb86c;
 }
 </style>

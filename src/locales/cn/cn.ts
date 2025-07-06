@@ -12,6 +12,9 @@ import { aiChat_cn } from '@/views/service/ai/AIChat_lan'
 import { documentation_cn } from '@/views/documentation/DocumentationPage_lan'
 import { documentFormat_cn } from '@/views/service/documentFormat/DocumentFormat_lan'
 import { common_cn } from '@/locales/common'
+import { searchPage_cn } from '@/views/searchPage/searchPage_lan'
+import { csvGenerate_cn } from '@/views/service/csv/CsvGenerate_lan'
+import { commonFileSearch_cn } from '@/views/service/CommonFileSearch/CommonFileSearch_lan'
 
 const cn = {
   homePage: homePage_cn,
@@ -28,20 +31,9 @@ const cn = {
   documentation: documentation_cn,
   documentFormat: documentFormat_cn,
   common: common_cn,
-  csvGenerate: {
-    title: 'CSV做成',
-    templateInput: '模板输入',
-    templatePlaceholder: '请输入CSV模板，如：\n测试头1,测试头2,测试头3\n测试{i},测试{i},测试{i}',
-    startValue: '起始值',
-    endValue: '结束值',
-    fillAll: '是否填充',
-    generate: '生成',
-    result: '生成结果',
-    copy: '复制',
-    download: '下载CSV',
-    needTemplate: '模板需至少包含表头和一行数据模板',
-    copied: '已复制到剪贴板'
-  }
+  csvGenerate: csvGenerate_cn,
+  searchPage: searchPage_cn,
+  commonFileSearch: commonFileSearch_cn
 }
 
 export default cn

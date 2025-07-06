@@ -147,11 +147,31 @@ pre {
 }
 
 span {
-  color: red; /* 高亮部分的字体颜色 */
+  color: #d35400;
+  background: #ffe066;
   font-weight: bold;
+  border-radius: 2px;
+  padding: 0 2px;
 }
 
 .match_text {
   background-color: #f1f1f1;
+  color: #222;
+  border-radius: 4px;
+  padding: 8px;
+  min-height: 40px;
+}
+
+.body--dark .match_text {
+  background-color: #23272e !important;
+  color: #e0e0e0 !important;
+}
+.body--dark span {
+  color: #23272e !important;
+  background: #ffe066 !important;
+  font-weight: bold;
+  border-radius: 2px;
+  padding: 0 2px;
+  box-shadow: 0 0 2px #ffe066;
 }
 </style>

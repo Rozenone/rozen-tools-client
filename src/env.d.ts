@@ -49,6 +49,7 @@ declare module "@/stores" {
       }) => void;
     };
     setaico;
+    searchCommonFilesInFolders?: (folderPath: string, fileName: string) => Promise<any[]>;
   };
   export default useStore;
 }

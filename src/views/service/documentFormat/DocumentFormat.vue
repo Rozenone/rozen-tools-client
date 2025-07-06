@@ -249,7 +249,6 @@ const formatExcel = async () => {
     const fontSizeVal = Number(fontSize.value)
     const fontColorVal = String(fontColor.value)
     const overwrite = Boolean(overwriteSource.value)
-    console.log('batch-format-excel params:', { filePaths, zoom, font, fontSize: fontSizeVal, fontColor: fontColorVal, overwrite })
     await ipcRenderer.invoke('batch-format-excel', {
       filePaths,
       zoom,

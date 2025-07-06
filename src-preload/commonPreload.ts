@@ -15,6 +15,9 @@ contextBridge.exposeInMainWorld('ipcCommon', {
     },
     convertEncoding: (filePaths: string[], sourceEncoding: string, targetEncoding: string, outputPath: string) => {
         return ipcRenderer.invoke('convert-encoding', filePaths, sourceEncoding, targetEncoding, outputPath);
+    },
+    searchCommonFilesInFolders: (folderPath: string, fileName: string) => {
+        return ipcRenderer.invoke('search-common-files-in-folders', folderPath, fileName);
     }
 })
 

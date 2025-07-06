@@ -54,6 +54,7 @@
       <q-tabs align="left">
         <q-route-tab to="/" :label="$t('headerBar.page1')" />
         <q-route-tab to="/documentation" :label="$t('headerBar.documentation')" />
+        <q-route-tab to="/search" :label="$t('headerBar.search')" />
       </q-tabs>
     </q-header>
   </div>
