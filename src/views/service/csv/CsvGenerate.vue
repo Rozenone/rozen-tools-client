@@ -45,7 +45,7 @@ const csvResult = ref('')
 const allRows = ref<string[]>([])
 
 // 格式化csv
-function generateCsv() {
+const generateCsv = () => {
   if (!templateText.value) return
   const lines = templateText.value.split(/\r?\n/)
   if (lines.length < 2) {
@@ -68,14 +68,14 @@ function generateCsv() {
 }
 
 // 复制到剪切板
-function copyResult() {
+const copyResult = () => {
   if (!csvResult.value) return
   navigator.clipboard.writeText(csvResult.value)
   $q.notify({ type: 'positive', message: t('csvGenerate.copied') })
 }
 
 // 下载csv
-function downloadCsv() {
+const downloadCsv = () => {
   if (!allRows.value.length) return
   const blob = new Blob([allRows.value.join('\n')], { type: 'text/csv;charset=utf-8;' })
   const url = URL.createObjectURL(blob)

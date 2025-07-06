@@ -28,7 +28,7 @@
           color="pink"
           icon="fab fa-bilibili"
           type="a"
-          href="https://space.bilibili.com/37662911?spm_id_from=333.337.0.0"
+          href="https://space.bilibili.com/37662911"
           target="_blank"
         >
           <q-tooltip>Bilibili</q-tooltip>

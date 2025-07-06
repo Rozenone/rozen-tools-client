@@ -9,36 +9,20 @@
         <div class="row q-col-gutter-md">
           <!-- 源编码选择 -->
           <div class="col-12 col-sm-6">
-            <q-select
-              v-model="sourceEncoding"
-              :options="encodingOptions"
-              :label="$t('encodingConvert.sourceEncoding')"
-              outlined
-            />
+            <q-select v-model="sourceEncoding" :options="encodingOptions" :label="$t('encodingConvert.sourceEncoding')"
+              outlined />
           </div>
           <!-- 目标编码选择 -->
           <div class="col-12 col-sm-6">
-            <q-select
-              v-model="targetEncoding"
-              :options="encodingOptions"
-              :label="$t('encodingConvert.targetEncoding')"
-              outlined
-            />
+            <q-select v-model="targetEncoding" :options="encodingOptions" :label="$t('encodingConvert.targetEncoding')"
+              outlined />
           </div>
         </div>
 
         <!-- 文件上传区域 -->
         <div class="q-mt-md">
-          <q-file
-            v-model="files"
-            :label="$t('encodingConvert.selectFiles')"
-            outlined
-            multiple
-            use-chips
-            bottom-slots
-            counter
-            @rejected="onRejected"
-          >
+          <q-file v-model="files" :label="$t('encodingConvert.selectFiles')" outlined multiple use-chips bottom-slots
+            counter @rejected="onRejected">
             <template v-slot:prepend>
               <q-icon name="attach_file" />
             </template>
@@ -47,31 +31,16 @@
 
         <!-- 输出目录选择 -->
         <div class="q-mt-md">
-          <q-input
-            v-model="outputPath"
-            :label="$t('encodingConvert.outputPath')"
-            outlined
-            readonly
-          >
+          <q-input v-model="outputPath" :label="$t('encodingConvert.outputPath')" outlined readonly>
             <template v-slot:append>
-              <q-btn
-                flat
-                dense
-                icon="folder"
-                @click="selectOutputDir"
-              />
+              <q-btn flat dense icon="folder" @click="selectOutputDir" />
             </template>
           </q-input>
         </div>
 
         <!-- 转换按钮 -->
         <div class="row justify-end q-mt-md">
-          <q-btn
-            color="primary"
-            :loading="converting"
-            :disable="!canConvert"
-            @click="confirmConvert"
-          >
+          <q-btn color="primary" :loading="converting" :disable="!canConvert" @click="confirmConvert">
             {{ $t('encodingConvert.convert') }}
           </q-btn>
         </div>
@@ -82,7 +51,7 @@
 
 <script setup lang="ts">
 import { ref, computed, getCurrentInstance } from 'vue'
-const { proxy } = getCurrentInstance()
+const { proxy } = getCurrentInstance() as any
 import { useQuasar } from 'quasar'
 const $q = useQuasar()
 
@@ -104,9 +73,9 @@ const converting = ref(false)
 
 // 计算是否可以转换
 const canConvert = computed(() => {
-  return files.value.length > 0 && 
-         outputPath.value && 
-         sourceEncoding.value !== targetEncoding.value
+  return files.value.length > 0 &&
+    outputPath.value &&
+    sourceEncoding.value !== targetEncoding.value
 })
 
 // 选择输出目录
@@ -133,7 +102,7 @@ const onRejected = () => {
 const confirmConvert = () => {
   $q.dialog({
     title: proxy.$t('encodingConvert.confirmation.title'),
-    message: proxy.$t('encodingConvert.confirmation.message') ,
+    message: proxy.$t('encodingConvert.confirmation.message'),
     ok: {
       label: proxy.$t('encodingConvert.confirmation.ok'),
       color: 'primary'
@@ -151,7 +120,7 @@ const confirmConvert = () => {
 const convertFiles = async () => {
   converting.value = true
   try {
-    const filePaths = files.value.map(file => file.name)
+    const filePaths = files.value.map(file => (file as any).path)
     const result = await window.ipcCommon.convertEncoding(
       filePaths,
       sourceEncoding.value,

@@ -2,19 +2,12 @@
 <template>
   <div class="documentation-page full-height">
     <div class="text-h4 q-mb-lg q-pa-md">{{ $t('documentation.title') }}</div>
-    
+
     <!-- 工具选择网格 -->
     <div class="tools-grid q-pa-md">
       <div class="row q-col-gutter-lg">
-        <div 
-          v-for="tool in documentTools" 
-          :key="tool.name"
-          class="col-12 col-sm-6 col-md-4 col-lg-3"
-        >
-          <q-card 
-            class="tool-card cursor-pointer"
-            @click="navigateToTool(tool.route)"
-          >
+        <div v-for="tool in documentTools" :key="tool.name" class="col-12 col-sm-6 col-md-4 col-lg-3">
+          <q-card class="tool-card cursor-pointer" @click="navigateToTool(tool.route)">
             <q-card-section class="text-center">
               <div class="tool-icon q-mb-md">
                 <q-icon :name="tool.icon" size="4rem" :color="tool.color" />
@@ -57,7 +50,7 @@ const navigateToTool = (route: string) => {
 .documentation-page {
   background: var(--q-grey-1);
   min-height: 100vh;
-} 
+}
 
 .tool-card {
   height: 220px;

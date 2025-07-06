@@ -12,6 +12,9 @@ import { aiChat_jp } from '@/views/service/ai/AIChat_lan'
 import { documentation_jp } from '@/views/documentation/DocumentationPage_lan'
 import { documentFormat_jp } from '@/views/service/documentFormat/DocumentFormat_lan'
 import { common_jp } from '@/locales/common'
+import { searchPage_jp } from '@/views/searchPage/searchPage_lan'
+import { csvGenerate_jp } from '@/views/service/csv/CsvGenerate_lan'
+import { commonFileSearch_jp } from '@/views/service/CommonFileSearch/CommonFileSearch_lan'
 const jp = {
   homePage: homePage_jp,
   jsonFormat: jsonFormat_jp,
@@ -27,20 +30,9 @@ const jp = {
   documentation: documentation_jp,
   documentFormat: documentFormat_jp,
   common: common_jp,
-  csvGenerate: {
-    title: 'CSV作成',
-    templateInput: 'テンプレート入力',
-    templatePlaceholder: 'CSVテンプレートを入力してください。例：\nテストヘッダー1,テストヘッダー2,テストヘッダー3\nテスト{i},テスト{i},テスト{i}',
-    startValue: '開始値',
-    endValue: '終了値',
-    fillAll: '全て埋める',
-    generate: '生成',
-    result: '生成結果',
-    copy: 'コピー',
-    download: 'CSVダウンロード',
-    needTemplate: 'テンプレートは少なくともヘッダーと1行のデータが必要です',
-    copied: 'クリップボードにコピーしました'
-  }
+  csvGenerate: csvGenerate_jp,
+  searchPage: searchPage_jp,
+  commonFileSearch: commonFileSearch_jp
 }
 
 export default jp

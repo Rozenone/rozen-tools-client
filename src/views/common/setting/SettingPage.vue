@@ -484,7 +484,6 @@ const testProxyConnection = async () => {
       return
     }
     try {
-      // @ts-ignore
       const result = await window.electron.ipcRenderer.invoke('test-proxy-request', {
         protocol: proxyProtocol.value,
         host: proxyHost.value,

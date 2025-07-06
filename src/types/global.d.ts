@@ -10,6 +10,7 @@ interface Window {
       targetEnc: string,
       outputPath: string
     ) => Promise<{ successCount: number; failCount: number }>
+    searchCommonFilesInFolders?: (folderPath: string, fileName: string) => Promise<any[]>;
   }
 }
 

@@ -212,6 +212,37 @@ const createWindow = () => {
       return '未知';
     }
   });
+
+  // 共通文件检索：遍历所有一级子文件夹并读取指定文件内容
+  ipcMain.handle('search-common-files-in-folders', async (event, folderPath, fileName) => {
+    try {
+      const result: any[] = [];
+      // 获取所有一级子文件夹
+      const subFolders = fs.readdirSync(folderPath, { withFileTypes: true })
+        .filter(d => d.isDirectory())
+        .map(d => path.join(folderPath, d.name));
+      for (const subFolder of subFolders) {
+        const targetFile = path.join(subFolder, fileName);
+        if (fs.existsSync(targetFile)) {
+          try {
+            const content = fs.readFileSync(targetFile, 'utf-8');
+            result.push({
+              folder: path.basename(subFolder),
+              content
+            });
+          } catch (e) {
+            result.push({
+              folder: path.basename(subFolder),
+              content: '[读取失败]'
+            });
+          }
+        }
+      }
+      return result;
+    } catch (err) {
+      return [];
+    }
+  });
 };
 
 // 窗口准备事件
