@@ -24,7 +24,7 @@
                         <q-list separator>
                             <q-item v-for="item in filteredResults" :key="item.folder" class="result-item">
                                 <q-item-section>
-                                    <div class="text-bold">{{ item.folder }}</div>
+                                    <div class="text-bold" v-html="highlightFolder(item.folder)"></div>
                                     <pre class="result-content" v-html="highlight(item.content)"></pre>
                                 </q-item-section>
                             </q-item>
@@ -76,7 +76,8 @@ const filterResults = () => {
     }
     const keyword = searchText.value.toLowerCase()
     filteredResults.value = searchResults.value.filter(item =>
-        item.content.toLowerCase().includes(keyword)
+        item.content.toLowerCase().includes(keyword) ||
+        item.folder.toLowerCase().includes(keyword)
     )
 }
 
@@ -85,6 +86,13 @@ const highlight = (content: string) => {
     const keyword = escapeRegExp(searchText.value)
     const reg = new RegExp(`(${keyword})`, 'gi')
     return escapeHtml(content).replace(reg, '<mark class="highlight">$1</mark>')
+}
+
+const highlightFolder = (folder: string) => {
+    if (!searchText.value) return escapeHtml(folder)
+    const keyword = escapeRegExp(searchText.value)
+    const reg = new RegExp(`(${keyword})`, 'gi')
+    return escapeHtml(folder).replace(reg, '<mark class="highlight">$1</mark>')
 }
 
 function escapeHtml(str: string) {
@@ -134,6 +142,8 @@ function escapeRegExp(str: string) {
     font-size: 13px;
     white-space: pre-wrap;
     word-break: break-all;
+    user-select: text;
+    cursor: text;
 }
 
 .highlight,

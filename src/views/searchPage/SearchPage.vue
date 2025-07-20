@@ -44,7 +44,6 @@ const navigateToTool = (route: string) => {
 <style scoped>
 .search-page {
     background: var(--q-grey-1);
-    min-height: 100vh;
 }
 
 .tools-grid {

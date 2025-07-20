@@ -53,15 +53,11 @@ const router = createRouter({
         },
         {
           path: 'csv/generate',
-          name: 'CsvGenerate',
-          component: () => import('@/views/service/csv/CsvGenerate.vue'),
-          meta: { title: 'CSV做成', icon: 'table_chart' }
+          component: () => import('@/views/service/csv/CsvGenerate.vue')
         },
         {
-          path: 'plsql/to-plantuml',
-          name: 'PlsqlToPlantUml',
-          component: () => import('@/views/service/plsql/PlsqlToPlantUml.vue'),
-          meta: { title: 'PLSQL转流程图', icon: 'description' }
+          path: 'sql_format',
+          component: () => import('@/views/service/sql/SqlFormat.vue')
         }
       ]
     },

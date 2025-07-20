@@ -348,14 +348,15 @@ const currentTheme = ref(store.top.theme)
 const fontSize = ref(store.top.fontSize || 14)
 
 onMounted(() => {
-  const lan = localStorage.getItem('lan') || ''
+  let lan = localStorage.getItem('lan') || i18n.global.locale.value || 'cn'
+  // 兼容label显示
+  if (!['cn', 'jp'].includes(lan)) lan = 'cn'
   model.value = lan
   $q.dark.set(currentTheme.value === 'dark')
-  // 应用保存的字体大小
   document.documentElement.style.fontSize = `${fontSize.value}px`
 })
 
-const model = ref('中文')
+const model = ref('')
 const options = reactive([
   {
     label: '中文',
@@ -484,7 +485,7 @@ const testProxyConnection = async () => {
       return
     }
     try {
-      const result = await window.electron.ipcRenderer.invoke('test-proxy-request', {
+      const result = await window.electron?.ipcRenderer.invoke('test-proxy-request', {
         protocol: proxyProtocol.value,
         host: proxyHost.value,
         port: proxyPort.value,

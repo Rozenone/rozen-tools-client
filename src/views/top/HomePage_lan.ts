@@ -11,8 +11,8 @@ export const homePage_cn = {
   jwtDescription: 'JWT Token 解析与编码工具',
   csv_generate: 'CSV做成',
   csv_generateDescription: '自定义模板批量生成CSV文件',
-  plsql_plantuml: 'PLSQL转流程图',
-  plsql_plantumlDescription: '将Oracle存储过程一键生成PlantUML流程图'
+  sql_format: 'SQL格式化',
+  sql_formatDescription: '粘贴SQL代码或存储过程代码，自动格式化换行、对齐等，让SQL语句美观。'
 }
 
 
@@ -29,6 +29,6 @@ export const homePage_jp = {
   jwtDescription: 'JWT トークン解析・エンコードツール',
   csv_generate: 'CSV作成',
   csv_generateDescription: 'テンプレートでCSVファイルを一括生成',
-  plsql_plantuml: 'PLSQL→フローチャート',
-  plsql_plantumlDescription: 'OracleストアドプロシージャをPlantUMLフロー図に変換'
+  sql_format: 'SQL整形',
+  sql_formatDescription: 'SQL文やストアドプロシージャを貼り付けて、自動で整形・改行・インデントを行い、SQLを見やすくします。'
 }
