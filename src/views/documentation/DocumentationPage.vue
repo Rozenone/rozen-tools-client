@@ -49,7 +49,6 @@ const navigateToTool = (route: string) => {
 <style scoped>
 .documentation-page {
   background: var(--q-grey-1);
-  min-height: 100vh;
 }
 
 .tool-card {

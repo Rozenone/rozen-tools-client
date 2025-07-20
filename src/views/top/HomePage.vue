@@ -70,9 +70,9 @@ const toolItems: ToolItem[] = reactive([
     url: '/service/csv/generate'
   },
   {
-    title: 'plsql_plantuml',
-    img: 'description',
-    url: '/service/plsql/to-plantuml'
+    title: 'sql_format',
+    img: 'json.svg', 
+    url: '/service/sql_format'
   }
 ])
 </script>

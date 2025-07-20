@@ -12,6 +12,11 @@ interface Window {
     ) => Promise<{ successCount: number; failCount: number }>
     searchCommonFilesInFolders?: (folderPath: string, fileName: string) => Promise<any[]>;
   }
+  electron?: {
+    ipcRenderer: {
+      invoke: (channel: string, ...args: any[]) => Promise<any>;
+    };
+  };
 }
 
 declare module '*.vue' {
