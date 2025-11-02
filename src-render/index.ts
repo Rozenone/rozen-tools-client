@@ -77,7 +77,11 @@ const createWindow = () => {
 
           // 读取文件内容 写入文件
           const fileBuffer = fs.readFileSync(filePath);
-          const fileContent = iconv.decode(fileBuffer, sourceEncoding);
+          let fileContent = iconv.decode(fileBuffer, sourceEncoding);
+
+          // 确保文件内容使用CRLF换行符
+          // 先将所有CRLF转换为LF，再统一转换为CRLF
+          fileContent = fileContent.replace(/\r\n/g, '\n').replace(/\n/g, '\r\n');
 
           // 将文件内容转码到目标编码，并写入新文件
           const outputBuffer = iconv.encode(fileContent, targetEncoding);
@@ -187,16 +191,27 @@ const createWindow = () => {
             visibility: 'visible'
           }];
         }
+        // 设置ExcelJS使用CRLF换行符
+        workbook.creator = workbook.creator || 'rozen-tools';
+        workbook.lastModifiedBy = workbook.lastModifiedBy || 'rozen-tools';
+        workbook.created = workbook.created || new Date();
+        workbook.modified = new Date();
+
+        // ExcelJS在写入时，单元格中的换行符会被自动处理，但我们可以通过设置确保一致性
+        const writeOptions = {
+          eol: '\r\n' as const
+        };
+
         if (overwrite) {
-          await workbook.xlsx.writeFile(filePath);
+          await workbook.xlsx.writeFile(filePath, writeOptions);
         } else {
           if (savePath) {
-            await workbook.xlsx.writeFile(savePath);
+            await workbook.xlsx.writeFile(savePath, writeOptions);
           } else {
             const dir = path.dirname(filePath);
             const base = path.basename(filePath, path.extname(filePath));
             const newPath = path.join(dir, `${base}_formatted.xlsx`);
-            await workbook.xlsx.writeFile(newPath);
+            await workbook.xlsx.writeFile(newPath, writeOptions);
           }
         }
       }

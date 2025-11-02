@@ -1,10 +1,11 @@
 <template>
   <div class="csv-generate-page q-pa-md">
-    <div class="text-h4 q-mb-lg">{{$t('csvGenerate.title')}}</div>
+    <div class="text-h4 q-mb-lg">{{ $t('csvGenerate.title') }}</div>
     <q-card class="q-mb-lg">
       <q-card-section>
-        <div class="text-h6 q-mb-md">{{$t('csvGenerate.templateInput')}}</div>
-        <q-input v-model="templateText" type="textarea" :rows="6" outlined :placeholder="$t('csvGenerate.templatePlaceholder')" />
+        <div class="text-h6 q-mb-md">{{ $t('csvGenerate.templateInput') }}</div>
+        <q-input v-model="templateText" type="textarea" :rows="6" outlined
+          :placeholder="$t('csvGenerate.templatePlaceholder')" />
         <div class="row q-col-gutter-md q-mt-md">
           <div class="col-6">
             <q-input v-model.number="startValue" type="number" :label="$t('csvGenerate.startValue')" outlined dense />
@@ -20,7 +21,7 @@
     </q-card>
     <q-card v-if="csvResult" class="q-mb-lg">
       <q-card-section>
-        <div class="text-h6 q-mb-md">{{$t('csvGenerate.result')}}</div>
+        <div class="text-h6 q-mb-md">{{ $t('csvGenerate.result') }}</div>
         <q-input v-model="csvResult" type="textarea" :rows="8" readonly />
         <div class="q-mt-md row q-gutter-sm">
           <q-btn color="secondary" :label="$t('csvGenerate.copy')" @click="copyResult" />
@@ -77,7 +78,8 @@ const copyResult = () => {
 // 下载csv
 const downloadCsv = () => {
   if (!allRows.value.length) return
-  const blob = new Blob([allRows.value.join('\n')], { type: 'text/csv;charset=utf-8;' })
+  // 使用CRLF换行符
+  const blob = new Blob([allRows.value.join('\r\n')], { type: 'text/csv;charset=utf-8;' })
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
   a.href = url
@@ -87,5 +89,4 @@ const downloadCsv = () => {
 }
 </script>
 
-<style scoped>
-</style> 
+<style scoped></style>
