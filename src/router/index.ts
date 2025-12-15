@@ -5,7 +5,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      component: () => import('@/views/top/HomePage.vue') 
+      component: () => import('@/views/top/HomePage.vue')
     },
     {
       path: '/common',
@@ -54,10 +54,6 @@ const router = createRouter({
         {
           path: 'csv/generate',
           component: () => import('@/views/service/csv/CsvGenerate.vue')
-        },
-        {
-          path: 'sql_format',
-          component: () => import('@/views/service/sql/SqlFormat.vue')
         }
       ]
     },

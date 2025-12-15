@@ -6,11 +6,7 @@
         <q-card class="tool-card" @click="router.push(item.url)">
           <q-card-section class="row items-center">
             <div class="col-auto">
-              <q-img
-                :src="getImageUrl(item.img)"
-                spinner-color="primary"
-                style="height: 40px; width: 40px"
-              />
+              <q-img :src="getImageUrl(item.img)" spinner-color="primary" style="height: 40px; width: 40px" />
             </div>
             <div class="col q-ml-md">
               <div class="text-h6">{{ $t(`homePage.${item.title}`) }}</div>
@@ -68,11 +64,6 @@ const toolItems: ToolItem[] = reactive([
     title: 'csv_generate',
     img: 'csv.svg',
     url: '/service/csv/generate'
-  },
-  {
-    title: 'sql_format',
-    img: 'json.svg', 
-    url: '/service/sql_format'
   }
 ])
 </script>

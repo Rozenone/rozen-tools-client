@@ -30,26 +30,11 @@
 
       <!-- 输入区域 -->
       <q-card-section class="input-container q-pa-md">
-        <q-input
-          v-model="inputMessage"
-          type="textarea"
-          :placeholder="$t('aiChat.inputPlaceholder')"
-          outlined
-          dense
-          autogrow
-          :disable="loading || !store.top.aiConfig.enabled"
-          @keypress.enter.prevent="sendMessage"
-        >
+        <q-input v-model="inputMessage" type="textarea" :placeholder="$t('aiChat.inputPlaceholder')" outlined dense
+          autogrow :disable="loading || !store.top.aiConfig.enabled" @keypress.enter.prevent="sendMessage">
           <template v-slot:after>
-            <q-btn
-              round
-              flat
-              color="primary"
-              icon="send"
-              :loading="loading"
-              :disable="!store.top.aiConfig.enabled"
-              @click="sendMessage"
-            />
+            <q-btn round flat color="primary" icon="send" :loading="loading" :disable="!store.top.aiConfig.enabled"
+              @click="sendMessage" />
           </template>
         </q-input>
       </q-card-section>
@@ -121,7 +106,7 @@ const sendMessage = async () => {
     ]
 
     const response = await chatCompletion(chatMessages)
-    
+
     if (response.data.choices?.[0]?.message) {
       messages.value.push({
         role: 'assistant',
@@ -256,4 +241,4 @@ onMounted(() => {
     background: rgba(255, 255, 255, 0.1);
   }
 }
-</style> 
+</style>

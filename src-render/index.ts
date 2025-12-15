@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Menu, ipcMain, dialog, IpcMainInvokeEvent } from "electron";
+import { app, BrowserWindow, Menu, ipcMain, dialog, IpcMainInvokeEvent, shell } from "electron";
 import fs from "fs";
 import iconv from "iconv-lite";
 import path from "path";
@@ -260,6 +260,16 @@ const createWindow = () => {
       return result;
     } catch (err) {
       return [];
+    }
+  });
+
+  // 在外部浏览器中打开链接
+  ipcMain.handle('open-external-url', async (event, url: string) => {
+    try {
+      await shell.openExternal(url);
+      return { success: true };
+    } catch (error) {
+      return { success: false, message: error instanceof Error ? error.message : 'unknown error' };
     }
   });
 };
