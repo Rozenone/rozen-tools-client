@@ -197,21 +197,17 @@ const createWindow = () => {
         workbook.created = workbook.created || new Date();
         workbook.modified = new Date();
 
-        // ExcelJS在写入时，单元格中的换行符会被自动处理，但我们可以通过设置确保一致性
-        const writeOptions = {
-          eol: '\r\n' as const
-        };
-
+        // ExcelJS在写入时，单元格中的换行符会被自动处理
         if (overwrite) {
-          await workbook.xlsx.writeFile(filePath, writeOptions);
+          await workbook.xlsx.writeFile(filePath);
         } else {
           if (savePath) {
-            await workbook.xlsx.writeFile(savePath, writeOptions);
+            await workbook.xlsx.writeFile(savePath);
           } else {
             const dir = path.dirname(filePath);
             const base = path.basename(filePath, path.extname(filePath));
             const newPath = path.join(dir, `${base}_formatted.xlsx`);
-            await workbook.xlsx.writeFile(newPath, writeOptions);
+            await workbook.xlsx.writeFile(newPath);
           }
         }
       }
@@ -270,6 +266,108 @@ const createWindow = () => {
       return { success: true };
     } catch (error) {
       return { success: false, message: error instanceof Error ? error.message : 'unknown error' };
+    }
+  });
+
+  // 打开本地文件或文件夹
+  ipcMain.handle('open-path', async (event, targetPath: string) => {
+    try {
+      if (!fs.existsSync(targetPath)) {
+        return { success: false, message: '路径不存在' };
+      }
+      const result = await shell.openPath(targetPath);
+      if (result) {
+        // openPath 返回非空字符串表示错误
+        return { success: false, message: result };
+      }
+      return { success: true };
+    } catch (error) {
+      return {
+        success: false,
+        message: error instanceof Error ? error.message : 'unknown error'
+      };
+    }
+  });
+
+  // 生成文件夹文档树
+  ipcMain.handle('generate-folder-tree', async (event, folderPath: string) => {
+    try {
+      // 定义树节点类型
+      interface TreeNode {
+        name: string;
+        path: string;
+        type: 'file' | 'folder';
+        children?: TreeNode[];
+        size?: number;
+        modifiedTime?: string;
+      }
+
+      // 递归遍历文件夹生成树形结构
+      const buildTree = (dirPath: string, relativePath: string = ''): TreeNode | null => {
+        try {
+          const stats = fs.statSync(dirPath);
+
+          if (stats.isDirectory()) {
+            const node: TreeNode = {
+              name: path.basename(dirPath),
+              path: relativePath || dirPath,
+              type: 'folder',
+              children: [],
+              modifiedTime: stats.mtime.toISOString()
+            };
+
+            // 读取目录内容
+            const entries = fs.readdirSync(dirPath, { withFileTypes: true });
+
+            // 排序：文件夹在前，文件在后，然后按名称排序
+            entries.sort((a, b) => {
+              if (a.isDirectory() && !b.isDirectory()) return -1;
+              if (!a.isDirectory() && b.isDirectory()) return 1;
+              return a.name.localeCompare(b.name);
+            });
+
+            for (const entry of entries) {
+              const fullPath = path.join(dirPath, entry.name);
+              const childRelativePath = relativePath
+                ? path.join(relativePath, entry.name)
+                : fullPath;
+
+              const childNode = buildTree(fullPath, childRelativePath);
+              if (childNode) {
+                node.children!.push(childNode);
+              }
+            }
+
+            return node;
+          } else if (stats.isFile()) {
+            return {
+              name: path.basename(dirPath),
+              path: relativePath || dirPath,
+              type: 'file',
+              size: stats.size,
+              modifiedTime: stats.mtime.toISOString()
+            };
+          }
+
+          return null;
+        } catch (error) {
+          // 忽略无法访问的文件/文件夹
+          return null;
+        }
+      };
+
+      const tree = buildTree(folderPath);
+
+      if (!tree) {
+        return { success: false, message: '无法读取文件夹' };
+      }
+
+      return { success: true, tree };
+    } catch (error) {
+      return {
+        success: false,
+        message: error instanceof Error ? error.message : 'unknown error'
+      };
     }
   });
 };

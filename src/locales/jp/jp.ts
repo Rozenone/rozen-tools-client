@@ -3,7 +3,7 @@ import { headerBar_jp } from '@/components/common/HeaderBar/HeaderBar_lan'
 import { jsonFormat_jp } from '@/views/service/json/JsonFormat_lan'
 import { rightDrawer_jp } from '@/components/common/RightDrawer/RightDrawer_lan'
 import { settingPage_jp } from '@/views/common/setting/SettingPage_lan'
-import { regexFormat_jp} from '@/views/service/regex/RegexFormat_lan'
+import { regexFormat_jp } from '@/views/service/regex/RegexFormat_lan'
 import { uuidCreat_jp } from '@/views/service/uuid/UUIDCreat_lan'
 import { encodingConvert_jp } from '@/views/service/encoding/EncodingConvert_lan'
 import { leftDrawer_jp } from '@/components/common/LeftDrawer/LeftDrawer_lan'
@@ -15,6 +15,7 @@ import { common_jp } from '@/locales/common'
 import { searchPage_jp } from '@/views/searchPage/searchPage_lan'
 import { csvGenerate_jp } from '@/views/service/csv/CsvGenerate_lan'
 import { commonFileSearch_jp } from '@/views/service/CommonFileSearch/CommonFileSearch_lan'
+import { folderTree_jp } from '@/views/service/folderTree/FolderTree_lan'
 const jp = {
   homePage: homePage_jp,
   jsonFormat: jsonFormat_jp,
@@ -32,7 +33,8 @@ const jp = {
   common: common_jp,
   csvGenerate: csvGenerate_jp,
   searchPage: searchPage_jp,
-  commonFileSearch: commonFileSearch_jp
+  commonFileSearch: commonFileSearch_jp,
+  folderTree: folderTree_jp
 }
 
 export default jp

@@ -12,7 +12,9 @@ export const homePage_cn = {
   csv_generate: 'CSV做成',
   csv_generateDescription: '自定义模板批量生成CSV文件',
   sql_format: 'SQL格式化',
-  sql_formatDescription: '粘贴SQL代码或存储过程代码，自动格式化换行、对齐等，让SQL语句美观。'
+  sql_formatDescription: '粘贴SQL代码或存储过程代码，自动格式化换行、对齐等，让SQL语句美观。',
+  folder_tree: '文档树生成',
+  folder_treeDescription: '选择文件夹自动生成文档树结构'
 }
 
 
@@ -30,5 +32,7 @@ export const homePage_jp = {
   csv_generate: 'CSV作成',
   csv_generateDescription: 'テンプレートでCSVファイルを一括生成',
   sql_format: 'SQL整形',
-  sql_formatDescription: 'SQL文やストアドプロシージャを貼り付けて、自動で整形・改行・インデントを行い、SQLを見やすくします。'
+  sql_formatDescription: 'SQL文やストアドプロシージャを貼り付けて、自動で整形・改行・インデントを行い、SQLを見やすくします。',
+  folder_tree: 'ドキュメントツリー生成',
+  folder_treeDescription: 'フォルダを選択してドキュメントツリー構造を自動生成'
 }

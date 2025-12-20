@@ -5,7 +5,7 @@ contextBridge.exposeInMainWorld('ipcCommon', {
         ipcRenderer.send('close-window', null);
     },
     minWindow: () => {
-        ipcRenderer.send('min-window',null);
+        ipcRenderer.send('min-window', null);
     },
     maxWindow: () => {
         ipcRenderer.send('max-window', null);
@@ -18,7 +18,13 @@ contextBridge.exposeInMainWorld('ipcCommon', {
     },
     searchCommonFilesInFolders: (folderPath: string, fileName: string) => {
         return ipcRenderer.invoke('search-common-files-in-folders', folderPath, fileName);
+    },
+    generateFolderTree: (folderPath: string) => {
+        return ipcRenderer.invoke('generate-folder-tree', folderPath);
+    },
+    openPath: (targetPath: string) => {
+        return ipcRenderer.invoke('open-path', targetPath);
     }
 })
 
-export default {contextBridge}
+export default { contextBridge }

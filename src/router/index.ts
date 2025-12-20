@@ -54,6 +54,10 @@ const router = createRouter({
         {
           path: 'csv/generate',
           component: () => import('@/views/service/csv/CsvGenerate.vue')
+        },
+        {
+          path: 'folder-tree',
+          component: () => import('@/views/service/folderTree/FolderTree.vue')
         }
       ]
     },

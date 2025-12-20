@@ -11,6 +11,8 @@ interface Window {
       outputPath: string
     ) => Promise<{ successCount: number; failCount: number }>
     searchCommonFilesInFolders?: (folderPath: string, fileName: string) => Promise<any[]>;
+    generateFolderTree?: (folderPath: string) => Promise<{ success: boolean; tree?: any; message?: string }>;
+    openPath?: (targetPath: string) => Promise<{ success: boolean; message?: string }>;
   }
   electron?: {
     ipcRenderer: {

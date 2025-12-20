@@ -64,6 +64,11 @@ const toolItems: ToolItem[] = reactive([
     title: 'csv_generate',
     img: 'csv.svg',
     url: '/service/csv/generate'
+  },
+  {
+    title: 'folder_tree',
+    img: 'restart.svg',
+    url: '/service/folder-tree'
   }
 ])
 </script>
