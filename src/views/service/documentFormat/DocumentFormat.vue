@@ -14,7 +14,8 @@
         <div class="row q-col-gutter-md">
           <!-- 文件选择 -->
           <div class="col-12">
-            <q-btn :label="$t('documentFormat.excel.selectFile')" @click="selectExcelFile" color="primary" class="q-mb-md" />
+            <q-btn :label="$t('documentFormat.excel.selectFile')" @click="selectExcelFile" color="primary"
+              class="q-mb-md" />
           </div>
 
           <!-- 缩放设置 -->
@@ -33,18 +34,11 @@
             <div class="quick-fonts q-mb-sm">
               <div class="text-caption text-grey-6 q-mb-xs">{{ $t('documentFormat.excel.quickJapaneseFonts') }}:</div>
               <div class="row q-gutter-xs">
-                <q-btn 
-                  v-for="font in quickJapaneseFonts" 
-                  :key="font"
-                  :label="font" 
-                  size="sm" 
-                  outline 
-                  :color="selectedFont === font ? 'primary' : 'grey'"
-                  @click="selectedFont = font"
-                />
+                <q-btn v-for="font in quickJapaneseFonts" :key="font" :label="font" size="sm" outline
+                  :color="selectedFont === font ? 'primary' : 'grey'" @click="selectedFont = font" />
               </div>
             </div>
-            
+
             <q-select v-model="selectedFont" :options="fontOptions" :label="$t('documentFormat.excel.fontFamily')"
               outlined dense>
               <template v-slot:prepend>
@@ -73,7 +67,7 @@
           <!-- 操作按钮 -->
           <div class="col-12">
             <div class="row justify-end q-gutter-sm">
-      
+
               <q-btn :label="$t('documentFormat.excel.format')" color="primary" :disable="!excelFilePaths.length"
                 @click="formatExcel" :loading="isProcessing" />
             </div>
@@ -81,7 +75,8 @@
 
           <!-- 在操作按钮上方添加勾选框 -->
           <div class="col-12">
-            <q-checkbox v-model="overwriteSource" :label="t('documentFormat.excel.overwriteSource')" class="q-mb-md" :text-color="$q.dark.isActive ? 'white' : 'black'" />
+            <q-checkbox v-model="overwriteSource" :label="t('documentFormat.excel.overwriteSource')" class="q-mb-md"
+              :text-color="$q.dark.isActive ? 'white' : 'black'" />
           </div>
         </div>
 
@@ -240,6 +235,7 @@ const selectExcelFile = async () => {
 // 格式化Excel
 const formatExcel = async () => {
   if (!excelFilePaths.value.length) return
+  if (!ipcRenderer) return
   isProcessing.value = true
   try {
     // 强制所有参数为简单类型
@@ -267,7 +263,6 @@ const formatExcel = async () => {
 </script>
 
 <style scoped>
-
 .excel-format-card {
   color: white;
 }
