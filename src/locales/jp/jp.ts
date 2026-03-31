@@ -16,6 +16,7 @@ import { searchPage_jp } from '@/views/searchPage/searchPage_lan'
 import { csvGenerate_jp } from '@/views/service/csv/CsvGenerate_lan'
 import { commonFileSearch_jp } from '@/views/service/CommonFileSearch/CommonFileSearch_lan'
 import { folderTree_jp } from '@/views/service/folderTree/FolderTree_lan'
+import { base64Parse_jp } from '@/views/service/base64/Base64Parse_lan'
 const jp = {
   homePage: homePage_jp,
   jsonFormat: jsonFormat_jp,
@@ -34,7 +35,8 @@ const jp = {
   csvGenerate: csvGenerate_jp,
   searchPage: searchPage_jp,
   commonFileSearch: commonFileSearch_jp,
-  folderTree: folderTree_jp
+  folderTree: folderTree_jp,
+  base64Parse: base64Parse_jp
 }
 
 export default jp

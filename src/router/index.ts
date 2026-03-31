@@ -58,6 +58,10 @@ const router = createRouter({
         {
           path: 'folder-tree',
           component: () => import('@/views/service/folderTree/FolderTree.vue')
+        },
+        {
+          path: 'base64-parse',
+          component: () => import('@/views/service/base64/Base64Parse.vue')
         }
       ]
     },

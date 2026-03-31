@@ -70,7 +70,7 @@ const generateCsv = () => {
 
 // 复制到剪切板
 const copyResult = () => {
-  if (!csvResult.value) return
+  if (!csvResult.value) return;
   navigator.clipboard.writeText(csvResult.value)
   $q.notify({ type: 'positive', message: t('csvGenerate.copied') })
 }

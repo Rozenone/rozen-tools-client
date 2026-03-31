@@ -14,7 +14,11 @@ export const homePage_cn = {
   sql_format: 'SQL格式化',
   sql_formatDescription: '粘贴SQL代码或存储过程代码，自动格式化换行、对齐等，让SQL语句美观。',
   folder_tree: '文档树生成',
-  folder_treeDescription: '选择文件夹自动生成文档树结构'
+  folder_treeDescription: '选择文件夹自动生成文档树结构',
+  base64: 'Base64 编解码',
+  base64Description: 'Base64 编码与解码工具',
+  favorite: '收藏',
+  unfavorite: '取消收藏'
 }
 
 
@@ -34,5 +38,9 @@ export const homePage_jp = {
   sql_format: 'SQL整形',
   sql_formatDescription: 'SQL文やストアドプロシージャを貼り付けて、自動で整形・改行・インデントを行い、SQLを見やすくします。',
   folder_tree: 'ドキュメントツリー生成',
-  folder_treeDescription: 'フォルダを選択してドキュメントツリー構造を自動生成'
+  folder_treeDescription: 'フォルダを選択してドキュメントツリー構造を自動生成',
+  base64: 'Base64 エンコード/デコード',
+  base64Description: 'Base64 エンコード・デコードツール',
+  favorite: 'お気に入り',
+  unfavorite: 'お気に入り解除'
 }

@@ -16,6 +16,7 @@ import { searchPage_cn } from '@/views/searchPage/searchPage_lan'
 import { csvGenerate_cn } from '@/views/service/csv/CsvGenerate_lan'
 import { commonFileSearch_cn } from '@/views/service/CommonFileSearch/CommonFileSearch_lan'
 import { folderTree_cn } from '@/views/service/folderTree/FolderTree_lan'
+import { base64Parse_cn } from '@/views/service/base64/Base64Parse_lan'
 
 const cn = {
   homePage: homePage_cn,
@@ -35,7 +36,8 @@ const cn = {
   csvGenerate: csvGenerate_cn,
   searchPage: searchPage_cn,
   commonFileSearch: commonFileSearch_cn,
-  folderTree: folderTree_cn
+  folderTree: folderTree_cn,
+  base64Parse: base64Parse_cn
 }
 
 export default cn

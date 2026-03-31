@@ -2,31 +2,55 @@
 <template>
   <div class="q-pa-md">
     <div class="row q-col-gutter-md">
-      <div class="col-12 col-sm-6 col-md-4" v-for="item in toolItems" :key="item.title">
-        <q-card class="tool-card" @click="router.push(item.url)">
-          <q-card-section class="row items-center">
-            <div class="col-auto">
-              <q-img :src="getImageUrl(item.img)" spinner-color="primary" style="height: 40px; width: 40px" />
-            </div>
-            <div class="col q-ml-md">
-              <div class="text-h6">{{ $t(`homePage.${item.title}`) }}</div>
-              <div class="text-subtitle2 text-grey-7">
-                {{ $t(`homePage.${item.title}Description`) }}
-              </div>
-            </div>
-          </q-card-section>
-        </q-card>
-      </div>
+      <draggable
+        v-model="sortedToolItems"
+        item-key="title"
+        class="row q-col-gutter-md w-full"
+        @end="onDragEnd"
+      >
+        <template #item="{ element }">
+          <div class="col-12 col-sm-6 col-md-4">
+            <q-card class="tool-card" @click="router.push(element.url)">
+              <q-card-section class="row items-center">
+                <div class="col-auto">
+                  <q-img :src="getImageUrl(element.img)" spinner-color="primary" style="height: 40px; width: 40px" />
+                </div>
+                <div class="col q-ml-md">
+                  <div class="text-h6">{{ $t(`homePage.${element.title}`) }}</div>
+                  <div class="text-subtitle2 text-grey-7">
+                    {{ $t(`homePage.${element.title}Description`) }}
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <q-btn
+                    flat
+                    round
+                    dense
+                    :icon="toolStore.isFavorite(element.title) ? 'star' : 'star_border'"
+                    :color="toolStore.isFavorite(element.title) ? 'amber' : 'grey'"
+                    @click.stop="toolStore.toggleFavorite(element.title)"
+                  >
+                    <q-tooltip>{{ toolStore.isFavorite(element.title) ? $t('homePage.unfavorite') : $t('homePage.favorite') }}</q-tooltip>
+                  </q-btn>
+                </div>
+              </q-card-section>
+            </q-card>
+          </div>
+        </template>
+      </draggable>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive } from "vue"
+import { ref, onMounted, watch } from "vue"
 import { useRouter } from "vue-router"
+import draggable from 'vuedraggable'
 import { getImageUrl } from "@/utils/CommUtils"
+import useToolStore from "@/stores/toolStore"
 
 const router = useRouter()
+const toolStore = useToolStore()
 
 interface ToolItem {
   title: string
@@ -34,7 +58,7 @@ interface ToolItem {
   url: string
 }
 
-const toolItems: ToolItem[] = reactive([
+const defaultToolItems: ToolItem[] = [
   {
     title: 'json',
     img: 'json.svg',
@@ -69,8 +93,52 @@ const toolItems: ToolItem[] = reactive([
     title: 'folder_tree',
     img: 'restart.svg',
     url: '/service/folder-tree'
+  },
+  {
+    title: 'base64',
+    img: 'encoding.svg',
+    url: '/service/base64-parse'
   }
-])
+]
+
+// 根据 store 中的排序和收藏状态计算排序后的工具列表
+const sortedToolItems = ref<ToolItem[]>([])
+
+const computeSortedItems = () => {
+  // 按 toolOrder 排序
+  const orderedItems = [...defaultToolItems].sort((a, b) => {
+    const indexA = toolStore.toolOrder.indexOf(a.title)
+    const indexB = toolStore.toolOrder.indexOf(b.title)
+    // 如果不在 order 中，放到最后
+    const orderA = indexA === -1 ? Infinity : indexA
+    const orderB = indexB === -1 ? Infinity : indexB
+    return orderA - orderB
+  })
+
+  // 收藏的排在前面
+  const favorites = orderedItems.filter(item => toolStore.isFavorite(item.title))
+  const nonFavorites = orderedItems.filter(item => !toolStore.isFavorite(item.title))
+
+  return [...favorites, ...nonFavorites]
+}
+
+// 初始化
+onMounted(() => {
+  const defaultTitles = defaultToolItems.map(item => item.title)
+  toolStore.initOrder(defaultTitles)
+  sortedToolItems.value = computeSortedItems()
+})
+
+// 监听收藏变化，重新排序
+watch(() => toolStore.favorites, () => {
+  sortedToolItems.value = computeSortedItems()
+}, { deep: true })
+
+// 拖拽结束保存新排序
+const onDragEnd = () => {
+  const newOrder = sortedToolItems.value.map(item => item.title)
+  toolStore.updateOrder(newOrder)
+}
 </script>
 
 <style scoped>
