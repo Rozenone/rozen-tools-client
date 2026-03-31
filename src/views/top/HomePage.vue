@@ -2,12 +2,7 @@
 <template>
   <div class="q-pa-md">
     <div class="row q-col-gutter-md">
-      <draggable
-        v-model="sortedToolItems"
-        item-key="title"
-        class="row q-col-gutter-md w-full"
-        @end="onDragEnd"
-      >
+      <draggable v-model="sortedToolItems" item-key="title" class="row q-col-gutter-md w-full" @end="onDragEnd">
         <template #item="{ element }">
           <div class="col-12 col-sm-6 col-md-4">
             <q-card class="tool-card" @click="router.push(element.url)">
@@ -22,15 +17,11 @@
                   </div>
                 </div>
                 <div class="col-auto">
-                  <q-btn
-                    flat
-                    round
-                    dense
-                    :icon="toolStore.isFavorite(element.title) ? 'star' : 'star_border'"
+                  <q-btn flat round dense :icon="toolStore.isFavorite(element.title) ? 'star' : 'star_border'"
                     :color="toolStore.isFavorite(element.title) ? 'amber' : 'grey'"
-                    @click.stop="toolStore.toggleFavorite(element.title)"
-                  >
-                    <q-tooltip>{{ toolStore.isFavorite(element.title) ? $t('homePage.unfavorite') : $t('homePage.favorite') }}</q-tooltip>
+                    @click.stop="toolStore.toggleFavorite(element.title)">
+                    <q-tooltip>{{ toolStore.isFavorite(element.title) ? $t('homePage.unfavorite') :
+                      $t('homePage.favorite') }}</q-tooltip>
                   </q-btn>
                 </div>
               </q-card-section>
