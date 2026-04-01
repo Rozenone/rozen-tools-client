@@ -40,29 +40,6 @@ export const settingPage_cn = {
       testSuccess: '代理连接测试成功',
       testFailed: '代理连接测试失败'
     }
-  },
-  ai: {
-    title: 'AI设置',
-    description: '配置AI接口的相关信息',
-    enable: '启用AI',
-    model: '模型',
-    apiKey: 'API密钥',
-    baseUrl: 'API地址',
-    temperature: '温度',
-    maxTokens: '最大Token数',
-    placeholder: {
-      apiKey: '请输入API密钥',
-      baseUrl: '请输入API地址',
-      temperature: '0-2，越大越随机',
-      maxTokens: '100-4000'
-    },
-    testConnection: '测试连接',
-    save: '保存',
-    notification: {
-      saved: 'AI设置已保存',
-      testSuccess: 'AI接口连接成功',
-      testFailed: 'AI接口连接失败'
-    }
   }
 }
 
@@ -108,29 +85,6 @@ export const settingPage_jp = {
       saved: 'プロキシ設定を保存しました',
       testSuccess: '接続テストに成功しました',
       testFailed: '接続テストに失敗しました'
-    }
-  },
-  ai: {
-    title: 'AI設定',
-    description: 'AIインターフェースの情報を設定します',
-    enable: 'AIを有効化',
-    model: 'モデル',
-    apiKey: 'APIキー',
-    baseUrl: 'APIアドレス',
-    temperature: '温度',
-    maxTokens: '最大トークン数',
-    placeholder: {
-      apiKey: 'APIキーを入力してください',
-      baseUrl: 'APIアドレスを入力してください',
-      temperature: '0-2、大きいほどランダム性が高い',
-      maxTokens: '100-4000'
-    },
-    testConnection: '接続テスト',
-    save: '保存する',
-    notification: {
-      saved: 'AI設定が保存されました',
-      testSuccess: 'AIインターフェースの接続に成功しました',
-      testFailed: 'AIインターフェースの接続に失敗しました'
     }
   }
 }

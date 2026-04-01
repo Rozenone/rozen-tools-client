@@ -6,7 +6,8 @@
       store.top.theme === 'dark' ? 'bg-dark' : 'bg-primary'
     ]">
       <!-- Windows 风格标题栏 -->
-      <q-bar v-if="isWindows" :class="store.top.theme === 'dark' ? 'bg-dark' : 'bg-primary'" class="text-white window-drag">
+      <q-bar v-if="isWindows" :class="store.top.theme === 'dark' ? 'bg-dark' : 'bg-primary'"
+        class="text-white window-drag">
         <div class="app-title">
           <span class="brand-name">Rozen</span>
           <span class="tool-name">Tools</span>
@@ -38,21 +39,12 @@
       <q-toolbar>
         <q-btn dense flat round icon="menu_open" @click="toggleLeftDrawer" />
         <q-space />
-        <q-btn 
-          dense 
-          flat 
-          round 
-          icon="smart_toy" 
-          class="q-mr-sm"
-          @click="openAIChat"
-        >
-          <q-tooltip>{{ $t('headerBar.aiChat') }}</q-tooltip>
-        </q-btn>
         <q-btn dense flat round icon="brightness_5" @click="toggleRightDrawer" />
       </q-toolbar>
 
       <q-tabs align="left">
         <q-route-tab to="/" :label="$t('headerBar.page1')" />
+        <q-route-tab to="/favorites" :label="$t('headerBar.favorites')" />
         <q-route-tab to="/documentation" :label="$t('headerBar.documentation')" />
         <q-route-tab to="/search" :label="$t('headerBar.search')" />
       </q-tabs>
@@ -62,11 +54,9 @@
 
 <script setup lang="ts">
 import useStore from "@/stores"
-import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 
 const store = useStore()
-const router = useRouter()
 const isWindows = ref(false)
 
 onMounted(() => {
@@ -92,10 +82,6 @@ const minWindow = () => {
 
 const maxWindow = () => {
   window.ipcCommon.maxWindow()
-}
-
-const openAIChat = () => {
-  router.push('/service/ai-chat')
 }
 </script>
 

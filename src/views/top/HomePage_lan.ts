@@ -17,6 +17,16 @@ export const homePage_cn = {
   folder_treeDescription: '选择文件夹自动生成文档树结构',
   base64: 'Base64 编解码',
   base64Description: 'Base64 编码与解码工具',
+  crypto_hash: '哈希加密',
+  crypto_hashDescription: 'SHA256/SHA512 哈希计算工具',
+  xml_format: 'XML 格式化',
+  xml_formatDescription: 'XML 格式化与压缩工具',
+  url_encode: 'URL 编码',
+  url_encodeDescription: 'URL 编码与解码工具',
+  unicode_trans: 'Unicode 转码',
+  unicode_transDescription: 'ASCII/Unicode/中文互相转换工具',
+  lang_detect: '代码语言检测',
+  lang_detectDescription: '检测代码中是否包含指定语言字符',
   favorite: '收藏',
   unfavorite: '取消收藏'
 }
@@ -41,6 +51,16 @@ export const homePage_jp = {
   folder_treeDescription: 'フォルダを選択してドキュメントツリー構造を自動生成',
   base64: 'Base64 エンコード/デコード',
   base64Description: 'Base64 エンコード・デコードツール',
+  crypto_hash: 'ハッシュ暗号化',
+  crypto_hashDescription: 'SHA256/SHA512 ハッシュ計算ツール',
+  xml_format: 'XML フォーマッター',
+  xml_formatDescription: 'XMLフォーマットと圧縮ツール',
+  url_encode: 'URL エンコード',
+  url_encodeDescription: 'URL エンコード・デコードツール',
+  unicode_trans: 'Unicode 変換',
+  unicode_transDescription: 'ASCII/Unicode/中国語相互変換ツール',
+  lang_detect: 'コード言語検出',
+  lang_detectDescription: 'コード内の指定言語文字を検出',
   favorite: 'お気に入り',
   unfavorite: 'お気に入り解除'
 }

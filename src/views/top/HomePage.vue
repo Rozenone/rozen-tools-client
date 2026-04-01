@@ -89,6 +89,31 @@ const defaultToolItems: ToolItem[] = [
     title: 'base64',
     img: 'encoding.svg',
     url: '/service/base64-parse'
+  },
+  {
+    title: 'crypto_hash',
+    img: 'encoding.svg',
+    url: '/service/crypto-hash'
+  },
+  {
+    title: 'xml_format',
+    img: 'json.svg',
+    url: '/service/xml-format'
+  },
+  {
+    title: 'url_encode',
+    img: 'encoding.svg',
+    url: '/service/url-encode'
+  },
+  {
+    title: 'unicode_trans',
+    img: 'encoding.svg',
+    url: '/service/unicode-trans'
+  },
+  {
+    title: 'lang_detect',
+    img: 'regx.svg',
+    url: '/service/lang-detect'
   }
 ]
 

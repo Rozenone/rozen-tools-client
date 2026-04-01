@@ -8,7 +8,6 @@ import { uuidCreat_cn } from '@/views/service/uuid/UUIDCreat_lan'
 import { encodingConvert_cn } from '@/views/service/encoding/EncodingConvert_lan'
 import { leftDrawer_cn } from '@/components/common/LeftDrawer/LeftDrawer_lan'
 import { jwtParser_cn } from '@/views/service/jwt/JWTParser_lan'
-import { aiChat_cn } from '@/views/service/ai/AIChat_lan'
 import { documentation_cn } from '@/views/documentation/DocumentationPage_lan'
 import { documentFormat_cn } from '@/views/service/documentFormat/DocumentFormat_lan'
 import { common_cn } from '@/locales/common'
@@ -17,6 +16,12 @@ import { csvGenerate_cn } from '@/views/service/csv/CsvGenerate_lan'
 import { commonFileSearch_cn } from '@/views/service/CommonFileSearch/CommonFileSearch_lan'
 import { folderTree_cn } from '@/views/service/folderTree/FolderTree_lan'
 import { base64Parse_cn } from '@/views/service/base64/Base64Parse_lan'
+import { favoritesPage_cn } from '@/views/favorites/FavoritesPage_lan'
+import { cryptoHash_cn } from '@/views/service/crypto/CryptoHash_lan'
+import { xmlFormat_cn } from '@/views/service/xml/XmlFormat_lan'
+import { urlEncode_cn } from '@/views/service/url/UrlEncode_lan'
+import { unicodeTrans_cn } from '@/views/service/unicode/UnicodeTrans_lan'
+import { langDetect_cn } from '@/views/service/langDetect/LangDetect_lan'
 
 const cn = {
   homePage: homePage_cn,
@@ -29,7 +34,6 @@ const cn = {
   encodingConvert: encodingConvert_cn,
   leftDrawer: leftDrawer_cn,
   jwtParser: jwtParser_cn,
-  aiChat: aiChat_cn,
   documentation: documentation_cn,
   documentFormat: documentFormat_cn,
   common: common_cn,
@@ -37,7 +41,13 @@ const cn = {
   searchPage: searchPage_cn,
   commonFileSearch: commonFileSearch_cn,
   folderTree: folderTree_cn,
-  base64Parse: base64Parse_cn
+  base64Parse: base64Parse_cn,
+  favoritesPage: favoritesPage_cn,
+  cryptoHash: cryptoHash_cn,
+  xmlFormat: xmlFormat_cn,
+  urlEncode: urlEncode_cn,
+  unicodeTrans: unicodeTrans_cn,
+  langDetect: langDetect_cn
 }
 
 export default cn

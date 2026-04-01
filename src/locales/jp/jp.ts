@@ -8,7 +8,6 @@ import { uuidCreat_jp } from '@/views/service/uuid/UUIDCreat_lan'
 import { encodingConvert_jp } from '@/views/service/encoding/EncodingConvert_lan'
 import { leftDrawer_jp } from '@/components/common/LeftDrawer/LeftDrawer_lan'
 import { jwtParser_jp } from '@/views/service/jwt/JWTParser_lan'
-import { aiChat_jp } from '@/views/service/ai/AIChat_lan'
 import { documentation_jp } from '@/views/documentation/DocumentationPage_lan'
 import { documentFormat_jp } from '@/views/service/documentFormat/DocumentFormat_lan'
 import { common_jp } from '@/locales/common'
@@ -17,6 +16,13 @@ import { csvGenerate_jp } from '@/views/service/csv/CsvGenerate_lan'
 import { commonFileSearch_jp } from '@/views/service/CommonFileSearch/CommonFileSearch_lan'
 import { folderTree_jp } from '@/views/service/folderTree/FolderTree_lan'
 import { base64Parse_jp } from '@/views/service/base64/Base64Parse_lan'
+import { favoritesPage_jp } from '@/views/favorites/FavoritesPage_lan'
+import { cryptoHash_jp } from '@/views/service/crypto/CryptoHash_lan'
+import { xmlFormat_jp } from '@/views/service/xml/XmlFormat_lan'
+import { urlEncode_jp } from '@/views/service/url/UrlEncode_lan'
+import { unicodeTrans_jp } from '@/views/service/unicode/UnicodeTrans_lan'
+import { langDetect_jp } from '@/views/service/langDetect/LangDetect_lan'
+
 const jp = {
   homePage: homePage_jp,
   jsonFormat: jsonFormat_jp,
@@ -28,7 +34,6 @@ const jp = {
   encodingConvert: encodingConvert_jp,
   leftDrawer: leftDrawer_jp,
   jwtParser: jwtParser_jp,
-  aiChat: aiChat_jp,
   documentation: documentation_jp,
   documentFormat: documentFormat_jp,
   common: common_jp,
@@ -36,7 +41,13 @@ const jp = {
   searchPage: searchPage_jp,
   commonFileSearch: commonFileSearch_jp,
   folderTree: folderTree_jp,
-  base64Parse: base64Parse_jp
+  base64Parse: base64Parse_jp,
+  favoritesPage: favoritesPage_jp,
+  cryptoHash: cryptoHash_jp,
+  xmlFormat: xmlFormat_jp,
+  urlEncode: urlEncode_jp,
+  unicodeTrans: unicodeTrans_jp,
+  langDetect: langDetect_jp
 }
 
 export default jp

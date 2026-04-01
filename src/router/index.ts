@@ -44,10 +44,6 @@ const router = createRouter({
           component: () => import('@/views/service/jwt/JWTParser.vue')
         },
         {
-          path: 'ai-chat',
-          component: () => import('@/views/service/ai/AIChat.vue')
-        },
-        {
           path: 'document-format',
           component: () => import('@/views/service/documentFormat/DocumentFormat.vue')
         },
@@ -62,12 +58,36 @@ const router = createRouter({
         {
           path: 'base64-parse',
           component: () => import('@/views/service/base64/Base64Parse.vue')
+        },
+        {
+          path: 'xml-format',
+          component: () => import('@/views/service/xml/XmlFormat.vue')
+        },
+        {
+          path: 'crypto-hash',
+          component: () => import('@/views/service/crypto/CryptoHash.vue')
+        },
+        {
+          path: 'url-encode',
+          component: () => import('@/views/service/url/UrlEncode.vue')
+        },
+        {
+          path: 'lang-detect',
+          component: () => import('@/views/service/langDetect/LangDetect.vue')
+        },
+        {
+          path: 'unicode-trans',
+          component: () => import('@/views/service/unicode/UnicodeTrans.vue')
         }
       ]
     },
     {
       path: '/search',
       component: () => import('@/views/searchPage/SearchPage.vue')
+    },
+    {
+      path: '/favorites',
+      component: () => import('@/views/favorites/FavoritesPage.vue')
     },
     {
       path: '/service/common-file-search',

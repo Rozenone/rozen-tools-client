@@ -15,14 +15,6 @@ const useStore = defineStore('main', {
         password: '',
         protocol: 'http'
       },
-      aiConfig: {
-        enabled: false,
-        apiKey: '',
-        baseUrl: '',
-        model: 'gpt-3.5-turbo',
-        temperature: 0.7,
-        maxTokens: 2000
-      },
       toggleLeftDrawer() {
         this.leftDrawerOpen = !this.leftDrawerOpen
       },
@@ -44,16 +36,6 @@ const useStore = defineStore('main', {
         protocol: string
       }) {
         this.proxy = proxyConfig
-      },
-      setAIConfig(config: {
-        enabled: boolean
-        apiKey: string
-        baseUrl: string
-        model: string
-        temperature: number
-        maxTokens: number
-      }) {
-        this.aiConfig = config
       }
     }
   }),
