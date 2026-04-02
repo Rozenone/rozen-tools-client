@@ -31,7 +31,7 @@
                                         </q-btn>
                                     </div>
                                 </div>
-                                <q-input v-model="inputText" type="textarea" outlined autogrow class="unicode-input"
+                                <q-input v-model="inputText" type="textarea" outlined rows="10" class="unicode-input"
                                     :placeholder="inputPlaceholder" bg-color="grey-1" :error="hasError"
                                     :error-message="errorMessage" />
                             </q-card-section>
@@ -55,7 +55,7 @@
                                         </q-btn>
                                     </div>
                                 </div>
-                                <q-input v-model="outputText" type="textarea" outlined autogrow readonly
+                                <q-input v-model="outputText" type="textarea" outlined rows="10" readonly
                                     class="unicode-input" :placeholder="$t('unicodeTrans.placeholder.output')"
                                     bg-color="grey-1" />
                             </q-card-section>
@@ -276,6 +276,12 @@ watch(mode, () => {
 .unicode-input {
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
     font-size: 14px;
+}
+
+/* 限制 autogrow textarea 的最大高度 */
+.unicode-input :deep(.q-field__native) {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
 }
 
 .mode-switch {

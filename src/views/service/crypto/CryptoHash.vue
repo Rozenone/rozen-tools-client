@@ -33,7 +33,7 @@
                                         </q-btn>
                                     </div>
                                 </div>
-                                <q-input v-model="inputText" type="textarea" outlined autogrow class="crypto-input"
+                                <q-input v-model="inputText" type="textarea" outlined rows="10" class="crypto-input"
                                     :placeholder="$t('cryptoHash.placeholder.input')" bg-color="grey-1" />
                             </q-card-section>
                         </q-card>
@@ -56,7 +56,7 @@
                                         </q-btn>
                                     </div>
                                 </div>
-                                <q-input v-model="outputHash" type="textarea" outlined autogrow readonly
+                                <q-input v-model="outputHash" type="textarea" outlined rows="10" readonly
                                     class="crypto-input" :placeholder="$t('cryptoHash.placeholder.output')"
                                     bg-color="grey-1" />
                             </q-card-section>
@@ -283,6 +283,12 @@ watch(selectedAlgorithm, () => {
 .crypto-input {
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
     font-size: 14px;
+}
+
+/* 限制 autogrow textarea 的最大高度 */
+.crypto-input :deep(.q-field__native) {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
 }
 
 :deep(.q-field__control) {

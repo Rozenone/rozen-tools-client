@@ -4,7 +4,7 @@
     <h5>
       {{ $t('xmlFormat.tips') }}
     </h5>
-    <q-input v-model="inputText" color="orange" class="input_area" filled type="textarea" />
+    <q-input v-model="inputText" color="orange" class="input_area" filled type="textarea" rows="10" />
     <q-btn class="xml_btn" color="primary" :label="$t('xmlFormat.format')" @click="format()" />
     <q-btn class="xml_btn" color="primary" :label="$t('xmlFormat.compress')" @click="compress()" />
     <q-btn class="xml_btn" color="secondary" :label="$t('xmlFormat.copy')" @click="copyResult()" />
@@ -227,6 +227,8 @@ const clear = () => {
   word-break: break-all;
   color: #222;
   min-height: 80px;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
   margin-top: 1em;
 }
 

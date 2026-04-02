@@ -19,7 +19,7 @@
         <div v-if="mode === 'decode'" class="decode-mode">
           <!-- JWT 输入区域 -->
           <div class="input-section">
-            <q-input v-model="jwtToken" type="textarea" :label="$t('jwtParser.input')" outlined autogrow
+            <q-input v-model="jwtToken" type="textarea" :label="$t('jwtParser.input')" outlined rows="10"
               class="token-input" :placeholder="$t('jwtParser.placeholder')" bg-color="grey-1">
               <template v-slot:append>
                 <q-btn flat round dense icon="content_paste" @click="pasteToken">
@@ -52,7 +52,7 @@
 
               <q-tab-panels v-model="activeTab" animated>
                 <q-tab-panel name="header">
-                  <q-input v-model="decodedData.header" type="textarea" outlined autogrow class="code-editor"
+                  <q-input v-model="decodedData.header" type="textarea" outlined rows="10" class="code-editor"
                     bg-color="grey-1">
                     <template v-slot:append>
                       <q-btn flat round dense icon="content_copy" @click="copyContent(decodedData.header)">
@@ -63,7 +63,7 @@
                 </q-tab-panel>
 
                 <q-tab-panel name="payload">
-                  <q-input v-model="decodedData.payload" type="textarea" outlined autogrow class="code-editor"
+                  <q-input v-model="decodedData.payload" type="textarea" outlined rows="10" class="code-editor"
                     bg-color="grey-1">
                     <template v-slot:append>
                       <q-btn flat round dense icon="content_copy" @click="copyContent(decodedData.payload)">
@@ -155,7 +155,7 @@
               <q-card flat bordered>
                 <q-card-section>
                   <div class="text-subtitle2 q-mb-md">{{ $t('jwtParser.header') }}</div>
-                  <q-input v-model="encodeData.header" type="textarea" outlined autogrow class="code-editor"
+                  <q-input v-model="encodeData.header" type="textarea" outlined rows="10" class="code-editor"
                     :placeholder="$t('jwtParser.encode.headerPlaceholder')" bg-color="grey-1" />
                 </q-card-section>
               </q-card>
@@ -166,7 +166,7 @@
               <q-card flat bordered>
                 <q-card-section>
                   <div class="text-subtitle2 q-mb-md">{{ $t('jwtParser.payload') }}</div>
-                  <q-input v-model="encodeData.payload" type="textarea" outlined autogrow class="code-editor"
+                  <q-input v-model="encodeData.payload" type="textarea" outlined rows="10" class="code-editor"
                     :placeholder="$t('jwtParser.encode.payloadPlaceholder')" bg-color="grey-1" />
                 </q-card-section>
               </q-card>
@@ -464,6 +464,13 @@ watch(mode, (newMode) => {
 
 .code-editor {
   line-height: 1.5;
+}
+
+/* 限制 autogrow textarea 的最大高度 */
+.token-input :deep(.q-field__native),
+.code-editor :deep(.q-field__native) {
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
 }
 
 :deep(.q-field__control) {

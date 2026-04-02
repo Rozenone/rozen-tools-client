@@ -10,6 +10,7 @@
       class="input_area"
       filled
       type="textarea"
+      rows="10"
     />
     <q-btn class="json_btn" color="primary" :label="$t('jsonFormat.format')" @click="format()" />
     <q-btn class="json_btn" color="primary" :label="$t('jsonFormat.compress')" @click="compressJson()" />
@@ -82,6 +83,8 @@ const compressJson = () => {
   word-break: break-all;
   color: #222;
   min-height: 80px;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
   margin-top: 1em;
 }
 .body--dark .output_box {

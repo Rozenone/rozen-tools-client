@@ -24,8 +24,8 @@
                                         </q-btn>
                                     </div>
                                 </div>
-                                <q-input v-model="inputCode" type="textarea" outlined autogrow class="code-input"
-                                    :placeholder="$t('langDetect.placeholder.input')" bg-color="grey-1" rows="8" />
+                                <q-input v-model="inputCode" type="textarea" outlined rows="8" class="code-input"
+                                    :placeholder="$t('langDetect.placeholder.input')" bg-color="grey-1" />
                             </q-card-section>
                         </q-card>
                     </div>
@@ -241,6 +241,12 @@ const clearAll = () => {
 .code-input {
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
     font-size: 14px;
+}
+
+/* 限制 autogrow textarea 的最大高度 */
+.code-input :deep(.q-field__native) {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
 }
 
 .positions-wrap {

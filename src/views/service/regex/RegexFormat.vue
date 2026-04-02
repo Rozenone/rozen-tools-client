@@ -41,6 +41,7 @@
       filled
       @input="updateHighlightedText"
       type="textarea"
+      rows="10"
       style="margin-bottom: 10px"
     />
     <!--    输出文本域-->
@@ -160,6 +161,8 @@ span {
   border-radius: 4px;
   padding: 8px;
   min-height: 40px;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
 }
 
 .body--dark .match_text {
