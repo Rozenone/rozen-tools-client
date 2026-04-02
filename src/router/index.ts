@@ -5,6 +5,10 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      redirect: '/favorites'
+    },
+    {
+      path: '/all',
       component: () => import('@/views/top/HomePage.vue')
     },
     {
@@ -78,6 +82,26 @@ const router = createRouter({
         {
           path: 'unicode-trans',
           component: () => import('@/views/service/unicode/UnicodeTrans.vue')
+        },
+        {
+          path: 'date-calc',
+          component: () => import('@/views/service/dateCalc/DateCalc.vue')
+        },
+        {
+          path: 'keep-awake',
+          component: () => import('@/views/service/keepAwake/KeepAwake.vue')
+        },
+        {
+          path: 'stopwatch',
+          component: () => import('@/views/service/stopwatch/Stopwatch.vue')
+        },
+        {
+          path: 'timestamp',
+          component: () => import('@/views/service/timestamp/TimestampConvert.vue')
+        },
+        {
+          path: 'unit-convert',
+          component: () => import('@/views/service/unitConvert/UnitConvert.vue')
         }
       ]
     },

@@ -22,6 +22,11 @@ import { xmlFormat_cn } from '@/views/service/xml/XmlFormat_lan'
 import { urlEncode_cn } from '@/views/service/url/UrlEncode_lan'
 import { unicodeTrans_cn } from '@/views/service/unicode/UnicodeTrans_lan'
 import { langDetect_cn } from '@/views/service/langDetect/LangDetect_lan'
+import { dateCalc_cn } from '@/views/service/dateCalc/DateCalc_lan'
+import { keepAwake_cn } from '@/views/service/keepAwake/KeepAwake_lan'
+import { stopwatch_cn } from '@/views/service/stopwatch/Stopwatch_lan'
+import { timestampConvert_cn } from '@/views/service/timestamp/TimestampConvert_lan'
+import { unitConvert_cn } from '@/views/service/unitConvert/UnitConvert_lan'
 
 const cn = {
   homePage: homePage_cn,
@@ -47,7 +52,12 @@ const cn = {
   xmlFormat: xmlFormat_cn,
   urlEncode: urlEncode_cn,
   unicodeTrans: unicodeTrans_cn,
-  langDetect: langDetect_cn
+  langDetect: langDetect_cn,
+  dateCalc: dateCalc_cn,
+  keepAwake: keepAwake_cn,
+  stopwatch: stopwatch_cn,
+  timestampConvert: timestampConvert_cn,
+  unitConvert: unitConvert_cn
 }
 
 export default cn

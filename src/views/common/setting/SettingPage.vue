@@ -142,7 +142,7 @@ import useStore from '@/stores'
 import { useQuasar } from 'quasar'
 import i18n from '@/locales/i18config'
 
-const { proxy } = getCurrentInstance() as any
+const { proxy } = getCurrentInstance() as { proxy: { $t: (key: string) => string } }
 const $q = useQuasar()
 const tab = ref('language')
 const splitterModel = ref(20)
@@ -250,7 +250,7 @@ const testProxyConnection = async () => {
         port: proxyPort.value,
         username: proxyUsername.value,
         password: proxyPassword.value
-      }, url)
+      }, url) as { success: boolean; status?: number; message?: string }
       if (result.success) {
         $q.notify({ type: 'positive', message: '请求成功，状态码：' + result.status })
       } else {

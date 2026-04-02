@@ -22,6 +22,11 @@ import { xmlFormat_jp } from '@/views/service/xml/XmlFormat_lan'
 import { urlEncode_jp } from '@/views/service/url/UrlEncode_lan'
 import { unicodeTrans_jp } from '@/views/service/unicode/UnicodeTrans_lan'
 import { langDetect_jp } from '@/views/service/langDetect/LangDetect_lan'
+import { dateCalc_jp } from '@/views/service/dateCalc/DateCalc_lan'
+import { keepAwake_jp } from '@/views/service/keepAwake/KeepAwake_lan'
+import { stopwatch_jp } from '@/views/service/stopwatch/Stopwatch_lan'
+import { timestampConvert_jp } from '@/views/service/timestamp/TimestampConvert_lan'
+import { unitConvert_jp } from '@/views/service/unitConvert/UnitConvert_lan'
 
 const jp = {
   homePage: homePage_jp,
@@ -47,7 +52,12 @@ const jp = {
   xmlFormat: xmlFormat_jp,
   urlEncode: urlEncode_jp,
   unicodeTrans: unicodeTrans_jp,
-  langDetect: langDetect_jp
+  langDetect: langDetect_jp,
+  dateCalc: dateCalc_jp,
+  keepAwake: keepAwake_jp,
+  stopwatch: stopwatch_jp,
+  timestampConvert: timestampConvert_jp,
+  unitConvert: unitConvert_jp
 }
 
 export default jp

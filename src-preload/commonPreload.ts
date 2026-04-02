@@ -24,6 +24,12 @@ contextBridge.exposeInMainWorld('ipcCommon', {
     },
     openPath: (targetPath: string) => {
         return ipcRenderer.invoke('open-path', targetPath);
+    },
+    startKeepAwake: () => {
+        return ipcRenderer.invoke('start-keep-awake');
+    },
+    stopKeepAwake: () => {
+        return ipcRenderer.invoke('stop-keep-awake');
     }
 })
 

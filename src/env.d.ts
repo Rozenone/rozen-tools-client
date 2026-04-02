@@ -48,8 +48,15 @@ declare module "@/stores" {
         maxTokens: number;
       }) => void;
     };
-    setaico;
-    searchCommonFilesInFolders?: (folderPath: string, fileName: string) => Promise<any[]>;
+    setAIConfig: (config: {
+      enabled: boolean;
+      apiKey: string;
+      baseUrl: string;
+      model: string;
+      temperature: number;
+      maxTokens: number;
+    }) => void;
+    searchCommonFilesInFolders?: (folderPath: string, fileName: string) => Promise<unknown[]>;
   };
   export default useStore;
 }

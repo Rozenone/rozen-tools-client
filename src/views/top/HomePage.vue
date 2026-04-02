@@ -114,6 +114,41 @@ const defaultToolItems: ToolItem[] = [
     title: 'lang_detect',
     img: 'regx.svg',
     url: '/service/lang-detect'
+  },
+  {
+    title: 'date_calc',
+    img: 'calendar.svg',
+    url: '/service/date-calc'
+  },
+  {
+    title: 'keep_awake',
+    img: 'keepawake.svg',
+    url: '/service/keep-awake'
+  },
+  {
+    title: 'stopwatch',
+    img: 'stopwatch.svg',
+    url: '/service/stopwatch'
+  },
+  {
+    title: 'timestamp',
+    img: 'timestamp.svg',
+    url: '/service/timestamp'
+  },
+  {
+    title: 'unit_convert',
+    img: 'unit.svg',
+    url: '/service/unit-convert'
+  },
+  {
+    title: 'common_file_search',
+    img: 'restart.svg',
+    url: '/service/common-file-search'
+  },
+  {
+    title: 'document_format',
+    img: 'json.svg',
+    url: '/service/document-format'
   }
 ]
 

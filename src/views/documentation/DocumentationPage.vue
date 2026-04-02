@@ -27,7 +27,7 @@ import { ref, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const { proxy } = getCurrentInstance() as any
+const { proxy } = getCurrentInstance() as { proxy: { $t: (key: string) => string } }
 
 // 文档工具列表
 const documentTools = ref([

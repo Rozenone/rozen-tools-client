@@ -230,7 +230,7 @@
 import { ref, computed, getCurrentInstance, watch } from 'vue'
 import { useQuasar } from 'quasar'
 
-const { proxy } = getCurrentInstance() as any
+const { proxy } = getCurrentInstance() as { proxy: { $t: (key: string) => string } }
 const $q = useQuasar()
 
 // 基础数据
@@ -340,7 +340,7 @@ const generateJWT = () => {
       type: 'positive',
       message: proxy.$t('jwtParser.notification.generateSuccess')
     })
-  } catch (error) {
+  } catch {
     $q.notify({
       type: 'negative',
       message: proxy.$t('jwtParser.notification.invalidJson')
@@ -368,7 +368,7 @@ const verifySignature = () => {
       type: isValid ? 'positive' : 'negative',
       message: verificationResult.value.message
     })
-  } catch (error) {
+  } catch {
     verificationResult.value = {
       valid: false,
       message: proxy.$t('jwtParser.verification.verificationFailed')

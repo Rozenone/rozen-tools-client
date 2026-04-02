@@ -51,7 +51,7 @@
 
 <script setup lang="ts">
 import { ref, computed, getCurrentInstance } from 'vue'
-const { proxy } = getCurrentInstance() as any
+const { proxy } = getCurrentInstance() as { proxy: { $t: (key: string, params?: Record<string, unknown>) => string } }
 import { useQuasar } from 'quasar'
 const $q = useQuasar()
 
@@ -120,7 +120,7 @@ const confirmConvert = () => {
 const convertFiles = async () => {
   converting.value = true
   try {
-    const filePaths = files.value.map(file => (file as any).path)
+    const filePaths = files.value.map(file => (file as File & { path: string }).path)
     const result = await window.ipcCommon.convertEncoding(
       filePaths,
       sourceEncoding.value,

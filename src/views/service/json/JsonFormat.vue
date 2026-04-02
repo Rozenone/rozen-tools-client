@@ -4,14 +4,7 @@
     <h5>
       {{ $t('jsonFormat.tips') }}
     </h5>
-    <q-input
-      v-model="inputText"
-      color="orange"
-      class="input_area"
-      filled
-      type="textarea"
-      rows="10"
-    />
+    <q-input v-model="inputText" color="orange" class="input_area" filled type="textarea" rows="10" />
     <q-btn class="json_btn" color="primary" :label="$t('jsonFormat.format')" @click="format()" />
     <q-btn class="json_btn" color="primary" :label="$t('jsonFormat.compress')" @click="compressJson()" />
     <div id="tip">{{ tip }}</div>
@@ -23,7 +16,7 @@
 <script setup lang='ts'>
 import { getCurrentInstance, ref } from 'vue'
 
-const { proxy } = getCurrentInstance() as any
+const { proxy } = getCurrentInstance() as { proxy: { $t: (key: string) => string } }
 const inputText = ref('')
 const outputText = ref('')
 const tip = ref('')
@@ -40,8 +33,8 @@ const format = () => {
       .replace(/\b(null)\b/g, '<span class="null">$1</span>') // 高亮 null
     outputText.value = `<pre>${highlightedJSON}</pre>`
     tip.value = proxy.$t('jsonFormat.checkPass')
-  } catch (error: any) {
-    tip.value = error.message
+  } catch (error: unknown) {
+    tip.value = error instanceof Error ? error.message : String(error)
   }
 }
 
@@ -53,8 +46,8 @@ const compressJson = () => {
     tip.value = proxy.$t('jsonFormat.checkPass')
     outputText.value = ''
     tip.value = proxy.$t('jsonFormat.compressSuccess')
-  } catch (error: any) {
-    tip.value = error.message
+  } catch (error: unknown) {
+    tip.value = error instanceof Error ? error.message : String(error)
   }
 }
 
@@ -87,6 +80,7 @@ const compressJson = () => {
   overflow-y: auto;
   margin-top: 1em;
 }
+
 .body--dark .output_box {
   background: #23272e !important;
   color: #e0e0e0 !important;
@@ -117,10 +111,13 @@ const compressJson = () => {
 .body--dark .string {
   color: #7fff7f;
 }
+
 .body--dark .number {
   color: #6ab0ff;
 }
-.body--dark .boolean, .body--dark .null {
+
+.body--dark .boolean,
+.body--dark .null {
   color: #ffb86c;
 }
 </style>

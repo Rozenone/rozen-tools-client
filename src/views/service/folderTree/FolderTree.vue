@@ -99,7 +99,7 @@ const generateTree = async () => {
 
     try {
         if (window.ipcCommon && window.ipcCommon.generateFolderTree) {
-            const result = await window.ipcCommon.generateFolderTree(selectedFolderPath.value)
+            const result = await window.ipcCommon.generateFolderTree(selectedFolderPath.value) as { success: boolean; tree?: TreeNode; message?: string }
             if (result.success && result.tree) {
                 treeData.value = result.tree
             } else {
@@ -146,8 +146,8 @@ const openTarget = async (node: TreeNode) => {
 const treeNodes = computed(() => {
     if (!treeData.value) return []
 
-    const convertNode = (node: TreeNode): any => {
-        const result: any = {
+    const convertNode = (node: TreeNode): Record<string, unknown> => {
+        const result: Record<string, unknown> = {
             label: node.name,
             name: node.name,
             path: node.path,

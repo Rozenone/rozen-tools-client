@@ -2,10 +2,8 @@
 <template>
   <div>
     <div class="input_box">
-      <q-input class="input_main" v-model="regex"
-               :label="$t('regexFormat.tip.inputReg')"
-               @input="updateHighlightedText"
-               prefix="/">
+      <q-input class="input_main" v-model="regex" :label="$t('regexFormat.tip.inputReg')" @input="updateHighlightedText"
+        prefix="/">
         <template v-slot:append>
           <q-avatar>
             {{ '/' + suffix }}
@@ -13,19 +11,12 @@
         </template>
       </q-input>
       <!--选择框-->
-      <q-select
-        filled
-        v-model="model"
-        :options="options"
-        :label="$t('regexFormat.tip.modifier')"
-        multiple
-        emit-value
-        map-options
-        class="selection"
-      >
+      <q-select filled v-model="model" :options="options" :label="$t('regexFormat.tip.modifier')" multiple emit-value
+        map-options class="selection">
         <template v-slot:option="{ itemProps, opt, selected, toggleOption }">
           <q-item v-bind="itemProps">
             <q-item-section>
+              <!-- eslint-disable-next-line vue/no-v-text-v-html-on-component -->
               <q-item-label v-html="opt.label" />
             </q-item-section>
             <q-item-section side>
@@ -36,14 +27,8 @@
       </q-select>
     </div>
     <!--    输入文本域-->
-    <q-input
-      v-model="inputText"
-      filled
-      @input="updateHighlightedText"
-      type="textarea"
-      rows="10"
-      style="margin-bottom: 10px"
-    />
+    <q-input v-model="inputText" filled @input="updateHighlightedText" type="textarea" rows="10"
+      style="margin-bottom: 10px" />
     <!--    输出文本域-->
     <!-- 高亮显示匹配结果 -->
     <h5>{{ $t('regexFormat.tip.matchText') }}</h5>
@@ -54,7 +39,7 @@
 <script setup lang='ts'>
 import { getCurrentInstance, ref, watch } from 'vue'
 
-const { proxy } = getCurrentInstance() as any
+const { proxy } = getCurrentInstance() as { proxy: { $t: (key: string) => string } }
 const regex = ref('')
 const suffix = ref('g')
 const model = ref<string[]>([])
@@ -90,7 +75,7 @@ const updateHighlightedText = () => {
       // 将匹配的部分包裹上span标签，添加高亮样式
       return `<span style="background-color: yellow;">${match}</span>`
     })
-  } catch (e) {
+  } catch {
     // 如果正则无效，清空高亮文本
     highlightedText.value = proxy.$t('regexFormat.tip.regexErrMessage')
   }
@@ -143,8 +128,10 @@ watch(model, async (newVal) => {
 }
 
 pre {
-  white-space: pre-wrap; /* 自动换行 */
-  word-wrap: break-word; /* 防止单词溢出 */
+  white-space: pre-wrap;
+  /* 自动换行 */
+  word-wrap: break-word;
+  /* 防止单词溢出 */
 }
 
 span {
@@ -169,6 +156,7 @@ span {
   background-color: #23272e !important;
   color: #e0e0e0 !important;
 }
+
 .body--dark span {
   color: #23272e !important;
   background: #ffe066 !important;

@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Menu, ipcMain, dialog, IpcMainInvokeEvent, shell } from "electron";
+import { app, BrowserWindow, Menu, ipcMain, dialog, IpcMainInvokeEvent, shell, powerSaveBlocker } from "electron";
 import fs from "fs";
 import iconv from "iconv-lite";
 import path from "path";
@@ -25,7 +25,7 @@ const createWindow = () => {
     win
       .loadFile(path.join(__dirname, "./index.html"))
   } else {
-    const url: string = process.env.VITE_URL || "http://localhost:5173"; // 本地启动的vue项目路径。
+    const url: string = process.env.VITE_URL || "http://localhost:5173"; // 本地启动的vue项目路径
     win.loadURL(url).then(() =>
       win.on("ready-to-show", () => {
         // 窗口准备就绪后，显示窗口
@@ -79,7 +79,7 @@ const createWindow = () => {
           const fileBuffer = fs.readFileSync(filePath);
           let fileContent = iconv.decode(fileBuffer, sourceEncoding);
 
-          // 确保文件内容使用CRLF换行符
+          // 确保文件内容使用CRLF换行
           // 先将所有CRLF转换为LF，再统一转换为CRLF
           fileContent = fileContent.replace(/\r\n/g, '\n').replace(/\n/g, '\r\n');
 
@@ -88,7 +88,6 @@ const createWindow = () => {
           fs.writeFileSync(outputFilePath, outputBuffer);
           successCount++;
         } catch {
-          failCount++;
           failCount++;
         }
       }
@@ -121,7 +120,7 @@ const createWindow = () => {
       win = BrowserWindow.getAllWindows()[0] || undefined;
     }
     const result = await dialog.showSaveDialog(win, options);
-    // 只返回 filePath 字段，避免克隆问题
+    // 只返回filePath 字段，避免克隆问题
     return result.filePath || '';
   });
 
@@ -369,6 +368,24 @@ const createWindow = () => {
         message: error instanceof Error ? error.message : 'unknown error'
       };
     }
+  });
+
+  // 防睡眠功能
+  let keepAwakeId: number | null = null;
+
+  ipcMain.handle('start-keep-awake', () => {
+    if (keepAwakeId === null) {
+      keepAwakeId = powerSaveBlocker.start('prevent-display-sleep');
+    }
+    return { success: true, id: keepAwakeId };
+  });
+
+  ipcMain.handle('stop-keep-awake', () => {
+    if (keepAwakeId !== null) {
+      powerSaveBlocker.stop(keepAwakeId);
+      keepAwakeId = null;
+    }
+    return { success: true };
   });
 };
 

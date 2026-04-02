@@ -24,7 +24,16 @@
 
     <!-- 导航菜单 -->
     <q-list padding>
-      <q-item clickable v-ripple to="/" exact>
+      <q-item clickable v-ripple to="/favorites" exact>
+        <q-item-section avatar>
+          <q-icon name="star" />
+        </q-item-section>
+        <q-item-section>
+          {{ $t('headerBar.favorites') }}
+        </q-item-section>
+      </q-item>
+
+      <q-item clickable v-ripple to="/all">
         <q-item-section avatar>
           <q-icon name="home" />
         </q-item-section>

@@ -60,7 +60,7 @@ const searchFiles = async () => {
     searched.value = false
     if (!folderPath.value || !targetFileName.value) return
     if (window.ipcCommon && window.ipcCommon.searchCommonFilesInFolders) {
-        const results = await window.ipcCommon.searchCommonFilesInFolders(folderPath.value, targetFileName.value)
+        const results = await window.ipcCommon.searchCommonFilesInFolders(folderPath.value, targetFileName.value) as { folder: string; content: string }[]
         if (Array.isArray(results)) {
             searchResults.value = results
             filteredResults.value = results
@@ -97,7 +97,7 @@ const highlightFolder = (folder: string) => {
 
 function escapeHtml(str: string) {
     return str.replace(/[&<>"]|'/g, function (tag) {
-        const chars: any = {
+        const chars: Record<string, string> = {
             '&': '&amp;',
             '<': '&lt;',
             '>': '&gt;',

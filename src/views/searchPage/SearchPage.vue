@@ -24,7 +24,7 @@ import { ref, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const { proxy } = getCurrentInstance() as any
+const { proxy } = getCurrentInstance() as { proxy: { $t: (key: string) => string } }
 
 const tools = ref([
     {

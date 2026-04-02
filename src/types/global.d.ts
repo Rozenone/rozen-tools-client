@@ -10,13 +10,15 @@ interface Window {
       targetEnc: string,
       outputPath: string
     ) => Promise<{ successCount: number; failCount: number }>
-    searchCommonFilesInFolders?: (folderPath: string, fileName: string) => Promise<any[]>;
-    generateFolderTree?: (folderPath: string) => Promise<{ success: boolean; tree?: any; message?: string }>;
+    searchCommonFilesInFolders?: (folderPath: string, fileName: string) => Promise<unknown[]>;
+    generateFolderTree?: (folderPath: string) => Promise<{ success: boolean; tree?: unknown; message?: string }>;
     openPath?: (targetPath: string) => Promise<{ success: boolean; message?: string }>;
+    startKeepAwake: () => Promise<{ success: boolean; id: number }>;
+    stopKeepAwake: () => Promise<{ success: boolean }>;
   }
   electron?: {
     ipcRenderer: {
-      invoke: (channel: string, ...args: any[]) => Promise<any>;
+      invoke: (channel: string, ...args: unknown[]) => Promise<unknown>;
     };
   };
 }

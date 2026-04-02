@@ -118,14 +118,14 @@
 import { ref } from 'vue'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
-// @ts-ignore
-const { ipcRenderer } = window.electron || {}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const { ipcRenderer } = (window as any).electron || {}
 
 const $q = useQuasar()
 const { t } = useI18n()
 
 const excelFilePaths = ref<string[]>([])
-const excelInfos = ref<any[]>([])
+const excelInfos = ref<{ fileName: string | undefined; sheetCount: number | string }[]>([])
 const isProcessing = ref(false)
 
 // 格式化设置
@@ -216,7 +216,7 @@ const selectExcelFile = async () => {
       excelInfos.value = []
       for (const filePath of excelFilePaths.value) {
         try {
-          const sheetCount = await ipcRenderer.invoke('get-excel-sheet-count', filePath)
+          const sheetCount = await ipcRenderer.invoke('get-excel-sheet-count', filePath) as number | string
           excelInfos.value.push({
             fileName: filePath.split(/[\\/]/).pop(),
             sheetCount
