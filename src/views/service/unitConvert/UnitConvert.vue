@@ -30,8 +30,8 @@
                 <div class="row q-col-gutter-md q-mb-lg">
                     <div class="col-12 col-md-6">
                         <q-input v-model.number="inputValue" type="number" outlined
-                            :label="proxy?.$t('unitConvert.inputValue')" class="input-field"
-                            bg-color="grey-1" step="any" @update:model-value="calculateResults">
+                            :label="proxy?.$t('unitConvert.inputValue')" class="input-field" bg-color="grey-1"
+                            step="any" @update:model-value="calculateResults">
                             <template v-if="inputValue" v-slot:append>
                                 <q-icon name="close" class="cursor-pointer" @click="clearInput" />
                             </template>
@@ -39,8 +39,8 @@
                     </div>
                     <div class="col-12 col-md-6">
                         <q-select v-model="inputUnit" :options="currentUnitOptions" outlined
-                            :label="proxy?.$t('unitConvert.selectUnit')" class="input-field"
-                            bg-color="grey-1" emit-value map-options @update:model-value="calculateResults" />
+                            :label="proxy?.$t('unitConvert.selectUnit')" class="input-field" bg-color="grey-1"
+                            emit-value map-options @update:model-value="calculateResults" />
                     </div>
                 </div>
 
@@ -133,7 +133,7 @@ const conversionResults = computed<ConversionResult[]>(() => {
     const base = mode.value === 'storage' ? storageBase.value : 1000
     const units = currentUnitOptions.value
     const currentUnit = units.find(u => u.value === inputUnit.value) || units[0]
-    
+
     // 转换为最小单位
     const baseValue = inputValue.value * Math.pow(base, currentUnit.factor)
 
@@ -150,7 +150,7 @@ const conversionResults = computed<ConversionResult[]>(() => {
 // 格式化数字
 const formatNumber = (num: number): string => {
     if (num === 0) return '0'
-    
+
     // 根据数值大小选择显示精度
     if (Math.abs(num) >= 1000000) {
         return num.toExponential(4)
@@ -173,7 +173,7 @@ const calculateResults = () => {
 // 复制结果
 const copyResult = async (result: ConversionResult) => {
     if (result.value === '-') return
-    
+
     try {
         await navigator.clipboard.writeText(result.value)
         $q.notify({

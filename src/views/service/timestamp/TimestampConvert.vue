@@ -18,7 +18,8 @@
                                         <div class="text-caption text-grey">{{ $t('timestampConvert.seconds') }}</div>
                                         <div class="text-h5 text-primary">{{ currentSecondTimestamp }}</div>
                                     </div>
-                                    <q-btn flat round dense icon="content_copy" size="sm" @click="copyTimestamp('second')">
+                                    <q-btn flat round dense icon="content_copy" size="sm"
+                                        @click="copyTimestamp('second')">
                                         <q-tooltip>{{ $t('timestampConvert.action.copy') }}</q-tooltip>
                                     </q-btn>
                                 </q-card-section>
@@ -28,10 +29,12 @@
                             <q-card flat bordered class="timestamp-display">
                                 <q-card-section class="row items-center justify-between">
                                     <div>
-                                        <div class="text-caption text-grey">{{ $t('timestampConvert.milliseconds') }}</div>
+                                        <div class="text-caption text-grey">{{ $t('timestampConvert.milliseconds') }}
+                                        </div>
                                         <div class="text-h5 text-primary">{{ currentMillisecondTimestamp }}</div>
                                     </div>
-                                    <q-btn flat round dense icon="content_copy" size="sm" @click="copyTimestamp('millisecond')">
+                                    <q-btn flat round dense icon="content_copy" size="sm"
+                                        @click="copyTimestamp('millisecond')">
                                         <q-tooltip>{{ $t('timestampConvert.action.copy') }}</q-tooltip>
                                     </q-btn>
                                 </q-card-section>
@@ -57,18 +60,19 @@
                                     <div class="row items-center justify-between q-mb-sm">
                                         <div class="text-subtitle2">{{ $t('timestampConvert.input.timestamp') }}</div>
                                         <div class="row">
-                                            <q-btn flat round dense icon="content_paste" size="sm" @click="pasteTimestamp">
+                                            <q-btn flat round dense icon="content_paste" size="sm"
+                                                @click="pasteTimestamp">
                                                 <q-tooltip>{{ $t('timestampConvert.action.paste') }}</q-tooltip>
                                             </q-btn>
-                                            <q-btn v-if="inputTimestamp" flat round dense icon="clear" size="sm" @click="clearInput">
+                                            <q-btn v-if="inputTimestamp" flat round dense icon="clear" size="sm"
+                                                @click="clearInput">
                                                 <q-tooltip>{{ $t('timestampConvert.action.clear') }}</q-tooltip>
                                             </q-btn>
                                         </div>
                                     </div>
                                     <q-input v-model="inputTimestamp" type="text" outlined
-                                        :placeholder="$t('timestampConvert.input.placeholder')"
-                                        bg-color="grey-1" class="timestamp-input"
-                                        :hint="$t('timestampConvert.input.autoDetect')" />
+                                        :placeholder="$t('timestampConvert.input.placeholder')" bg-color="grey-1"
+                                        class="timestamp-input" :hint="$t('timestampConvert.input.autoDetect')" />
                                 </q-card-section>
                             </q-card>
                         </div>
@@ -83,10 +87,12 @@
                                     <q-card-section>
                                         <div class="row items-center justify-between">
                                             <div>
-                                                <div class="text-caption text-grey">{{ $t('timestampConvert.output.iso8601') }}</div>
+                                                <div class="text-caption text-grey">{{
+                                                    $t('timestampConvert.output.iso8601') }}</div>
                                                 <div class="text-body1">{{ convertResult.iso8601 }}</div>
                                             </div>
-                                            <q-btn flat round dense icon="content_copy" size="sm" @click="copyResult(convertResult.iso8601)">
+                                            <q-btn flat round dense icon="content_copy" size="sm"
+                                                @click="copyResult(convertResult.iso8601)">
                                                 <q-tooltip>{{ $t('timestampConvert.action.copy') }}</q-tooltip>
                                             </q-btn>
                                         </div>
@@ -98,10 +104,12 @@
                                     <q-card-section>
                                         <div class="row items-center justify-between">
                                             <div>
-                                                <div class="text-caption text-grey">{{ $t('timestampConvert.output.standard') }}</div>
+                                                <div class="text-caption text-grey">{{
+                                                    $t('timestampConvert.output.standard') }}</div>
                                                 <div class="text-body1">{{ convertResult.standard }}</div>
                                             </div>
-                                            <q-btn flat round dense icon="content_copy" size="sm" @click="copyResult(convertResult.standard)">
+                                            <q-btn flat round dense icon="content_copy" size="sm"
+                                                @click="copyResult(convertResult.standard)">
                                                 <q-tooltip>{{ $t('timestampConvert.action.copy') }}</q-tooltip>
                                             </q-btn>
                                         </div>
@@ -113,10 +121,12 @@
                                     <q-card-section>
                                         <div class="row items-center justify-between">
                                             <div>
-                                                <div class="text-caption text-grey">{{ $t('timestampConvert.output.slashFormat') }}</div>
+                                                <div class="text-caption text-grey">{{
+                                                    $t('timestampConvert.output.slashFormat') }}</div>
                                                 <div class="text-body1">{{ convertResult.slashFormat }}</div>
                                             </div>
-                                            <q-btn flat round dense icon="content_copy" size="sm" @click="copyResult(convertResult.slashFormat)">
+                                            <q-btn flat round dense icon="content_copy" size="sm"
+                                                @click="copyResult(convertResult.slashFormat)">
                                                 <q-tooltip>{{ $t('timestampConvert.action.copy') }}</q-tooltip>
                                             </q-btn>
                                         </div>
@@ -128,10 +138,12 @@
                                     <q-card-section>
                                         <div class="row items-center justify-between">
                                             <div>
-                                                <div class="text-caption text-grey">{{ $t('timestampConvert.output.localFormat') }}</div>
+                                                <div class="text-caption text-grey">{{
+                                                    $t('timestampConvert.output.localFormat') }}</div>
                                                 <div class="text-body1">{{ convertResult.localFormat }}</div>
                                             </div>
-                                            <q-btn flat round dense icon="content_copy" size="sm" @click="copyResult(convertResult.localFormat)">
+                                            <q-btn flat round dense icon="content_copy" size="sm"
+                                                @click="copyResult(convertResult.localFormat)">
                                                 <q-tooltip>{{ $t('timestampConvert.action.copy') }}</q-tooltip>
                                             </q-btn>
                                         </div>
@@ -143,10 +155,12 @@
                                     <q-card-section>
                                         <div class="row items-center justify-between">
                                             <div>
-                                                <div class="text-caption text-grey">{{ $t('timestampConvert.output.weekday') }}</div>
+                                                <div class="text-caption text-grey">{{
+                                                    $t('timestampConvert.output.weekday') }}</div>
                                                 <div class="text-body1">{{ convertResult.weekday }}</div>
                                             </div>
-                                            <q-btn flat round dense icon="content_copy" size="sm" @click="copyResult(convertResult.weekday)">
+                                            <q-btn flat round dense icon="content_copy" size="sm"
+                                                @click="copyResult(convertResult.weekday)">
                                                 <q-tooltip>{{ $t('timestampConvert.action.copy') }}</q-tooltip>
                                             </q-btn>
                                         </div>
@@ -158,7 +172,8 @@
 
                     <div class="row justify-center q-mt-lg">
                         <q-btn unelevated color="primary" :label="$t('timestampConvert.action.convert')"
-                            @click="convertTimestampToDate" :disable="!inputTimestamp" icon="schedule" class="q-px-md" />
+                            @click="convertTimestampToDate" :disable="!inputTimestamp" icon="schedule"
+                            class="q-px-md" />
                     </div>
                 </div>
 
@@ -177,9 +192,12 @@
                                         <template v-slot:prepend>
                                             <q-icon name="event" class="cursor-pointer">
                                                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                                                    <q-date v-model="selectedDate" mask="YYYY-MM-DD HH:mm:ss" with-seconds>
+                                                    <q-date v-model="selectedDate" mask="YYYY-MM-DD HH:mm:ss"
+                                                        with-seconds>
                                                         <div class="row items-center justify-end">
-                                                            <q-btn v-close-popup :label="$t('timestampConvert.action.clear')" color="primary" flat />
+                                                            <q-btn v-close-popup
+                                                                :label="$t('timestampConvert.action.clear')"
+                                                                color="primary" flat />
                                                             <q-btn v-close-popup label="OK" color="primary" flat />
                                                         </div>
                                                     </q-date>
@@ -189,9 +207,12 @@
                                         <template v-slot:append>
                                             <q-icon name="access_time" class="cursor-pointer">
                                                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                                                    <q-time v-model="selectedDate" mask="YYYY-MM-DD HH:mm:ss" with-seconds>
+                                                    <q-time v-model="selectedDate" mask="YYYY-MM-DD HH:mm:ss"
+                                                        with-seconds>
                                                         <div class="row items-center justify-end">
-                                                            <q-btn v-close-popup :label="$t('timestampConvert.action.clear')" color="primary" flat />
+                                                            <q-btn v-close-popup
+                                                                :label="$t('timestampConvert.action.clear')"
+                                                                color="primary" flat />
                                                             <q-btn v-close-popup label="OK" color="primary" flat />
                                                         </div>
                                                     </q-time>
@@ -213,10 +234,13 @@
                                     <q-card-section>
                                         <div class="row items-center justify-between">
                                             <div>
-                                                <div class="text-caption text-grey">{{ $t('timestampConvert.output.secondTimestamp') }}</div>
+                                                <div class="text-caption text-grey">{{
+                                                    $t('timestampConvert.output.secondTimestamp') }}
+                                                </div>
                                                 <div class="text-h6 text-primary">{{ dateConvertResult.seconds }}</div>
                                             </div>
-                                            <q-btn flat round dense icon="content_copy" size="sm" @click="copyResult(dateConvertResult.seconds.toString())">
+                                            <q-btn flat round dense icon="content_copy" size="sm"
+                                                @click="copyResult(dateConvertResult.seconds.toString())">
                                                 <q-tooltip>{{ $t('timestampConvert.action.copy') }}</q-tooltip>
                                             </q-btn>
                                         </div>
@@ -228,10 +252,14 @@
                                     <q-card-section>
                                         <div class="row items-center justify-between">
                                             <div>
-                                                <div class="text-caption text-grey">{{ $t('timestampConvert.output.millisecondTimestamp') }}</div>
-                                                <div class="text-h6 text-primary">{{ dateConvertResult.milliseconds }}</div>
+                                                <div class="text-caption text-grey">{{
+                                                    $t('timestampConvert.output.millisecondTimestamp') }}
+                                                </div>
+                                                <div class="text-h6 text-primary">{{ dateConvertResult.milliseconds }}
+                                                </div>
                                             </div>
-                                            <q-btn flat round dense icon="content_copy" size="sm" @click="copyResult(dateConvertResult.milliseconds.toString())">
+                                            <q-btn flat round dense icon="content_copy" size="sm"
+                                                @click="copyResult(dateConvertResult.milliseconds.toString())">
                                                 <q-tooltip>{{ $t('timestampConvert.action.copy') }}</q-tooltip>
                                             </q-btn>
                                         </div>

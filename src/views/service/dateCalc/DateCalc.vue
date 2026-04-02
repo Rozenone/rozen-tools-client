@@ -26,7 +26,8 @@
                                         <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                                             <q-date v-model="startDate" mask="YYYY-MM-DD" :locale="dateLocale">
                                                 <div class="row items-center justify-end">
-                                                    <q-btn v-close-popup :label="$t('dateCalc.diff.selectDate')" color="primary" flat />
+                                                    <q-btn v-close-popup :label="$t('dateCalc.diff.selectDate')"
+                                                        color="primary" flat />
                                                 </div>
                                             </q-date>
                                         </q-popup-proxy>
@@ -42,7 +43,8 @@
                                         <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                                             <q-date v-model="endDate" mask="YYYY-MM-DD" :locale="dateLocale">
                                                 <div class="row items-center justify-end">
-                                                    <q-btn v-close-popup :label="$t('dateCalc.diff.selectDate')" color="primary" flat />
+                                                    <q-btn v-close-popup :label="$t('dateCalc.diff.selectDate')"
+                                                        color="primary" flat />
                                                 </div>
                                             </q-date>
                                         </q-popup-proxy>
@@ -54,8 +56,8 @@
 
                     <!-- 计算按钮 -->
                     <div class="row justify-center q-mb-lg">
-                        <q-btn unelevated color="primary" :label="$t('dateCalc.action.calculate')" @click="calculateDiff"
-                            :disable="!startDate || !endDate" icon="calculate" class="q-px-xl" />
+                        <q-btn unelevated color="primary" :label="$t('dateCalc.action.calculate')"
+                            @click="calculateDiff" :disable="!startDate || !endDate" icon="calculate" class="q-px-xl" />
                     </div>
 
                     <!-- 差值结果 -->
@@ -116,7 +118,8 @@
                                         <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                                             <q-date v-model="baseDate" mask="YYYY-MM-DD" :locale="dateLocale">
                                                 <div class="row items-center justify-end">
-                                                    <q-btn v-close-popup :label="$t('dateCalc.add.selectDate')" color="primary" flat />
+                                                    <q-btn v-close-popup :label="$t('dateCalc.add.selectDate')"
+                                                        color="primary" flat />
                                                 </div>
                                             </q-date>
                                         </q-popup-proxy>
@@ -136,8 +139,8 @@
                         </div>
                         <!-- 单位 -->
                         <div class="col-12 col-md-4">
-                            <q-select v-model="unit" outlined :label="$t('dateCalc.add.unit')"
-                                :options="unitOptions" emit-value map-options />
+                            <q-select v-model="unit" outlined :label="$t('dateCalc.add.unit')" :options="unitOptions"
+                                emit-value map-options />
                         </div>
                     </div>
 
@@ -356,6 +359,7 @@ const copyAddResult = async () => {
 
 /* 深色模式适配 */
 .body--dark {
+
     .result-card,
     .result-card-lg {
         background: #2d2d2d;

@@ -34,10 +34,12 @@
                                 <q-card flat bordered>
                                     <q-card-section>
                                         <div class="row items-center justify-between q-mb-sm">
-                                            <div class="text-subtitle2">{{ textMode === 'encode' ? $t('base64Parse.inputText') :
+                                            <div class="text-subtitle2">{{ textMode === 'encode' ?
+                                                $t('base64Parse.inputText') :
                                                 $t('base64Parse.inputBase64') }}</div>
                                             <div class="row">
-                                                <q-btn flat round dense icon="content_paste" size="sm" @click="pasteInput">
+                                                <q-btn flat round dense icon="content_paste" size="sm"
+                                                    @click="pasteInput">
                                                     <q-tooltip>{{ $t('base64Parse.paste') }}</q-tooltip>
                                                 </q-btn>
                                                 <q-btn v-if="inputText" flat round dense icon="clear" size="sm"
@@ -46,7 +48,8 @@
                                                 </q-btn>
                                             </div>
                                         </div>
-                                        <q-input v-model="inputText" type="textarea" outlined rows="10" class="base64-input"
+                                        <q-input v-model="inputText" type="textarea" outlined rows="10"
+                                            class="base64-input"
                                             :placeholder="textMode === 'encode' ? $t('base64Parse.placeholder.encode') : $t('base64Parse.placeholder.decode')"
                                             bg-color="grey-1" :error="hasError" :error-message="errorMessage" />
                                     </q-card-section>
@@ -58,11 +61,12 @@
                                 <q-card flat bordered>
                                     <q-card-section>
                                         <div class="row items-center justify-between q-mb-sm">
-                                            <div class="text-subtitle2">{{ textMode === 'encode' ? $t('base64Parse.outputBase64') :
+                                            <div class="text-subtitle2">{{ textMode === 'encode' ?
+                                                $t('base64Parse.outputBase64') :
                                                 $t('base64Parse.outputText') }}</div>
                                             <div class="row">
-                                                <q-btn flat round dense icon="content_copy" size="sm" @click="copyOutput"
-                                                    :disable="!outputText">
+                                                <q-btn flat round dense icon="content_copy" size="sm"
+                                                    @click="copyOutput" :disable="!outputText">
                                                     <q-tooltip>{{ $t('base64Parse.copy') }}</q-tooltip>
                                                 </q-btn>
                                                 <q-btn v-if="outputText" flat round dense icon="clear" size="sm"
@@ -108,7 +112,8 @@
                                         <div class="row items-center justify-between q-mb-sm">
                                             <div class="text-subtitle2">{{ $t('base64Parse.image.inputBase64') }}</div>
                                             <div class="row">
-                                                <q-btn flat round dense icon="content_paste" size="sm" @click="pasteBase64Image">
+                                                <q-btn flat round dense icon="content_paste" size="sm"
+                                                    @click="pasteBase64Image">
                                                     <q-tooltip>{{ $t('base64Parse.paste') }}</q-tooltip>
                                                 </q-btn>
                                                 <q-btn v-if="base64ImageInput" flat round dense icon="clear" size="sm"
@@ -118,8 +123,9 @@
                                             </div>
                                         </div>
                                         <q-input v-model="base64ImageInput" type="textarea" outlined rows="8"
-                                            class="base64-input" :placeholder="$t('base64Parse.image.base64Placeholder')"
-                                            bg-color="grey-1" @update:model-value="onBase64ImageInputChange" />
+                                            class="base64-input"
+                                            :placeholder="$t('base64Parse.image.base64Placeholder')" bg-color="grey-1"
+                                            @update:model-value="onBase64ImageInputChange" />
 
                                         <!-- 格式选择 -->
                                         <div class="q-mt-md">
@@ -151,7 +157,8 @@
                                                 @error="onImageError" />
                                             <div v-else class="no-preview">
                                                 <q-icon name="image" size="48px" color="grey-5" />
-                                                <div class="text-grey-6 q-mt-sm">{{ $t('base64Parse.image.noPreview') }}</div>
+                                                <div class="text-grey-6 q-mt-sm">{{ $t('base64Parse.image.noPreview') }}
+                                                </div>
                                             </div>
                                         </div>
                                     </q-card-section>
@@ -165,11 +172,11 @@
                             <div class="col-12 col-md-6">
                                 <q-card flat bordered class="upload-card">
                                     <q-card-section>
-                                        <div class="text-subtitle2 q-mb-md">{{ $t('base64Parse.image.uploadArea') }}</div>
+                                        <div class="text-subtitle2 q-mb-md">{{ $t('base64Parse.image.uploadArea') }}
+                                        </div>
                                         <div class="upload-area" @click="triggerFileInput"
                                             @dragover.prevent="isDragging = true"
-                                            @dragleave.prevent="isDragging = false"
-                                            @drop.prevent="handleFileDrop"
+                                            @dragleave.prevent="isDragging = false" @drop.prevent="handleFileDrop"
                                             :class="{ 'dragging': isDragging }">
                                             <input ref="fileInput" type="file" accept="image/*" class="hidden-input"
                                                 @change="handleFileSelect" />
@@ -184,24 +191,30 @@
 
                                         <!-- 文件信息 -->
                                         <div v-if="uploadedFile" class="file-info q-mt-md">
-                                            <div class="text-subtitle2 q-mb-sm">{{ $t('base64Parse.image.fileInfo') }}</div>
+                                            <div class="text-subtitle2 q-mb-sm">{{ $t('base64Parse.image.fileInfo') }}
+                                            </div>
                                             <q-list dense bordered>
                                                 <q-item>
                                                     <q-item-section>
-                                                        <q-item-label caption>{{ $t('base64Parse.image.fileName') }}</q-item-label>
+                                                        <q-item-label caption>{{ $t('base64Parse.image.fileName')
+                                                            }}</q-item-label>
                                                         <q-item-label>{{ uploadedFile.name }}</q-item-label>
                                                     </q-item-section>
                                                 </q-item>
                                                 <q-item>
                                                     <q-item-section>
-                                                        <q-item-label caption>{{ $t('base64Parse.image.fileSize') }}</q-item-label>
-                                                        <q-item-label>{{ formatFileSize(uploadedFile.size) }}</q-item-label>
+                                                        <q-item-label caption>{{ $t('base64Parse.image.fileSize')
+                                                            }}</q-item-label>
+                                                        <q-item-label>{{ formatFileSize(uploadedFile.size)
+                                                            }}</q-item-label>
                                                     </q-item-section>
                                                 </q-item>
                                                 <q-item>
                                                     <q-item-section>
-                                                        <q-item-label caption>{{ $t('base64Parse.image.fileType') }}</q-item-label>
-                                                        <q-item-label>{{ uploadedFile.type || 'Unknown' }}</q-item-label>
+                                                        <q-item-label caption>{{ $t('base64Parse.image.fileType')
+                                                            }}</q-item-label>
+                                                        <q-item-label>{{ uploadedFile.type || 'Unknown'
+                                                            }}</q-item-label>
                                                     </q-item-section>
                                                 </q-item>
                                             </q-list>
@@ -227,9 +240,9 @@
                                                 </q-btn>
                                             </div>
                                         </div>
-                                        <q-input v-model="imageBase64Output" type="textarea" outlined rows="8"
-                                            readonly class="base64-input"
-                                            :placeholder="$t('base64Parse.placeholder.output')" bg-color="grey-1" />
+                                        <q-input v-model="imageBase64Output" type="textarea" outlined rows="8" readonly
+                                            class="base64-input" :placeholder="$t('base64Parse.placeholder.output')"
+                                            bg-color="grey-1" />
                                     </q-card-section>
                                 </q-card>
 
