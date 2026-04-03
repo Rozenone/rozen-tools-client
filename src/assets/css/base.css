@@ -166,30 +166,30 @@
    max-height: calc(100vh - 200px);
    overflow-y: auto;
  }
- 
+
  /* ========== 深色模式全局组件修复 ========== */
- 
+
  /* 输入框控件背景 - 通用覆盖（最高优先级） */
  .body--dark .q-field__control {
    background: #2d2d2d !important;
  }
- 
+
  /* 输入框控件背景 - outlined 模式 */
  .body--dark .q-field--outlined .q-field__control {
    background: #2d2d2d !important;
    border-color: #555 !important;
  }
- 
+
  /* 输入框控件背景 - filled 模式 */
  .body--dark .q-field--filled .q-field__control {
    background: #2d2d2d !important;
  }
- 
+
  /* 输入框控件背景 - standard 模式 */
  .body--dark .q-field--standard .q-field__control {
    background: transparent !important;
  }
- 
+
  /* 原生 textarea/input 元素背景 - 覆盖 bg-color 内联样式 */
  .body--dark .q-field__native,
  .body--dark textarea.q-field__native,
@@ -198,7 +198,7 @@
    color: #e0e0e0 !important;
    caret-color: #e0e0e0 !important;
  }
- 
+
  /* 输入框文字颜色 */
  .body--dark .q-field__native,
  .body--dark .q-field__input,
@@ -206,47 +206,47 @@
  .body--dark .q-field__suffix {
    color: #e0e0e0 !important;
  }
- 
+
  /* 输入框标签颜色 */
  .body--dark .q-field__label {
    color: #b0b0b0 !important;
  }
- 
+
  /* 输入框 placeholder 颜色 */
  .body--dark .q-field__native::placeholder,
  .body--dark .q-field__input::placeholder {
    color: #888 !important;
  }
- 
+
  /* outlined hover 效果 */
  .body--dark .q-field--outlined:hover .q-field__control::before {
    border-color: #777 !important;
  }
- 
+
  /* q-select 下拉菜单 */
  .body--dark .q-menu {
    background: #2d2d2d !important;
  }
- 
+
  .body--dark .q-item {
    color: #e0e0e0 !important;
  }
- 
+
  /* q-btn-toggle 深色适配 */
  .body--dark .q-btn-toggle {
    border-color: #555 !important;
  }
- 
+
  /* 换算结果等区域的 q-card 文字 */
  .body--dark .q-card {
    color: #e0e0e0 !important;
  }
- 
+
  /* q-file 文件选择框深色适配 */
  .body--dark .q-file .q-field__control {
    background: #2d2d2d !important;
  }
- 
+
  /* q-select 选择框深色适配 */
  .body--dark .q-select .q-field__control {
    background: #2d2d2d !important;

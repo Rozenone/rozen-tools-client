@@ -197,24 +197,24 @@
                                                 <q-item>
                                                     <q-item-section>
                                                         <q-item-label caption>{{ $t('base64Parse.image.fileName')
-                                                            }}</q-item-label>
+                                                        }}</q-item-label>
                                                         <q-item-label>{{ uploadedFile.name }}</q-item-label>
                                                     </q-item-section>
                                                 </q-item>
                                                 <q-item>
                                                     <q-item-section>
                                                         <q-item-label caption>{{ $t('base64Parse.image.fileSize')
-                                                            }}</q-item-label>
+                                                        }}</q-item-label>
                                                         <q-item-label>{{ formatFileSize(uploadedFile.size)
-                                                            }}</q-item-label>
+                                                        }}</q-item-label>
                                                     </q-item-section>
                                                 </q-item>
                                                 <q-item>
                                                     <q-item-section>
                                                         <q-item-label caption>{{ $t('base64Parse.image.fileType')
-                                                            }}</q-item-label>
+                                                        }}</q-item-label>
                                                         <q-item-label>{{ uploadedFile.type || 'Unknown'
-                                                            }}</q-item-label>
+                                                        }}</q-item-label>
                                                     </q-item-section>
                                                 </q-item>
                                             </q-list>

@@ -77,13 +77,14 @@
                                                     <q-chip v-for="(pos, idx) in result.positions.slice(0, 10)"
                                                         :key="idx" dense size="sm" color="grey-3" text-color="dark">
                                                         {{ $t('langDetect.line') }}{{ pos.line }},{{
-                                                        $t('langDetect.col') }}{{ pos.col }}
+                                                            $t('langDetect.col') }}{{ pos.col }}
                                                     </q-chip>
                                                     <span v-if="result.positions.length > 10"
                                                         class="text-caption text-grey">
                                                         {{ $t('langDetect.andMore', {
                                                             count: result.positions.length -
-                                                        10 }) }}
+                                                                10
+                                                        }) }}
                                                     </span>
                                                 </div>
                                             </q-item-label>
