@@ -618,7 +618,7 @@ watch(imageFormat, () => {
 
 <style scoped>
 .base64-card {
-    max-width: 900px;
+    max-width: 100%;
     margin: 0 auto;
     border-radius: 8px;
 }
@@ -637,17 +637,6 @@ watch(imageFormat, () => {
 .mode-switch {
     display: flex;
     justify-content: center;
-}
-
-:deep(.q-field__control) {
-    background: var(--q-grey-1);
-}
-
-/* 深色模式适配 */
-.body--dark {
-    :deep(.q-field__control) {
-        background: #2d2d2d;
-    }
 }
 
 /* 允许选择文本 */

@@ -330,7 +330,7 @@ const copyAddResult = async () => {
 
 <style scoped>
 .datecalc-card {
-    max-width: 900px;
+    max-width: 100%;
     margin: 0 auto;
     border-radius: 8px;
 }

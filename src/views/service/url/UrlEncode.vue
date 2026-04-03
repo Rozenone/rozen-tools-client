@@ -203,7 +203,7 @@ watch(mode, () => {
 
 <style scoped>
 .url-encode-card {
-    max-width: 900px;
+    max-width: 100%;
     margin: 0 auto;
     border-radius: 8px;
 }

@@ -211,7 +211,7 @@ watch(storageBase, () => {
 
 <style scoped>
 .unit-convert-card {
-    max-width: 900px;
+    max-width: 100%;
     margin: 0 auto;
     border-radius: 8px;
 }
@@ -223,10 +223,6 @@ watch(storageBase, () => {
 
 .input-field {
     font-size: 16px;
-}
-
-:deep(.q-field__control) {
-    background: var(--q-grey-1);
 }
 
 .result-section {
@@ -252,10 +248,6 @@ watch(storageBase, () => {
 
 /* 深色模式适配 */
 .body--dark {
-    :deep(.q-field__control) {
-        background: #2d2d2d;
-    }
-
     .result-card:hover {
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     }

@@ -156,7 +156,7 @@ onUnmounted(() => {
 
 <style scoped>
 .keepawake-card {
-    max-width: 600px;
+    max-width: 100%;
     margin: 0 auto;
     border-radius: 8px;
 }
@@ -185,7 +185,7 @@ onUnmounted(() => {
 }
 
 .info-card {
-    max-width: 500px;
+    max-width: 100%;
     width: 100%;
     background: var(--q-grey-1);
 }

@@ -230,7 +230,7 @@ onUnmounted(() => {
 
 <style scoped>
 .stopwatch-card {
-    max-width: 700px;
+    max-width: 100%;
     margin: 0 auto;
     border-radius: 8px;
 }
