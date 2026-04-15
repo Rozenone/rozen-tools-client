@@ -1,19 +1,27 @@
 <template>
     <div class="common-file-search-page full-height">
         <div class="q-pa-md">
+            <!-- 浏览器端提示 -->
+            <q-banner v-if="isBrowser()" class="bg-warning text-white q-mb-md rounded-borders">
+                <template v-slot:avatar>
+                    <q-icon name="info" color="white" />
+                </template>
+                {{ $t('commonFileSearch.browserNotSupported') }}
+            </q-banner>
+
             <q-card class="tool-card q-mb-xl">
                 <q-card-section>
                     <div class="text-h6 q-mb-md">{{ $t('commonFileSearch.setting') }}</div>
                     <q-btn color="primary"
                         :label="folderPath ? $t('commonFileSearch.selected') + folderPath : $t('commonFileSearch.selectFolder')"
-                        @click="selectFolder" class="q-mb-md" />
+                        @click="selectFolder" class="q-mb-md" :disable="isBrowser()" />
                     <q-input v-model="targetFileName" :label="$t('commonFileSearch.inputFile')" outlined dense
-                        class="q-mb-md" />
+                        class="q-mb-md" :disable="isBrowser()" />
                     <q-btn color="primary" :label="$t('commonFileSearch.search')"
-                        :disable="!folderPath || !targetFileName" @click="searchFiles" class="q-mt-md q-mb-md" />
+                        :disable="!folderPath || !targetFileName || isBrowser()" @click="searchFiles" class="q-mt-md q-mb-md" />
                     <q-input v-model="searchText" :label="$t('commonFileSearch.findInput')" outlined dense
-                        class="q-mb-md" />
-                    <q-btn color="secondary" :label="$t('commonFileSearch.findBtn')" :disable="!searchText"
+                        class="q-mb-md" :disable="isBrowser()" />
+                    <q-btn color="secondary" :label="$t('commonFileSearch.findBtn')" :disable="!searchText || isBrowser()"
                         @click="filterResults" />
                 </q-card-section>
             </q-card>
@@ -40,6 +48,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { isBrowser } from '@/utils/platformDetect'
 const folderPath = ref('')
 const targetFileName = ref('')
 const searchResults = ref<{ folder: string, content: string }[]>([])

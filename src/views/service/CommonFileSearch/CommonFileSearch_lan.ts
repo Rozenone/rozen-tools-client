@@ -8,7 +8,8 @@ export const commonFileSearch_cn = {
   findInput: '查找内容（高亮并筛选结果）',
   findBtn: '查找',
   notFound: '未找到相关文件。',
-  pleaseSet: '请先设置检索条件并点击检索。'
+  pleaseSet: '请先设置检索条件并点击检索。',
+  browserNotSupported: '此功能需要文件系统访问权限，请在客户端中使用'
 }
 
 export const commonFileSearch_jp = {
@@ -22,5 +23,6 @@ export const commonFileSearch_jp = {
   findInput: '検索内容（ハイライト＆絞り込み）',
   findBtn: '検索',
   notFound: '該当ファイルが見つかりません。',
-  pleaseSet: '検索条件を設定して検索をクリックしてください。'
+  pleaseSet: '検索条件を設定して検索をクリックしてください。',
+  browserNotSupported: 'この機能はファイルシステムへのアクセスが必要です。クライアントでご利用ください'
 } 

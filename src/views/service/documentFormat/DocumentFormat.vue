@@ -11,11 +11,32 @@
           {{ $t('documentFormat.excel.title') }}
         </div>
 
+        <!-- 浏览器端文件选择 -->
+        <input
+          v-if="isBrowser()"
+          type="file"
+          ref="browserFileInput"
+          accept=".xlsx,.xls"
+          multiple
+          style="display: none"
+          @change="handleBrowserFileSelect"
+        />
+
         <div class="row q-col-gutter-md">
           <!-- 文件选择 -->
           <div class="col-12">
             <q-btn :label="$t('documentFormat.excel.selectFile')" @click="selectExcelFile" color="primary"
               class="q-mb-md" />
+          </div>
+
+          <!-- 浏览器端提示 -->
+          <div v-if="isBrowser()" class="col-12">
+            <q-banner class="bg-info text-white q-mb-md" dense>
+              <template v-slot:avatar>
+                <q-icon name="info" />
+              </template>
+              {{ $t('documentFormat.excel.browserHint') || '浏览器版本将下载处理后的文件' }}
+            </q-banner>
           </div>
 
           <!-- 缩放设置 -->
@@ -73,8 +94,8 @@
             </div>
           </div>
 
-          <!-- 在操作按钮上方添加勾选框 -->
-          <div class="col-12">
+          <!-- 在操作按钮上方添加勾选框 (仅 Electron 可用) -->
+          <div v-if="isElectron()" class="col-12">
             <q-checkbox v-model="overwriteSource" :label="t('documentFormat.excel.overwriteSource')" class="q-mb-md"
               :text-color="$q.dark.isActive ? 'white' : 'black'" />
           </div>
@@ -118,6 +139,8 @@
 import { ref } from 'vue'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
+import { isElectron, isBrowser } from '@/utils/platformDetect'
+import ExcelJS from 'exceljs'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const { ipcRenderer } = (window as any).electron || {}
 
@@ -127,6 +150,10 @@ const { t } = useI18n()
 const excelFilePaths = ref<string[]>([])
 const excelInfos = ref<{ fileName: string | undefined; sheetCount: number | string }[]>([])
 const isProcessing = ref(false)
+
+// 浏览器端文件引用
+const browserFileInput = ref<HTMLInputElement | null>(null)
+const browserFiles = ref<File[]>([])
 
 // 格式化设置
 const zoomPercentage = ref(100)
@@ -206,59 +233,167 @@ const excelFeatures = ref([
   }
 ])
 
+// 浏览器端文件选择处理
+const handleBrowserFileSelect = async (event: Event) => {
+  const target = event.target as HTMLInputElement
+  const files = target.files
+  if (!files || files.length === 0) return
+
+  browserFiles.value = Array.from(files)
+  excelFilePaths.value = browserFiles.value.map(f => f.name)
+  excelInfos.value = []
+
+  // 读取每个文件的 sheet 数量
+  for (const file of browserFiles.value) {
+    try {
+      const arrayBuffer = await file.arrayBuffer()
+      const workbook = new ExcelJS.Workbook()
+      await workbook.xlsx.load(arrayBuffer)
+      const sheetCount = workbook.worksheets.length
+      excelInfos.value.push({
+        fileName: file.name,
+        sheetCount
+      })
+    } catch {
+      excelInfos.value.push({
+        fileName: file.name,
+        sheetCount: '未知'
+      })
+    }
+  }
+}
+
 // 文件选择
 const selectExcelFile = async () => {
-  if (ipcRenderer) {
-    const filePaths = await ipcRenderer.invoke('select-excel-file')
-    if (Array.isArray(filePaths) && filePaths.length) {
-      excelFilePaths.value = filePaths.filter(f => typeof f === 'string' && f)
-      // 读取每个文件的sheet数量（用exceljs主进程handler）
-      excelInfos.value = []
-      for (const filePath of excelFilePaths.value) {
-        try {
-          const sheetCount = await ipcRenderer.invoke('get-excel-sheet-count', filePath) as number | string
-          excelInfos.value.push({
-            fileName: filePath.split(/[\\/]/).pop(),
-            sheetCount
-          })
-        } catch {
-          excelInfos.value.push({
-            fileName: filePath.split(/[\\/]/).pop(),
-            sheetCount: '未知'
-          })
+  if (isElectron()) {
+    // Electron 端：使用 IPC 调用主进程
+    if (ipcRenderer) {
+      const filePaths = await ipcRenderer.invoke('select-excel-file')
+      if (Array.isArray(filePaths) && filePaths.length) {
+        excelFilePaths.value = filePaths.filter(f => typeof f === 'string' && f)
+        // 读取每个文件的sheet数量（用exceljs主进程handler）
+        excelInfos.value = []
+        for (const filePath of excelFilePaths.value) {
+          try {
+            const sheetCount = await ipcRenderer.invoke('get-excel-sheet-count', filePath) as number | string
+            excelInfos.value.push({
+              fileName: filePath.split(/[\\/]/).pop(),
+              sheetCount
+            })
+          } catch {
+            excelInfos.value.push({
+              fileName: filePath.split(/[\\/]/).pop(),
+              sheetCount: '未知'
+            })
+          }
         }
       }
     }
+  } else {
+    // 浏览器端：触发隐藏的文件选择器
+    browserFileInput.value?.click()
   }
 }
 
 // 格式化Excel
 const formatExcel = async () => {
   if (!excelFilePaths.value.length) return
-  if (!ipcRenderer) return
+
   isProcessing.value = true
   try {
-    // 强制所有参数为简单类型
-    const filePaths = excelFilePaths.value.map(f => String(f))
-    const zoom = Number(zoomPercentage.value)
-    const font = String(selectedFont.value)
-    const fontSizeVal = Number(fontSize.value)
-    const fontColorVal = String(fontColor.value)
-    const overwrite = Boolean(overwriteSource.value)
-    await ipcRenderer.invoke('batch-format-excel', {
-      filePaths,
-      zoom,
-      font,
-      fontSize: fontSizeVal,
-      fontColor: fontColorVal,
-      overwrite
-    })
-    $q.notify({ type: 'positive', message: '所有文件已处理完成！', position: 'top' })
+    if (isElectron()) {
+      // Electron 端：使用 IPC 调用主进程
+      if (!ipcRenderer) return
+      // 强制所有参数为简单类型
+      const filePaths = excelFilePaths.value.map(f => String(f))
+      const zoom = Number(zoomPercentage.value)
+      const font = String(selectedFont.value)
+      const fontSizeVal = Number(fontSize.value)
+      const fontColorVal = String(fontColor.value)
+      const overwrite = Boolean(overwriteSource.value)
+      await ipcRenderer.invoke('batch-format-excel', {
+        filePaths,
+        zoom,
+        font,
+        fontSize: fontSizeVal,
+        fontColor: fontColorVal,
+        overwrite
+      })
+      $q.notify({ type: 'positive', message: '所有文件已处理完成！', position: 'top' })
+    } else {
+      // 浏览器端：在前端处理 Excel
+      await formatExcelBrowser()
+    }
   } catch (error) {
     $q.notify({ type: 'negative', message: '格式化失败，请重试' + error, position: 'top' })
   } finally {
     isProcessing.value = false
   }
+}
+
+// 浏览器端 Excel 格式化
+const formatExcelBrowser = async () => {
+  if (browserFiles.value.length === 0) return
+
+  for (const file of browserFiles.value) {
+    try {
+      const arrayBuffer = await file.arrayBuffer()
+      const workbook = new ExcelJS.Workbook()
+      await workbook.xlsx.load(arrayBuffer)
+
+      // 应用格式化设置到每个工作表
+      workbook.worksheets.forEach(worksheet => {
+        // 设置缩放比例
+        const zoom = Number(zoomPercentage.value)
+        if (zoom && zoom > 0) {
+          worksheet.views = [
+            { zoomScale: zoom, activeCell: 'A1' }
+          ]
+        }
+
+        // 设置字体样式到所有单元格
+        const font = String(selectedFont.value)
+        const fontSizeVal = Number(fontSize.value)
+        const fontColorVal = String(fontColor.value)
+
+        worksheet.eachRow((row) => {
+          row.eachCell((cell) => {
+            // 设置字体
+            if (!cell.font) cell.font = {}
+            if (font) cell.font.name = font
+            if (fontSizeVal && fontSizeVal > 0) cell.font.size = fontSizeVal
+            if (fontColorVal) cell.font.color = { argb: fontColorVal.replace('#', '') }
+
+            // 设置对齐方式
+            if (!cell.alignment) cell.alignment = {}
+            cell.alignment.vertical = 'middle'
+            cell.alignment.horizontal = 'left'
+          })
+        })
+      })
+
+      // 生成处理后的文件
+      const buffer = await workbook.xlsx.writeBuffer()
+      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+
+      // 触发下载
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      // 生成下载文件名：原文件名_格式化.xlsx
+      const fileNameWithoutExt = file.name.replace(/\.xlsx?$/i, '')
+      link.download = `${fileNameWithoutExt}_formatted.xlsx`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      URL.revokeObjectURL(url)
+    } catch (error) {
+      console.error('处理文件失败:', file.name, error)
+      throw new Error(`处理文件 ${file.name} 失败`)
+    }
+  }
+
+  $q.notify({ type: 'positive', message: '所有文件已处理完成！', position: 'top' })
 }
 </script>
 

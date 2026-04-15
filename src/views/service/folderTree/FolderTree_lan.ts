@@ -10,7 +10,8 @@ export const folderTree_cn = {
     copySuccess: '已复制到剪贴板',
     copyFailed: '复制失败',
     open: '打开',
-    openFailed: '打开失败'
+    openFailed: '打开失败',
+    browserNotSupported: '此功能需要文件系统访问权限，请在客户端中使用'
 }
 
 export const folderTree_jp = {
@@ -25,6 +26,7 @@ export const folderTree_jp = {
     copySuccess: 'クリップボードにコピーしました',
     copyFailed: 'コピーに失敗しました',
     open: '開く',
-    openFailed: '開けませんでした'
+    openFailed: '開けませんでした',
+    browserNotSupported: 'この機能はファイルシステムへのアクセスが必要です。クライアントでご利用ください'
 }
 

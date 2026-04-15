@@ -63,15 +63,18 @@
 import { ref, computed, getCurrentInstance, onBeforeUnmount, onUnmounted } from 'vue'
 import type { ComponentInternalInstance } from 'vue'
 import { useQuasar } from 'quasar'
+import { isElectron } from '@/utils/platformDetect'
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance
 const $q = useQuasar()
 
 // 状态
 const isActive = ref(false)
+const isKeepAwakeActive = ref(false)
 const startTime = ref<number | null>(null)
 const duration = ref(0)
 let timerInterval: ReturnType<typeof setInterval> | null = null
+let wakeLock: WakeLockSentinel | null = null
 
 // 格式化持续时间 HH:MM:SS
 const formattedDuration = computed(() => {
@@ -102,14 +105,58 @@ const stopTimer = () => {
     duration.value = 0
 }
 
+// 浏览器端防睡眠逻辑
+const startBrowserKeepAwake = async () => {
+    try {
+        if ('wakeLock' in navigator) {
+            wakeLock = await navigator.wakeLock.request('screen')
+            // 处理页面可见性变化时重新获取锁
+            document.addEventListener('visibilitychange', handleVisibilityChange)
+        }
+    } catch (err) {
+        console.error('Wake Lock 获取失败:', err)
+        throw err
+    }
+}
+
+const stopBrowserKeepAwake = () => {
+    if (wakeLock) {
+        wakeLock.release()
+        wakeLock = null
+        document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
+}
+
+const handleVisibilityChange = async () => {
+    if (document.visibilityState === 'visible' && isKeepAwakeActive.value) {
+        try {
+            wakeLock = await navigator.wakeLock.request('screen')
+        } catch (err) {
+            console.error('Wake Lock 重新获取失败:', err)
+        }
+    }
+}
+
 // 切换防睡眠状态
 const toggleKeepAwake = async () => {
     try {
         if (isActive.value) {
             // 关闭防睡眠
-            const result = await window.ipcCommon.stopKeepAwake()
-            if (result.success) {
+            if (isElectron()) {
+                const result = await window.ipcCommon.stopKeepAwake()
+                if (result.success) {
+                    isActive.value = false
+                    isKeepAwakeActive.value = false
+                    stopTimer()
+                    $q.notify({
+                        type: 'positive',
+                        message: proxy?.$t('keepAwake.notification.stopped')
+                    })
+                }
+            } else {
+                stopBrowserKeepAwake()
                 isActive.value = false
+                isKeepAwakeActive.value = false
                 stopTimer()
                 $q.notify({
                     type: 'positive',
@@ -118,9 +165,29 @@ const toggleKeepAwake = async () => {
             }
         } else {
             // 开启防睡眠
-            const result = await window.ipcCommon.startKeepAwake()
-            if (result.success) {
+            if (isElectron()) {
+                const result = await window.ipcCommon.startKeepAwake()
+                if (result.success) {
+                    isActive.value = true
+                    isKeepAwakeActive.value = true
+                    startTimer()
+                    $q.notify({
+                        type: 'positive',
+                        message: proxy?.$t('keepAwake.notification.started')
+                    })
+                }
+            } else {
+                // 浏览器端
+                if (!('wakeLock' in navigator)) {
+                    $q.notify({
+                        type: 'negative',
+                        message: proxy?.$t('keepAwake.notification.unsupported')
+                    })
+                    return
+                }
+                await startBrowserKeepAwake()
                 isActive.value = true
+                isKeepAwakeActive.value = true
                 startTimer()
                 $q.notify({
                     type: 'positive',
@@ -140,7 +207,11 @@ const toggleKeepAwake = async () => {
 onBeforeUnmount(async () => {
     if (isActive.value) {
         try {
-            await window.ipcCommon.stopKeepAwake()
+            if (isElectron()) {
+                await window.ipcCommon.stopKeepAwake()
+            } else {
+                stopBrowserKeepAwake()
+            }
             stopTimer()
         } catch {
             // 忽略错误
@@ -148,9 +219,14 @@ onBeforeUnmount(async () => {
     }
 })
 
-// 确保清理定时器
+// 确保清理定时器和 Wake Lock
 onUnmounted(() => {
     stopTimer()
+    if (wakeLock) {
+        wakeLock.release()
+        wakeLock = null
+        document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
 })
 </script>
 

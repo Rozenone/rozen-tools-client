@@ -1,21 +1,29 @@
 <template>
     <div class="folder-tree-page full-height">
         <div class="q-pa-md">
+            <!-- 浏览器端提示 -->
+            <q-banner v-if="isBrowser()" class="bg-warning text-white q-mb-md rounded-borders">
+                <template v-slot:avatar>
+                    <q-icon name="info" color="white" />
+                </template>
+                {{ $t('folderTree.browserNotSupported') }}
+            </q-banner>
+
             <q-card class="tool-card q-mb-md">
                 <q-card-section>
                     <div class="text-h6 q-mb-md">{{ $t('folderTree.title') }}</div>
                     <div class="row q-col-gutter-md">
                         <div class="col-12 col-md-8">
                             <q-input v-model="selectedFolderPath" :label="$t('folderTree.selectedFolder')" readonly
-                                outlined dense>
+                                outlined dense :disable="isBrowser()">
                                 <template v-slot:append>
                                     <q-btn icon="folder" flat dense :label="$t('folderTree.selectFolder')"
-                                        @click="selectFolder" />
+                                        @click="selectFolder" :disable="isBrowser()" />
                                 </template>
                             </q-input>
                         </div>
                         <div class="col-12 col-md-4">
-                            <q-btn color="primary" :label="$t('folderTree.generateTree')" :disable="!selectedFolderPath"
+                            <q-btn color="primary" :label="$t('folderTree.generateTree')" :disable="!selectedFolderPath || isBrowser()"
                                 :loading="loading" @click="generateTree" class="full-width" />
                         </div>
                     </div>
@@ -61,6 +69,7 @@
 import { ref, computed } from 'vue'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
+import { isBrowser } from '@/utils/platformDetect'
 
 const $q = useQuasar()
 const { t } = useI18n()

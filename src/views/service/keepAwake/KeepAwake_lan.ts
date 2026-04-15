@@ -15,7 +15,8 @@ export const keepAwake_cn = {
     notification: {
         started: '防睡眠已开启',
         stopped: '防睡眠已关闭',
-        error: '操作失败，请重试'
+        error: '操作失败，请重试',
+        unsupported: '当前浏览器不支持防睡眠功能'
     }
 }
 
@@ -36,6 +37,7 @@ export const keepAwake_jp = {
     notification: {
         started: 'スリープ防止がオンになりました',
         stopped: 'スリープ防止がオフになりました',
-        error: '操作に失敗しました。再試行してください'
+        error: '操作に失敗しました。再試行してください',
+        unsupported: '現在のブラウザはスリープ防止機能をサポートしていません'
     }
 }
